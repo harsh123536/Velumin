@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>html{background:#0E0B1A !important;}body{background:#0E0B1A !important;}a{color:#7B6FA0;text-decoration:none;}a:hover{color:#C9A96E;}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velumin — Lift the veil. Know yourself.</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.hero{text-align:center;padding:96px 48px 72px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:300;line-height:1.08;letter-spacing:0.02em;color:#F5F3FA;margin-bottom:24px;}
+.hero h1 em{font-style:italic;color:#C9A96E;}
+.hero p{font-size:15px;font-weight:300;color:#7B6FA0;line-height:1.8;max-width:500px;margin:0 auto 40px;}
+.btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+.insight-bar{background:#1C1530;border-top:0.5px solid rgba(200,191,231,0.07);border-bottom:0.5px solid rgba(200,191,231,0.07);padding:18px 48px;display:flex;align-items:center;gap:16px;margin-bottom:80px;}
+.insight-tag{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C9A96E;white-space:nowrap;}
+.insight-divider{width:1px;height:16px;background:rgba(200,191,231,0.15);}
+.insight-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:#B4A8D0;line-height:1.5;}
+.insight-cite{font-size:10px;color:rgba(123,111,160,0.5);white-space:nowrap;margin-left:auto;}
+
+.features{padding:0 48px 88px;max-width:960px;margin:0 auto;}
+.features-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:#F5F3FA;text-align:center;margin-bottom:56px;line-height:1.2;}
+.features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.feat-card{background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:32px 28px;text-decoration:none;display:block;transition:border-color 0.2s;}
+.feat-card:hover{border-color:rgba(201,169,110,0.3);}
+.feat-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:rgba(201,169,110,0.2);margin-bottom:16px;line-height:1;}
+.feat-title{font-size:15px;font-weight:500;color:#F5F3FA;margin-bottom:10px;}
+.feat-desc{font-size:13px;font-weight:300;color:#7B6FA0;line-height:1.75;}
+.feat-tag{display:inline-block;margin-top:14px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#C9A96E;border:0.5px solid rgba(201,169,110,0.3);padding:4px 10px;border-radius:2px;}
+
+.how{padding:0 48px 88px;max-width:860px;margin:0 auto;}
+.how-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:#F5F3FA;text-align:center;margin-bottom:56px;}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.step{border-left:0.5px solid rgba(201,169,110,0.25);padding:0 0 0 20px;}
+.step-n{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:rgba(201,169,110,0.25);margin-bottom:12px;}
+.step-t{font-size:14px;font-weight:500;color:#E8E4F0;margin-bottom:8px;}
+.step-d{font-size:12px;font-weight:300;color:#7B6FA0;line-height:1.7;}
+.step-cite{font-size:10px;color:rgba(123,111,160,0.4);margin-top:8px;}
+
+.science{background:#1C1530;border-top:0.5px solid rgba(200,191,231,0.07);border-bottom:0.5px solid rgba(200,191,231,0.07);padding:56px 48px;margin-bottom:80px;}
+.science-inner{max-width:860px;margin:0 auto;}
+.science-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#F5F3FA;margin-bottom:28px;text-align:center;}
+.science-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.science-item{border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:20px;}
+.sci-framework{font-size:13px;font-weight:500;color:#E8E4F0;margin-bottom:6px;}
+.sci-author{font-size:11px;color:#C9A96E;margin-bottom:6px;}
+.sci-desc{font-size:11px;color:#7B6FA0;line-height:1.6;}
+
+.founder-strip{text-align:center;padding:72px 48px;}
+.founder-avatar{width:60px;height:60px;border-radius:50%;background:#2A2040;border:0.5px solid rgba(201,169,110,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:#C9A96E;margin:0 auto 18px;}
+.founder-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:#F5F3FA;margin-bottom:6px;}
+.founder-role{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#7B6FA0;margin-bottom:20px;}
+.founder-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;font-weight:300;color:#B4A8D0;line-height:1.65;max-width:500px;margin:0 auto;}
+
+@media(max-width:700px){
+  .hero{padding:64px 24px 48px;}
+  .hero h1{font-size:40px;}
+  .insight-bar{padding:16px 24px;flex-wrap:wrap;}
+  .insight-cite{margin-left:0;}
+  .features,.how{padding-left:24px;padding-right:24px;}
+  .features-grid,.steps,.science-grid{grid-template-columns:1fr;}
+  .science{padding:40px 24px;}
+  .founder-strip{padding:48px 24px;}
+}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-banner">
+  Velumin is an educational tool, not a clinical service. AI insights may contain errors. <a href="disclaimer.html">Read full disclaimer →</a>
+</div>
+
+<nav class="vl-nav">
+  <a class="vl-nav-logo" href="index.html">Velumin</a>
+  <div class="vl-nav-links">
+    <a href="discover.html">Discover</a>
+    <a href="tracker.html">Mood tracker</a>
+    <a href="library.html">Library</a>
+    <a href="about.html">About</a>
+    <a class="vl-nav-cta" href="discover.html">Begin</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Psychology · AI · Self-discovery</div>
+  <h1>Lift the veil.<br><em>Know yourself.</em></h1>
+  <p>Velumin uses verified psychological frameworks and AI to reveal the hidden patterns shaping who you are — and who you're becoming.</p>
+  <div class="btn-row">
+    <a class="btn-primary" href="discover.html">Begin your discovery</a>
+    <a class="btn-ghost" href="about.html">Learn more</a>
+  </div>
+</section>
+
+<div class="gold-line" style="margin-bottom:0;"></div>
+
+<div class="insight-bar">
+  <div class="insight-tag">Daily insight</div>
+  <div class="insight-divider"></div>
+  <div class="insight-text">People who label their emotions recover from stress significantly faster than those who don't.</div>
+  <div class="insight-cite">Lieberman et al., 2007 · UCLA</div>
+</div>
+
+<section class="features">
+  <div class="section-eyebrow" style="text-align:center;margin-bottom:16px;">What Velumin offers</div>
+  <h2 class="features-title">Four tools. One mission.<br>Understand your mind.</h2>
+  <div class="features-grid">
+    <a class="feat-card" href="discover.html">
+      <div class="feat-num">01</div>
+      <div class="feat-title">Psychological discovery</div>
+      <div class="feat-desc">Answer 10 carefully crafted questions rooted in verified psychological science. Receive a personalised portrait of your cognitive patterns, emotional tendencies, and growth edges — generated by AI, grounded in research.</div>
+      <div class="feat-tag">Take the assessment ↗</div>
+    </a>
+    <a class="feat-card" href="tracker.html">
+      <div class="feat-num">02</div>
+      <div class="feat-title">Mood tracker</div>
+      <div class="feat-desc">Log your mood daily in under 30 seconds. Over 7 days, Velumin's AI identifies your emotional patterns — when you peak, when you dip, and what drives both.</div>
+      <div class="feat-tag">Track your mood ↗</div>
+    </a>
+    <a class="feat-card" href="library.html">
+      <div class="feat-num">03</div>
+      <div class="feat-title">Psychology library</div>
+      <div class="feat-desc">Curated resources from the world's most credible psychology institutions — APA, NIMHANS, iCall, Positive Psychology Institute and more. Western and Asian sources. Free for everyone.</div>
+      <div class="feat-tag">Explore resources ↗</div>
+    </a>
+    <a class="feat-card" href="#">
+      <div class="feat-num">04</div>
+      <div class="feat-title">Daily insight</div>
+      <div class="feat-desc">One psychology-backed insight, every day. Short, cited, and designed to shift how you see yourself. Each insight links to its original research so you can go deeper.</div>
+      <div class="feat-tag">Today's insight ↗</div>
+    </a>
+  </div>
+</section>
+
+<section class="how">
+  <h2 class="how-title">How discovery works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-t">Answer 10 questions</div>
+      <div class="step-d">Each question maps to a validated psychological framework. Honest responses yield honest insights.</div>
+      <div class="step-cite">Big Five · Costa & McCrae, 1992</div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-t">AI reads your patterns</div>
+      <div class="step-d">Your responses are analysed across personality, cognition, and emotional regulation dimensions in real time.</div>
+      <div class="step-cite">CBT framework · Beck, 1979</div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-t">Receive your portrait</div>
+      <div class="step-d">A personalised psychological profile with trait scores, pattern summary, and one clear insight to act on.</div>
+      <div class="step-cite">Emotion regulation · Gross, 1998</div>
+    </div>
+  </div>
+</section>
+
+<div class="science">
+  <div class="science-inner">
+    <div class="science-title">Built on verified science</div>
+    <div class="science-grid">
+      <div class="science-item">
+        <div class="sci-framework">Big Five Personality Model</div>
+        <div class="sci-author">Costa & McCrae · 1992</div>
+        <div class="sci-desc">The world's most validated personality framework, used in clinical and academic psychology globally.</div>
+      </div>
+      <div class="science-item">
+        <div class="sci-framework">Cognitive Behavioural Theory</div>
+        <div class="sci-author">Aaron Beck · 1979</div>
+        <div class="sci-desc">Identifies how thought patterns shape emotions and behaviour — the foundation of modern psychotherapy.</div>
+      </div>
+      <div class="science-item">
+        <div class="sci-framework">Emotional Regulation Model</div>
+        <div class="sci-author">James Gross · 1998</div>
+        <div class="sci-desc">Stanford research on how people manage and respond to emotions — a cornerstone of emotional intelligence.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="founder-strip">
+  <div class="section-eyebrow" style="margin-bottom:24px;">Founded by</div>
+  <div class="founder-avatar">HVM</div>
+  <div class="founder-name">Harsh Vijay More</div>
+  <div class="founder-role">Psychology Student · Founder, Velumin</div>
+  <p class="founder-quote">"I built Velumin because psychology should be accessible to everyone — not locked behind clinical doors or buried in textbooks."</p>
+</section>
+
+<footer class="vl-footer">
+  <div class="vl-footer-main">
+    <div class="vl-footer-logo">Velumin</div>
+    <div class="vl-footer-links">
+      <a href="discover.html">Discover</a>
+      <a href="tracker.html">Mood tracker</a>
+      <a href="library.html">Library</a>
+      <a href="about.html">About</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+    <div class="vl-footer-copy">© 2025 Harsh Vijay More. All rights reserved.</div>
+  </div>
+  <div class="vl-footer-disclaimer">
+    Velumin is an AI-powered educational tool, not a clinical service. Content does not constitute professional psychological or medical advice. AI-generated insights may contain errors and should not be used for clinical decisions. Velumin and its founder, Harsh Vijay More, accept no liability for outcomes arising from use of this platform. If you are in crisis, contact iCall India: <a href="tel:9152987821">9152987821</a> · veluminmind is an original work — © 2025 Harsh Vijay More. <a href="disclaimer.html">Full disclaimer →</a>
+  </div>
+</footer>
+
+</body>
+</html>

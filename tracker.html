@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>a{color:#7B6FA0;text-decoration:none;}a:hover{color:#C9A96E;}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>Mood Tracker — Velumin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0E0B1A;color:#E8E4F0;font-family:'DM Sans',sans-serif;min-height:100vh;}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:26px 48px;border-bottom:0.5px solid rgba(200,191,231,0.1);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:0.12em;color:#F5F3FA;text-decoration:none;}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#7B6FA0;text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:#C9A96E;}
+
+.hero{text-align:center;padding:72px 48px 48px;}
+.eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C9A96E;margin-bottom:20px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.1;color:#F5F3FA;margin-bottom:16px;}
+.hero h1 em{font-style:italic;color:#C9A96E;}
+.hero p{font-size:14px;font-weight:300;color:#7B6FA0;line-height:1.8;max-width:440px;margin:0 auto 8px;}
+.cite-note{font-size:11px;color:rgba(123,111,160,0.4);}
+
+.gold-line{width:36px;height:0.5px;background:#C9A96E;margin:40px auto 56px;}
+
+.main-wrap{max-width:720px;margin:0 auto;padding:0 48px 80px;}
+
+/* CHECK-IN CARD */
+.checkin-card{background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:36px;margin-bottom:20px;}
+.card-label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#C9A96E;margin-bottom:20px;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:#F5F3FA;margin-bottom:28px;line-height:1.3;}
+
+.mood-selector{display:flex;gap:10px;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;}
+.mood-btn{flex:1;min-width:80px;background:transparent;border:0.5px solid rgba(200,191,231,0.1);border-radius:3px;padding:14px 8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;color:#7B6FA0;transition:all 0.2s;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center;}
+.mood-btn:hover{border-color:rgba(201,169,110,0.3);color:#E8E4F0;}
+.mood-btn.selected{border-color:#C9A96E;color:#F5F3FA;background:rgba(201,169,110,0.06);}
+.mood-icon{font-size:20px;line-height:1;}
+
+.mood-btn[data-mood="1"] .mood-icon::before{content:"";display:block;width:20px;height:20px;border-radius:50%;background:#3C2A2A;border:0.5px solid #993C1D;margin:0 auto;}
+.mood-btn[data-mood="2"] .mood-icon::before{content:"";display:block;width:20px;height:20px;border-radius:50%;background:#2A2A2A;border:0.5px solid #5F5E5A;margin:0 auto;}
+.mood-btn[data-mood="3"] .mood-icon::before{content:"";display:block;width:20px;height:20px;border-radius:50%;background:#2A2230;border:0.5px solid #534AB7;margin:0 auto;}
+.mood-btn[data-mood="4"] .mood-icon::before{content:"";display:block;width:20px;height:20px;border-radius:50%;background:#1A2A2A;border:0.5px solid #0F6E56;margin:0 auto;}
+.mood-btn[data-mood="5"] .mood-icon::before{content:"";display:block;width:20px;height:20px;border-radius:50%;background:#2A1F00;border:0.5px solid #C9A96E;margin:0 auto;}
+
+.note-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(123,111,160,0.5);margin-bottom:10px;}
+textarea{width:100%;background:rgba(200,191,231,0.03);border:0.5px solid rgba(200,191,231,0.1);border-radius:3px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:#E8E4F0;resize:none;height:80px;outline:none;transition:border-color 0.2s;}
+textarea::placeholder{color:rgba(123,111,160,0.4);}
+textarea:focus{border-color:rgba(201,169,110,0.3);}
+
+.submit-row{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+.today-date{font-size:11px;color:rgba(123,111,160,0.4);letter-spacing:0.06em;}
+.btn-log{background:#C9A96E;border:none;padding:12px 32px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0E0B1A;border-radius:2px;cursor:pointer;transition:opacity 0.2s;opacity:0.35;pointer-events:none;}
+.btn-log.ready{opacity:1;pointer-events:all;}
+.btn-log.ready:hover{opacity:0.82;}
+
+.logged-msg{display:none;text-align:center;padding:16px;background:rgba(201,169,110,0.06);border:0.5px solid rgba(201,169,110,0.15);border-radius:3px;margin-top:16px;font-size:13px;font-style:italic;font-family:'Cormorant Garamond',serif;color:#B4A8D0;}
+
+/* WEEK VIEW */
+.week-card{background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:28px;margin-bottom:20px;}
+.week-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
+.week-title{font-size:13px;font-weight:500;color:#E8E4F0;}
+.week-days{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
+.day-col{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.day-name{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(123,111,160,0.4);}
+.day-bar-wrap{height:80px;display:flex;align-items:flex-end;}
+.day-bar{width:20px;border-radius:2px 2px 0 0;transition:height 0.6s ease;min-height:2px;}
+.bar-1{background:#993C1D;}
+.bar-2{background:#5F5E5A;}
+.bar-3{background:#534AB7;}
+.bar-4{background:#0F6E56;}
+.bar-5{background:#C9A96E;}
+.bar-empty{background:rgba(200,191,231,0.06);}
+.day-score{font-size:11px;color:#7B6FA0;}
+.day-today .day-name{color:#C9A96E;}
+
+/* AI INSIGHT */
+.insight-card{background:#1C1530;border-left:1px solid #C9A96E;border-radius:0 4px 4px 0;padding:24px 28px;margin-bottom:20px;}
+.insight-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C9A96E;margin-bottom:12px;}
+.insight-body{font-size:14px;font-weight:300;color:#D4CDED;line-height:1.75;}
+.insight-loading{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:#7B6FA0;}
+.insight-cite{margin-top:12px;font-size:11px;color:rgba(123,111,160,0.4);}
+
+/* STREAK */
+.streak-row{display:flex;gap:12px;margin-bottom:20px;}
+.streak-box{flex:1;background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:20px;text-align:center;}
+.streak-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:#C9A96E;line-height:1;}
+.streak-label{font-size:11px;color:rgba(123,111,160,0.5);margin-top:6px;letter-spacing:0.06em;}
+
+.cite-footer{font-size:11px;color:rgba(123,111,160,0.3);text-align:center;margin-top:8px;line-height:1.6;}
+
+footer{padding:28px 48px;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid rgba(200,191,231,0.07);margin-top:40px;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;letter-spacing:0.1em;color:#7B6FA0;}
+.footer-copy{font-size:11px;color:rgba(123,111,160,0.35);}
+
+@media(max-width:600px){
+  nav,.hero,.main-wrap,footer{padding-left:24px;padding-right:24px;}
+  .hero h1{font-size:36px;}
+  .mood-selector{gap:6px;}
+  .mood-btn{min-width:52px;padding:10px 4px;font-size:10px;}
+  .streak-row{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-banner">
+  Velumin is an educational tool, not a clinical service. AI insights may contain errors. <a href="disclaimer.html">Read full disclaimer →</a>
+</div>
+<nav class="vl-nav">
+  <a class="vl-nav-logo" href="index.html">Velumin</a>
+  <div class="vl-nav-links">
+    <a href="discover.html">Discover</a>
+    <a href="tracker.html"  class="active">Mood tracker</a>
+    <a href="library.html">Library</a>
+    <a href="about.html">About</a>
+    <a class="vl-nav-cta" href="discover.html">Begin</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Mood tracker</div>
+  <h1>Your emotions have <em>patterns.</em></h1>
+  <p>Log your mood daily. After 7 days, Velumin reveals the emotional patterns shaping your life — and what to do about them.</p>
+  <p class="cite-note">Based on affect regulation research · Gross & John, 2003 · Journal of Personality and Social Psychology</p>
+</div>
+
+<div class="gold-line"></div>
+
+<div class="main-wrap">
+
+  <!-- STREAKS -->
+  <div class="streak-row">
+    <div class="streak-box">
+      <div class="streak-num" id="streak-count">0</div>
+      <div class="streak-label">Day streak</div>
+    </div>
+    <div class="streak-box">
+      <div class="streak-num" id="entries-count">0</div>
+      <div class="streak-label">Total entries</div>
+    </div>
+    <div class="streak-box">
+      <div class="streak-num" id="avg-mood">—</div>
+      <div class="streak-label">Average mood</div>
+    </div>
+  </div>
+
+  <!-- CHECK-IN -->
+  <div class="checkin-card" id="checkin-card">
+    <div class="card-label">Today's check-in</div>
+    <div class="card-title">How are you feeling right now,<br>in this moment?</div>
+
+    <div class="mood-selector">
+      <button class="mood-btn" data-mood="1">
+        <div class="mood-icon"></div>
+        <span>Struggling</span>
+      </button>
+      <button class="mood-btn" data-mood="2">
+        <div class="mood-icon"></div>
+        <span>Low</span>
+      </button>
+      <button class="mood-btn" data-mood="3">
+        <div class="mood-icon"></div>
+        <span>Neutral</span>
+      </button>
+      <button class="mood-btn" data-mood="4">
+        <div class="mood-icon"></div>
+        <span>Good</span>
+      </button>
+      <button class="mood-btn" data-mood="5">
+        <div class="mood-icon"></div>
+        <span>Thriving</span>
+      </button>
+    </div>
+
+    <div class="note-label">One sentence about your day (optional)</div>
+    <textarea id="mood-note" placeholder="What's on your mind today..."></textarea>
+
+    <div class="submit-row">
+      <div class="today-date" id="today-date"></div>
+      <button class="btn-log" id="btn-log" onclick="logMood()">Log today</button>
+    </div>
+    <div class="logged-msg" id="logged-msg">Logged. See you tomorrow — consistency is where the insight lives.</div>
+  </div>
+
+  <!-- WEEK VIEW -->
+  <div class="week-card">
+    <div class="week-header">
+      <div class="week-title">This week</div>
+      <div style="font-size:11px;color:rgba(123,111,160,0.4);">Last 7 days</div>
+    </div>
+    <div class="week-days" id="week-days"></div>
+  </div>
+
+  <!-- AI INSIGHT -->
+  <div class="insight-card" id="insight-card">
+    <div class="insight-label">Pattern insight</div>
+    <div class="insight-body" id="insight-body">
+      <span class="insight-loading">Log your mood for 3 or more days and Velumin will reveal your emotional pattern here.</span>
+    </div>
+    <div class="insight-cite" id="insight-cite"></div>
+  </div>
+
+  <div class="cite-footer">
+    Mood tracking based on: Gross, J.J. & John, O.P. (2003). Individual differences in two emotion regulation processes. Journal of Personality and Social Psychology, 85(2), 348–362.<br>
+    Affect labelling: Lieberman, M.D. et al. (2007). Putting feelings into words. Psychological Science, 18(5), 421–428.
+  </div>
+
+</div>
+
+<footer class="vl-footer">
+  <div class="vl-footer-main">
+    <div class="vl-footer-logo">Velumin</div>
+    <div class="vl-footer-links">
+      <a href="discover.html">Discover</a>
+      <a href="tracker.html">Mood tracker</a>
+      <a href="library.html">Library</a>
+      <a href="about.html">About</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+    <div class="vl-footer-copy">© 2025 Harsh Vijay More. All rights reserved.</div>
+  </div>
+  <div class="vl-footer-disclaimer">
+    Velumin is an AI-powered educational tool, not a clinical service. Content does not constitute professional psychological or medical advice. AI-generated insights may contain errors and should not be used for clinical decisions. <a href="disclaimer.html">Full disclaimer →</a>
+  </div>
+</footer>
+
+<script>
+const STORAGE_KEY = 'velumin_moods';
+const moodLabels = {1:'Struggling',2:'Low',3:'Neutral',4:'Good',5:'Thriving'};
+const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+let selectedMood = null;
+
+function getEntries() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveEntries(entries) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+}
+function todayKey() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function initDate() {
+  const d = new Date();
+  document.getElementById('today-date').textContent = d.toLocaleDateString('en-GB', {weekday:'long',day:'numeric',month:'long'});
+}
+
+document.querySelectorAll('.mood-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedMood = parseInt(btn.dataset.mood);
+    document.getElementById('btn-log').classList.add('ready');
+  });
+});
+
+function logMood() {
+  if (!selectedMood) return;
+  const entries = getEntries();
+  const key = todayKey();
+  const existing = entries.findIndex(e => e.date === key);
+  const entry = { date: key, mood: selectedMood, note: document.getElementById('mood-note').value.trim() };
+  if (existing >= 0) entries[existing] = entry; else entries.push(entry);
+  entries.sort((a, b) => a.date.localeCompare(b.date));
+  saveEntries(entries);
+
+  document.getElementById('checkin-card').style.opacity = '0.5';
+  document.getElementById('checkin-card').style.pointerEvents = 'none';
+  document.getElementById('logged-msg').style.display = 'block';
+
+  renderAll();
+  if (entries.length >= 3) generateInsight(entries);
+}
+
+function renderWeek() {
+  const entries = getEntries();
+  const entryMap = {};
+  entries.forEach(e => { entryMap[e.date] = e; });
+
+  const today = new Date();
+  const wrap = document.getElementById('week-days');
+  wrap.innerHTML = '';
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const key = d.toISOString().split('T')[0];
+    const entry = entryMap[key];
+    const isToday = i === 0;
+
+    const col = document.createElement('div');
+    col.className = 'day-col' + (isToday ? ' day-today' : '');
+
+    const barHeight = entry ? Math.round((entry.mood / 5) * 72) : 4;
+    const barClass = entry ? 'day-bar bar-' + entry.mood : 'day-bar bar-empty';
+
+    col.innerHTML = `
+      <div class="day-name">${dayNames[d.getDay()]}</div>
+      <div class="day-bar-wrap"><div class="${barClass}" style="height:${barHeight}px"></div></div>
+      <div class="day-score">${entry ? entry.mood : '·'}</div>
+    `;
+    wrap.appendChild(col);
+  }
+}
+
+function renderStats() {
+  const entries = getEntries();
+  document.getElementById('entries-count').textContent = entries.length;
+
+  if (entries.length === 0) { document.getElementById('avg-mood').textContent = '—'; document.getElementById('streak-count').textContent = 0; return; }
+
+  const avg = entries.reduce((s, e) => s + e.mood, 0) / entries.length;
+  document.getElementById('avg-mood').textContent = avg.toFixed(1);
+
+  let streak = 0;
+  const today = new Date();
+  for (let i = 0; i < 30; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const key = d.toISOString().split('T')[0];
+    if (entries.find(e => e.date === key)) streak++;
+    else break;
+  }
+  document.getElementById('streak-count').textContent = streak;
+}
+
+function checkAlreadyLogged() {
+  const entries = getEntries();
+  const key = todayKey();
+  if (entries.find(e => e.date === key)) {
+    document.getElementById('checkin-card').style.opacity = '0.5';
+    document.getElementById('checkin-card').style.pointerEvents = 'none';
+    document.getElementById('logged-msg').style.display = 'block';
+    document.getElementById('logged-msg').textContent = 'Already logged today. Come back tomorrow.';
+  }
+}
+
+async function generateInsight(entries) {
+  const insightBody = document.getElementById('insight-body');
+  insightBody.innerHTML = '<span class="insight-loading">Reading your emotional pattern...</span>';
+
+  const summary = entries.slice(-7).map(e => `${e.date} (${dayNames[new Date(e.date).getDay()]}): Mood ${e.mood}/5 — ${moodLabels[e.mood]}${e.note ? ' — Note: ' + e.note : ''}`).join('\n');
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: `You are a compassionate psychological insight generator for Velumin. You analyse a person's mood log and identify emotional patterns. Write warmly, clearly, and without clinical jargon. Respond in JSON only — no markdown, no extra text. Format: {"pattern": "2-3 sentence description of the emotional pattern you notice", "insight": "One specific, actionable thing they can do based on this pattern", "cite": "Brief reference to a real psychological concept that explains this pattern"}`,
+        messages: [{
+          role: 'user',
+          content: `Here is my mood log for the past ${entries.slice(-7).length} days:\n\n${summary}\n\nWhat emotional pattern do you see, and what should I do about it?`
+        }]
+      })
+    });
+    const data = await response.json();
+    const raw = data.content && data.content[0] ? data.content[0].text : '';
+    const parsed = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    insightBody.innerHTML = `<div style="margin-bottom:10px;font-size:14px;font-weight:300;color:#D4CDED;line-height:1.75">${parsed.pattern}</div><div style="font-size:13px;color:#E8E4F0;font-weight:400;padding-top:10px;border-top:0.5px solid rgba(200,191,231,0.07)">Action: ${parsed.insight}</div>`;
+    if (parsed.cite) document.getElementById('insight-cite').textContent = parsed.cite;
+  } catch(e) {
+    const moods = entries.slice(-7).map(e => e.mood);
+    const avg = (moods.reduce((a,b) => a+b,0)/moods.length).toFixed(1);
+    const trend = moods[moods.length-1] > moods[0] ? 'upward' : moods[moods.length-1] < moods[0] ? 'downward' : 'stable';
+    insightBody.innerHTML = `<div style="font-size:14px;font-weight:300;color:#D4CDED;line-height:1.75">Your average mood over the past ${moods.length} days is ${avg}/5 with a ${trend} trend. ${trend === 'upward' ? 'Things appear to be improving — note what changed.' : trend === 'downward' ? 'Your mood has been declining — consider what external or internal factors have shifted.' : 'Your emotional state has been consistent — stability can be a strength.'}</div>`;
+  }
+}
+
+function renderAll() {
+  renderWeek();
+  renderStats();
+}
+
+initDate();
+renderAll();
+checkAlreadyLogged();
+
+const entries = getEntries();
+if (entries.length >= 3) generateInsight(entries);
+</script>
+</body>
+</html>

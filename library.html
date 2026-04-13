@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>a{color:#7B6FA0;text-decoration:none;}a:hover{color:#C9A96E;}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>Psychology Library — Velumin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0E0B1A;color:#E8E4F0;font-family:'DM Sans',sans-serif;min-height:100vh;}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:26px 48px;border-bottom:0.5px solid rgba(200,191,231,0.1);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:0.12em;color:#F5F3FA;text-decoration:none;}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#7B6FA0;text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:#C9A96E;}
+
+.hero{text-align:center;padding:72px 48px 56px;}
+.eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C9A96E;margin-bottom:20px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.1;color:#F5F3FA;margin-bottom:16px;}
+.hero h1 em{font-style:italic;color:#C9A96E;}
+.hero p{font-size:14px;font-weight:300;color:#7B6FA0;line-height:1.8;max-width:480px;margin:0 auto;}
+
+.gold-line{width:36px;height:0.5px;background:#C9A96E;margin:48px auto 0;}
+
+.filter-bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:40px 48px 48px;}
+.filter-btn{background:transparent;border:0.5px solid rgba(200,191,231,0.12);padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:#7B6FA0;border-radius:2px;cursor:pointer;transition:all 0.2s;}
+.filter-btn:hover{border-color:rgba(201,169,110,0.3);color:#E8E4F0;}
+.filter-btn.active{background:rgba(201,169,110,0.08);border-color:#C9A96E;color:#C9A96E;}
+
+.library-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;max-width:1060px;margin:0 auto;padding:0 48px 80px;}
+
+.resource-card{background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:24px;cursor:pointer;transition:border-color 0.2s;text-decoration:none;display:block;}
+.resource-card:hover{border-color:rgba(201,169,110,0.3);}
+.resource-card.hidden{display:none;}
+
+.rc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+.rc-tag{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:2px;}
+.tag-anxiety{background:rgba(123,111,160,0.15);color:#9B8FC4;}
+.tag-identity{background:rgba(201,169,110,0.1);color:#C9A96E;}
+.tag-stress{background:rgba(93,202,165,0.1);color:#5DCAA5;}
+.tag-relationships{background:rgba(212,83,126,0.12);color:#D4537E;}
+.tag-growth{background:rgba(55,138,221,0.1);color:#378ADD;}
+.tag-eastern{background:rgba(216,90,48,0.1);color:#D85A30;}
+.tag-selfworth{background:rgba(99,153,34,0.12);color:#639922;}
+
+.rc-origin{font-size:10px;color:rgba(123,111,160,0.4);letter-spacing:0.06em;}
+.rc-title{font-size:14px;font-weight:500;color:#F5F3FA;margin-bottom:8px;line-height:1.4;}
+.rc-source{font-size:11px;color:#C9A96E;margin-bottom:10px;letter-spacing:0.04em;}
+.rc-desc{font-size:12px;font-weight:300;color:#7B6FA0;line-height:1.7;margin-bottom:16px;}
+.rc-link{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(123,111,160,0.5);border-top:0.5px solid rgba(200,191,231,0.06);padding-top:12px;display:flex;justify-content:space-between;align-items:center;}
+.rc-link-arrow{color:#C9A96E;}
+
+.section-divider{max-width:1060px;margin:0 auto 32px;padding:0 48px;}
+.section-divider-label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(123,111,160,0.4);padding-bottom:12px;border-bottom:0.5px solid rgba(200,191,231,0.07);}
+
+.founder-strip{background:#1C1530;border-top:0.5px solid rgba(200,191,231,0.07);padding:32px 48px;text-align:center;margin-top:40px;}
+.founder-strip p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;font-weight:300;color:#7B6FA0;}
+.founder-strip span{color:#C9A96E;}
+
+footer{padding:28px 48px;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid rgba(200,191,231,0.07);}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;letter-spacing:0.1em;color:#7B6FA0;}
+.footer-copy{font-size:11px;color:rgba(123,111,160,0.35);}
+
+@media(max-width:600px){
+  nav,.hero,.filter-bar,.library-grid,.section-divider,.founder-strip,footer{padding-left:24px;padding-right:24px;}
+  .hero h1{font-size:38px;}
+  .library-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-banner">
+  Velumin is an educational tool, not a clinical service. AI insights may contain errors. <a href="disclaimer.html">Read full disclaimer →</a>
+</div>
+<nav class="vl-nav">
+  <a class="vl-nav-logo" href="index.html">Velumin</a>
+  <div class="vl-nav-links">
+    <a href="discover.html">Discover</a>
+    <a href="tracker.html">Mood tracker</a>
+    <a href="library.html"  class="active">Library</a>
+    <a href="about.html">About</a>
+    <a class="vl-nav-cta" href="discover.html">Begin</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Psychology library</div>
+  <h1>Knowledge is the first <em>act of healing.</em></h1>
+  <p>Curated resources from the world's most credible psychology institutions — Western and Asian. Organised by topic. Free for everyone.</p>
+</div>
+
+<div class="gold-line"></div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All topics</button>
+  <button class="filter-btn" data-filter="anxiety">Anxiety</button>
+  <button class="filter-btn" data-filter="stress">Stress</button>
+  <button class="filter-btn" data-filter="identity">Identity</button>
+  <button class="filter-btn" data-filter="selfworth">Self-worth</button>
+  <button class="filter-btn" data-filter="relationships">Relationships</button>
+  <button class="filter-btn" data-filter="growth">Growth</button>
+  <button class="filter-btn" data-filter="eastern">Eastern psychology</button>
+</div>
+
+<div class="library-grid">
+
+  <!-- ANXIETY -->
+  <a class="resource-card" data-topic="anxiety" href="https://www.apa.org/topics/anxiety" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-anxiety">Anxiety</span><span class="rc-origin">Western · USA</span></div>
+    <div class="rc-title">Understanding anxiety disorders</div>
+    <div class="rc-source">American Psychological Association (APA)</div>
+    <div class="rc-desc">A comprehensive guide to anxiety — what it is, why it happens, and evidence-based approaches to managing it. Written for the public by clinical psychologists.</div>
+    <div class="rc-link"><span>apa.org</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <a class="resource-card" data-topic="anxiety" href="https://www.nimh.nih.gov/health/topics/anxiety-disorders" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-anxiety">Anxiety</span><span class="rc-origin">Western · USA</span></div>
+    <div class="rc-title">Anxiety disorders — overview & treatment</div>
+    <div class="rc-source">National Institute of Mental Health (NIMH)</div>
+    <div class="rc-desc">Research-backed breakdown of anxiety types, symptoms, and treatments from the world's leading mental health research institution.</div>
+    <div class="rc-link"><span>nimh.nih.gov</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <a class="resource-card" data-topic="anxiety" href="https://icallhelpline.org" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-anxiety">Anxiety</span><span class="rc-origin">Asian · India</span></div>
+    <div class="rc-title">iCall — psychosocial helpline & resources</div>
+    <div class="rc-source">iCall, TISS Mumbai</div>
+    <div class="rc-desc">India's leading mental health helpline run by Tata Institute of Social Sciences. Offers counselling, self-help resources, and referrals — free for all.</div>
+    <div class="rc-link"><span>icallhelpline.org</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <!-- STRESS -->
+  <a class="resource-card" data-topic="stress" href="https://www.apa.org/topics/stress" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-stress">Stress</span><span class="rc-origin">Western · USA</span></div>
+    <div class="rc-title">Stress — the science and the solutions</div>
+    <div class="rc-source">American Psychological Association (APA)</div>
+    <div class="rc-desc">Evidence-based articles on how stress works biologically and psychologically, and strategies clinicians actually recommend for managing it.</div>
+    <div class="rc-link"><span>apa.org</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <a class="resource-card" data-topic="stress" href="https://www.nimhans.ac.in/mental-health-education/" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-stress">Stress</span><span class="rc-origin">Asian · India</span></div>
+    <div class="rc-title">Mental health education resources</div>
+    <div class="rc-source">NIMHANS, Bangalore</div>
+    <div class="rc-desc">National Institute of Mental Health and Neuro Sciences — India's premier psychiatric institution. Offers public-facing mental health education rooted in South Asian context.</div>
+    <div class="rc-link"><span>nimhans.ac.in</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <a class="resource-card" data-topic="stress" href="https://positivepsychology.com/stress-management-techniques/" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-stress">Stress</span><span class="rc-origin">Western · Global</span></div>
+    <div class="rc-title">Stress management — 25 evidence-based techniques</div>
+    <div class="rc-source">Positive Psychology Institute</div>
+    <div class="rc-desc">Research-backed stress management strategies drawn from positive psychology, CBT, and mindfulness literature. Practical and well-cited.</div>
+    <div class="rc-link"><span>positivepsychology.com</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <!-- IDENTITY -->
+  <a class="resource-card" data-topic="identity" href="https://psychologytoday.com/us/basics/identity" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-identity">Identity</span><span class="rc-origin">Western · USA</span></div>
+    <div class="rc-title">Identity — who are you, really?</div>
+    <div class="rc-source">Psychology Today</div>
+    <div class="rc-desc">Explores the psychology of self-concept, identity formation, and how our sense of self evolves through experience. Includes Erikson's stages and modern research.</div>
+    <div class="rc-link"><span>psychologytoday.com</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <a class="resource-card" data-topic="identity" href="https://positivepsychology.com/self-concept/" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-identity">Identity</span><span class="rc-origin">Western · Global</span></div>
+    <div class="rc-title">Self-concept — what shapes who we think we are</div>
+    <div class="rc-source">Positive Psychology Institute</div>
+    <div class="rc-desc">Deep dive into self-concept theory — how identity is formed, maintained, and changed. Draws on Carl Rogers, Bandura, and contemporary research.</div>
+    <div class="rc-link"><span>positivepsychology.com</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <!-- SELF-WORTH -->
+  <a class="resource-card" data-topic="selfworth" href="https://positivepsychology.com/self-worth/" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-selfworth">Self-worth</span><span class="rc-origin">Western · Global</span></div>
+    <div class="rc-title">Self-worth — how to build it from the inside</div>
+    <div class="rc-source">Positive Psychology Institute</div>
+    <div class="rc-desc">Research-based guide on developing genuine self-worth — distinguishing it from self-esteem and understanding its roots in values and behaviour.</div>
+    <div class="rc-link"><span>positivepsychology.com</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <a class="resource-card" data-topic="selfworth" href="https://www.apa.org/topics/self-esteem" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-selfworth">Self-worth</span><span class="rc-origin">Western · USA</span></div>
+    <div class="rc-title">Self-esteem — psychology and research</div>
+    <div class="rc-source">American Psychological Association (APA)</div>
+    <div class="rc-desc">APA's clinical overview of self-esteem — how it develops, its relationship to mental health, and what the research says about improving it.</div>
+    <div class="rc-link"><span>apa.org</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <!-- RELATIONSHIPS -->
+  <a class="resource-card" data-topic="relationships" href="https://www.gottman.com/blog/" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-relationships">Relationships</span><span class="rc-origin">Western · USA</span></div>
+    <div class="rc-title">The Gottman Institute — relationship science</div>
+    <div class="rc-source">The Gottman Institute</div>
+    <div class="rc-desc">40 years of relationship research translated into accessible articles. Covers communication, conflict, love, and connection. One of the most cited sources in relationship psychology.</div>
+    <div class="rc-link"><span>gottman.com</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <a class="resource-card" data-topic="relationships" href="https://psychologytoday.com/us/basics/relationships" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-relationships">Relationships</span><span class="rc-origin">Western · USA</span></div>
+    <div class="rc-title">Relationships — psychology and patterns</div>
+    <div class="rc-source">Psychology Today</div>
+    <div class="rc-desc">Wide-ranging coverage of attachment theory, communication patterns, toxic dynamics, and healthy relationship building — written by practising psychologists.</div>
+    <div class="rc-link"><span>psychologytoday.com</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <!-- GROWTH -->
+  <a class="resource-card" data-topic="growth" href="https://positivepsychology.com/growth-mindset/" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-growth">Growth</span><span class="rc-origin">Western · Global</span></div>
+    <div class="rc-title">Growth mindset — Dweck's research explained</div>
+    <div class="rc-source">Positive Psychology Institute</div>
+    <div class="rc-desc">Comprehensive overview of Carol Dweck's landmark research on fixed vs. growth mindsets — with exercises to shift your own thinking patterns.</div>
+    <div class="rc-link"><span>positivepsychology.com</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <a class="resource-card" data-topic="growth" href="https://positivepsychology.com/post-traumatic-growth/" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-growth">Growth</span><span class="rc-origin">Western · Global</span></div>
+    <div class="rc-title">Post-traumatic growth — growing through difficulty</div>
+    <div class="rc-source">Positive Psychology Institute</div>
+    <div class="rc-desc">Based on Tedeschi & Calhoun's research — why some people grow stronger after adversity, and the psychological mechanisms behind transformation through hardship.</div>
+    <div class="rc-link"><span>positivepsychology.com</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <!-- EASTERN PSYCHOLOGY -->
+  <a class="resource-card" data-topic="eastern" href="https://www.vedantasociety.net/psychology" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-eastern">Eastern psychology</span><span class="rc-origin">Asian · India</span></div>
+    <div class="rc-title">Vedantic psychology — the science of the self</div>
+    <div class="rc-source">Vedanta Society</div>
+    <div class="rc-desc">Explores the ancient Indian psychological tradition rooted in Vedanta philosophy — concepts of consciousness, ego, and self-realisation that parallel modern psychological findings.</div>
+    <div class="rc-link"><span>vedantasociety.net</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <a class="resource-card" data-topic="eastern" href="https://www.mindfulnessbasedstressreduction.com" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-eastern">Eastern psychology</span><span class="rc-origin">Asian · Global</span></div>
+    <div class="rc-title">Mindfulness-based stress reduction (MBSR)</div>
+    <div class="rc-source">MBSR — Jon Kabat-Zinn</div>
+    <div class="rc-desc">The Western integration of Buddhist mindfulness practice into clinical psychology — now one of the most researched psychological interventions in the world.</div>
+    <div class="rc-link"><span>mbsr.com</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+  <a class="resource-card" data-topic="eastern" href="https://www.journalofindianpsychology.in" target="_blank" rel="noopener">
+    <div class="rc-top"><span class="rc-tag tag-eastern">Eastern psychology</span><span class="rc-origin">Asian · India</span></div>
+    <div class="rc-title">Journal of Indian Psychology</div>
+    <div class="rc-source">Indian Psychology Institute</div>
+    <div class="rc-desc">Peer-reviewed academic journal exploring psychology through an Indian cultural lens — bridging ancient wisdom traditions with contemporary psychological science.</div>
+    <div class="rc-link"><span>journalofindianpsychology.in</span><span class="rc-link-arrow">↗</span></div>
+  </a>
+
+</div>
+
+<div class="founder-strip">
+  <p>Curated by <span>Harsh Vijay More</span> — Psychology Student & Founder, Velumin · veluminmind</p>
+</div>
+
+<footer class="vl-footer">
+  <div class="vl-footer-main">
+    <div class="vl-footer-logo">Velumin</div>
+    <div class="vl-footer-links">
+      <a href="discover.html">Discover</a>
+      <a href="tracker.html">Mood tracker</a>
+      <a href="library.html">Library</a>
+      <a href="about.html">About</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+    <div class="vl-footer-copy">© 2025 Harsh Vijay More. All rights reserved.</div>
+  </div>
+  <div class="vl-footer-disclaimer">
+    Velumin is an AI-powered educational tool, not a clinical service. Content does not constitute professional psychological or medical advice. AI-generated insights may contain errors and should not be used for clinical decisions. <a href="disclaimer.html">Full disclaimer →</a>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.resource-card').forEach(card => {
+      if (filter === 'all' || card.dataset.topic === filter) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

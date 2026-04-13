@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>a{color:#7B6FA0;text-decoration:none;}a:hover{color:#C9A96E;}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>Discover — Velumin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0E0B1A;color:#E8E4F0;font-family:'DM Sans',sans-serif;min-height:100vh;}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;align-items:center;padding:26px 48px;border-bottom:0.5px solid rgba(200,191,231,0.1);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:0.12em;color:#F5F3FA;text-decoration:none;}
+.nav-back{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#7B6FA0;cursor:pointer;transition:color 0.2s;background:none;border:none;font-family:'DM Sans',sans-serif;}
+.nav-back:hover{color:#C9A96E;}
+
+/* HERO */
+.discover-hero{text-align:center;padding:72px 48px 56px;}
+.eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C9A96E;margin-bottom:20px;}
+.discover-hero h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.1;color:#F5F3FA;margin-bottom:16px;}
+.discover-hero h1 em{font-style:italic;color:#C9A96E;}
+.discover-hero p{font-size:14px;font-weight:300;color:#7B6FA0;line-height:1.8;max-width:460px;margin:0 auto 12px;}
+.cite-note{font-size:11px;color:rgba(123,111,160,0.5);margin-bottom:0;}
+
+/* PROGRESS */
+.progress-wrap{max-width:640px;margin:0 auto 64px;padding:0 48px;}
+.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.progress-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#7B6FA0;}
+.progress-count{font-size:11px;color:#C9A96E;}
+.progress-bar-bg{height:1px;background:rgba(200,191,231,0.1);border-radius:1px;}
+.progress-bar-fill{height:1px;background:#C9A96E;border-radius:1px;transition:width 0.5s ease;}
+
+/* QUESTIONS */
+.questions-wrap{max-width:640px;margin:0 auto;padding:0 48px 80px;}
+.question-block{display:none;}
+.question-block.active{display:block;}
+
+.q-framework{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(201,169,110,0.5);margin-bottom:16px;}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#F5F3FA;line-height:1.3;margin-bottom:10px;}
+.q-sub{font-size:12px;font-weight:300;color:rgba(123,111,160,0.6);margin-bottom:36px;font-style:italic;}
+
+.options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:40px;}
+.option-btn{background:transparent;border:0.5px solid rgba(200,191,231,0.1);border-radius:3px;padding:16px 20px;text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:#B4A8D0;cursor:pointer;transition:all 0.2s;width:100%;}
+.option-btn:hover{border-color:rgba(201,169,110,0.4);color:#E8E4F0;background:rgba(201,169,110,0.04);}
+.option-btn.selected{border-color:#C9A96E;color:#F5F3FA;background:rgba(201,169,110,0.08);}
+
+.q-nav{display:flex;justify-content:space-between;align-items:center;}
+.btn-prev{background:transparent;border:0.5px solid rgba(200,191,231,0.15);padding:11px 24px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:#7B6FA0;border-radius:2px;cursor:pointer;transition:all 0.2s;}
+.btn-prev:hover{color:#E8E4F0;border-color:rgba(200,191,231,0.3);}
+.btn-next{background:#C9A96E;border:none;padding:11px 32px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0E0B1A;border-radius:2px;cursor:pointer;transition:opacity 0.2s;opacity:0.3;pointer-events:none;}
+.btn-next.enabled{opacity:1;pointer-events:all;}
+.btn-next.enabled:hover{opacity:0.82;}
+
+/* LOADING */
+#loading-screen{display:none;text-align:center;padding:80px 48px;max-width:640px;margin:0 auto;}
+.loading-logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;letter-spacing:0.12em;color:#F5F3FA;margin-bottom:48px;}
+.loading-spinner{width:40px;height:40px;border:0.5px solid rgba(200,191,231,0.1);border-top:0.5px solid #C9A96E;border-radius:50%;animation:spin 1.2s linear infinite;margin:0 auto 32px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;font-weight:300;color:#7B6FA0;line-height:1.6;}
+.loading-steps{margin-top:32px;display:flex;flex-direction:column;gap:10px;}
+.loading-step{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(123,111,160,0.4);transition:color 0.4s;}
+.loading-step.active{color:#C9A96E;}
+
+/* RESULT */
+#result-screen{display:none;max-width:680px;margin:0 auto;padding:0 48px 80px;}
+.result-header{text-align:center;padding:56px 0 48px;}
+.result-eyebrow{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A96E;margin-bottom:16px;}
+.result-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:#F5F3FA;margin-bottom:8px;}
+.result-subtitle{font-size:13px;font-weight:300;color:#7B6FA0;}
+
+.trait-card{background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:28px;margin-bottom:12px;}
+.trait-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.trait-dot{width:6px;height:6px;border-radius:50%;background:#C9A96E;flex-shrink:0;}
+.trait-name{font-size:14px;font-weight:500;color:#E8E4F0;flex:1;}
+.trait-score{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#C9A96E;}
+.trait-bar-bg{height:1px;background:rgba(200,191,231,0.1);border-radius:1px;margin-bottom:10px;}
+.trait-bar-fill{height:1px;background:#7B6FA0;border-radius:1px;transition:width 1s ease;}
+.trait-desc{font-size:12px;font-weight:300;color:#7B6FA0;line-height:1.7;}
+
+.portrait-card{background:#1C1530;border:0.5px solid rgba(201,169,110,0.15);border-radius:4px;padding:32px;margin-bottom:12px;}
+.portrait-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C9A96E;margin-bottom:16px;}
+.portrait-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;font-weight:300;color:#D4CDED;line-height:1.75;}
+
+.insight-card{background:#1C1530;border-left:1px solid #C9A96E;border-radius:0 4px 4px 0;padding:24px 28px;margin-bottom:28px;}
+.insight-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C9A96E;margin-bottom:10px;}
+.insight-text{font-size:14px;font-weight:400;color:#E8E4F0;line-height:1.7;}
+
+.citations-section{margin-bottom:32px;}
+.citations-title{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(123,111,160,0.5);margin-bottom:14px;}
+.citation-item{font-size:11px;color:rgba(123,111,160,0.45);line-height:1.7;margin-bottom:4px;}
+
+.result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-retake{background:transparent;border:0.5px solid rgba(200,191,231,0.2);padding:13px 28px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:#7B6FA0;border-radius:2px;cursor:pointer;transition:all 0.2s;}
+.btn-retake:hover{color:#E8E4F0;}
+.btn-share{background:#C9A96E;border:none;padding:13px 32px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0E0B1A;border-radius:2px;cursor:pointer;}
+
+/* ERROR */
+.error-note{background:rgba(201,169,110,0.06);border:0.5px solid rgba(201,169,110,0.2);border-radius:3px;padding:16px 20px;font-size:12px;color:#B4A8D0;line-height:1.6;margin-bottom:16px;display:none;}
+
+@media(max-width:600px){
+  nav,
+  .discover-hero,
+  .progress-wrap,
+  .questions-wrap,
+  #loading-screen,
+  #result-screen{padding-left:24px;padding-right:24px;}
+  .discover-hero h1{font-size:38px;}
+  .q-text{font-size:22px;}
+}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-banner">
+  Velumin is an educational tool, not a clinical service. AI insights may contain errors. <a href="disclaimer.html">Read full disclaimer →</a>
+</div>
+<nav class="vl-nav">
+  <a class="vl-nav-logo" href="index.html">Velumin</a>
+  <div class="vl-nav-links">
+    <a href="discover.html" class="active">Discover</a>
+    <a href="tracker.html">Mood tracker</a>
+    <a href="library.html">Library</a>
+    <a href="about.html">About</a>
+  </div>
+</nav>
+
+<div id="assessment-screen">
+  <div class="discover-hero">
+    <div class="eyebrow">Psychological discovery</div>
+    <h1>Reveal your <em>patterns.</em></h1>
+    <p>10 questions rooted in verified psychological science. Answer honestly — your portrait depends on it.</p>
+    <p class="cite-note">Frameworks: Big Five (Costa & McCrae, 1992) · CBT (Beck, 1979) · Emotional Regulation (Gross, 1998)</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">Your progress</span>
+      <span class="progress-count" id="progress-count">0 of 10</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="questions-wrap">
+
+    <!-- Q1 -->
+    <div class="question-block active" data-q="0">
+      <div class="q-framework">Big Five — Openness · Costa & McCrae, 1992</div>
+      <div class="q-text">When you face a big decision, what do you do first?</div>
+      <div class="q-sub">There are no right answers — only honest ones.</div>
+      <div class="options-list">
+        <button class="option-btn" data-value="A" data-trait="openness" data-score="60">Think it through alone for a long time</button>
+        <button class="option-btn" data-value="B" data-trait="openness" data-score="75">Talk it through with someone I trust</button>
+        <button class="option-btn" data-value="C" data-trait="openness" data-score="85">Go with my gut and figure it out after</button>
+        <button class="option-btn" data-value="D" data-trait="openness" data-score="90">Research everything before moving</button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-prev" style="visibility:hidden">Previous</button>
+        <button class="btn-next" id="btn-next-0">Next</button>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block" data-q="1">
+      <div class="q-framework">CBT — Cognitive response · Beck, 1979</div>
+      <div class="q-text">A plan falls apart last minute. Your first reaction?</div>
+      <div class="q-sub">Think of a real recent moment.</div>
+      <div class="options-list">
+        <button class="option-btn" data-value="A" data-trait="cognitive" data-score="55">Frustration — I had everything mapped out</button>
+        <button class="option-btn" data-value="B" data-trait="cognitive" data-score="90">Calm — I'll adapt and find another way</button>
+        <button class="option-btn" data-value="C" data-trait="cognitive" data-score="65">Panic first, then recover slowly</button>
+        <button class="option-btn" data-value="D" data-trait="cognitive" data-score="80">Detach, assess, then act</button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-prev" onclick="prevQ(1)">Previous</button>
+        <button class="btn-next" id="btn-next-1">Next</button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block" data-q="2">
+      <div class="q-framework">Self-awareness — Emotional intelligence · Goleman, 1995</div>
+      <div class="q-text">How often do you reflect on why you feel a certain way?</div>
+      <div class="q-sub">Be honest — reflection is not the same as overthinking.</div>
+      <div class="options-list">
+        <button class="option-btn" data-value="A" data-trait="awareness" data-score="40">Rarely — I just feel things and move on</button>
+        <button class="option-btn" data-value="B" data-trait="awareness" data-score="65">Sometimes, when things get difficult</button>
+        <button class="option-btn" data-value="C" data-trait="awareness" data-score="85">Often — I like understanding myself</button>
+        <button class="option-btn" data-value="D" data-trait="awareness" data-score="95">Almost always — it's how I process everything</button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-prev" onclick="prevQ(2)">Previous</button>
+        <button class="btn-next" id="btn-next-2">Next</button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block" data-q="3">
+      <div class="q-framework">Big Five — Extraversion · Costa & McCrae, 1992</div>
+      <div class="q-text">In a group, you naturally tend to...</div>
+      <div class="q-sub">Think about social settings you're actually in.</div>
+      <div class="options-list">
+        <button class="option-btn" data-value="A" data-trait="extraversion" data-score="90">Lead the conversation and direction</button>
+        <button class="option-btn" data-value="B" data-trait="extraversion" data-score="45">Support others and listen more than I speak</button>
+        <button class="option-btn" data-value="C" data-trait="extraversion" data-score="55">Observe before engaging</button>
+        <button class="option-btn" data-value="D" data-trait="extraversion" data-score="70">Switch between both depending on the context</button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-prev" onclick="prevQ(3)">Previous</button>
+        <button class="btn-next" id="btn-next-3">Next</button>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-block" data-q="4">
+      <div class="q-framework">CBT — Self-talk patterns · Beck, 1979</div>
+      <div class="q-text">When you fail at something important, you tell yourself...</div>
+      <div class="q-sub">Your inner voice reveals more than you think.</div>
+      <div class="options-list">
+        <button class="option-btn" data-value="A" data-trait="resilience" data-score="35">"I'm not good enough for this"</button>
+        <button class="option-btn" data-value="B" data-trait="resilience" data-score="90">"I'll learn from this and come back stronger"</button>
+        <button class="option-btn" data-value="C" data-trait="resilience" data-score="60">"It wasn't meant to be"</button>
+        <button class="option-btn" data-value="D" data-trait="resilience" data-score="80">"What specifically went wrong here?"</button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-prev" onclick="prevQ(4)">Previous</button>
+        <button class="btn-next" id="btn-next-4">Next</button>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-block" data-q="5">
+      <div class="q-framework">Big Five — Neuroticism / Stability · Costa & McCrae, 1992</div>
+      <div class="q-text">How comfortable are you with uncertainty?</div>
+      <div class="q-sub">Think about ambiguous situations in your real life.</div>
+      <div class="options-list">
+        <button class="option-btn" data-value="A" data-trait="stability" data-score="30">Very uncomfortable — I need a clear plan</button>
+        <button class="option-btn" data-value="B" data-trait="stability" data-score="55">I tolerate it but it quietly drains me</button>
+        <button class="option-btn" data-value="C" data-trait="stability" data-score="70">Neutral — depends entirely on the stakes</button>
+        <button class="option-btn" data-value="D" data-trait="stability" data-score="88">I actually find uncertainty energising</button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-prev" onclick="prevQ(5)">Previous</button>
+        <button class="btn-next" id="btn-next-5">Next</button>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-block" data-q="6">
+      <div class="q-framework">Emotional Regulation — Gross process model, 1998</div>
+      <div class="q-text">When someone upsets you, you typically...</div>
+      <div class="q-sub">Be honest — this reveals how you regulate emotions.</div>
+      <div class="options-list">
+        <button class="option-btn" data-value="A" data-trait="regulation" data-score="75">Express it directly and quickly</button>
+        <button class="option-btn" data-value="B" data-trait="regulation" data-score="70">Sit with it and process it in silence</button>
+        <button class="option-btn" data-value="C" data-trait="regulation" data-score="45">Suppress it and move on as if nothing happened</button>
+        <button class="option-btn" data-value="D" data-trait="regulation" data-score="85">Analyse why they acted that way before reacting</button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-prev" onclick="prevQ(6)">Previous</button>
+        <button class="btn-next" id="btn-next-6">Next</button>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-block" data-q="7">
+      <div class="q-framework">Cognitive style — Attention & focus · Kahneman, 2011</div>
+      <div class="q-text">Your ideal environment for deep, focused work is...</div>
+      <div class="q-sub">Think about where you actually do your best thinking.</div>
+      <div class="options-list">
+        <button class="option-btn" data-value="A" data-trait="openness" data-score="80">Complete silence, alone</button>
+        <button class="option-btn" data-value="B" data-trait="openness" data-score="70">Background noise with people around</button>
+        <button class="option-btn" data-value="C" data-trait="openness" data-score="75">Music, but no talking</button>
+        <button class="option-btn" data-value="D" data-trait="openness" data-score="65">It changes — I'm unpredictable</button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-prev" onclick="prevQ(7)">Previous</button>
+        <button class="btn-next" id="btn-next-7">Next</button>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-block" data-q="8">
+      <div class="q-framework">Motivation theory — Self-determination · Deci & Ryan, 1985</div>
+      <div class="q-text">What drives you more on a daily basis?</div>
+      <div class="q-sub">Not what you wish drove you — what actually does.</div>
+      <div class="options-list">
+        <button class="option-btn" data-value="A" data-trait="motivation" data-score="55">Avoiding failure or disappointing others</button>
+        <button class="option-btn" data-value="B" data-trait="motivation" data-score="90">Chasing a goal or vision I genuinely care about</button>
+        <button class="option-btn" data-value="C" data-trait="motivation" data-score="60">Keeping things stable and comfortable</button>
+        <button class="option-btn" data-value="D" data-trait="motivation" data-score="85">Curiosity about what I'm truly capable of</button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-prev" onclick="prevQ(8)">Previous</button>
+        <button class="btn-next" id="btn-next-8">Next</button>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question-block" data-q="9">
+      <div class="q-framework">Growth mindset — Dweck, 2006</div>
+      <div class="q-text">How do you know when you've grown as a person?</div>
+      <div class="q-sub">This is the last one. Take your time.</div>
+      <div class="options-list">
+        <button class="option-btn" data-value="A" data-trait="awareness" data-score="65">When others notice a change in me</button>
+        <button class="option-btn" data-value="B" data-trait="awareness" data-score="90">When I handle something I couldn't before</button>
+        <button class="option-btn" data-value="C" data-trait="awareness" data-score="75">When I feel more at peace with who I am</button>
+        <button class="option-btn" data-value="D" data-trait="awareness" data-score="50">I rarely feel like I've grown enough</button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-prev" onclick="prevQ(9)">Previous</button>
+        <button class="btn-next" id="btn-next-9">Generate my portrait</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading-screen">
+  <div class="loading-logo">Velumin</div>
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Reading your patterns...</div>
+  <div class="loading-steps">
+    <div class="loading-step active" id="ls-1">Analysing cognitive style</div>
+    <div class="loading-step" id="ls-2">Mapping emotional patterns</div>
+    <div class="loading-step" id="ls-3">Cross-referencing frameworks</div>
+    <div class="loading-step" id="ls-4">Composing your portrait</div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="result-screen">
+  <div class="result-header">
+    <div class="result-eyebrow">Your psychological portrait</div>
+    <h1 class="result-title">Your mind, <em style="font-style:italic;color:#C9A96E;">revealed.</em></h1>
+    <p class="result-subtitle">Generated from your responses · Grounded in verified psychology</p>
+  </div>
+
+  <div id="traits-container"></div>
+
+  <div class="portrait-card">
+    <div class="portrait-label">AI portrait — generated for you</div>
+    <div class="portrait-text" id="portrait-text">Generating your portrait...</div>
+  </div>
+
+  <div class="insight-card">
+    <div class="insight-label">Your one insight to act on</div>
+    <div class="insight-text" id="insight-text">Loading...</div>
+  </div>
+
+  <div class="citations-section">
+    <div class="citations-title">Sources & frameworks used</div>
+    <div class="citation-item">Costa, P.T. & McCrae, R.R. (1992). Revised NEO Personality Inventory. Psychological Assessment Resources.</div>
+    <div class="citation-item">Beck, A.T. (1979). Cognitive Therapy of Depression. Guilford Press.</div>
+    <div class="citation-item">Gross, J.J. (1998). The emerging field of emotion regulation. Review of General Psychology, 2(3), 271–299.</div>
+    <div class="citation-item">Goleman, D. (1995). Emotional Intelligence. Bantam Books.</div>
+    <div class="citation-item">Deci, E.L. & Ryan, R.M. (1985). Intrinsic Motivation and Self-Determination. Springer.</div>
+    <div class="citation-item">Dweck, C.S. (2006). Mindset: The New Psychology of Success. Random House.</div>
+    <div class="citation-item">Kahneman, D. (2011). Thinking, Fast and Slow. Farrar, Straus and Giroux.</div>
+  </div>
+
+  <div class="error-note" id="error-note">Note: AI portrait could not be generated at this time. Your trait scores and insight above are based directly on your responses and the psychological frameworks cited.</div>
+
+  <div class="result-actions">
+    <button class="btn-retake" onclick="retake()">Retake assessment</button>
+    <button class="btn-share" onclick="shareResult()">Share your portrait</button>
+  </div>
+
+  <div style="text-align:center;margin-top:40px;padding-top:32px;border-top:0.5px solid rgba(200,191,231,0.07);">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:300;letter-spacing:0.08em;color:rgba(123,111,160,0.4);">Velumin · veluminmind · Founded by Harsh Vijay More</div>
+  </div>
+</div>
+<footer class="vl-footer">
+  <div class="vl-footer-main">
+    <div class="vl-footer-logo">Velumin</div>
+    <div class="vl-footer-links">
+      <a href="discover.html">Discover</a>
+      <a href="tracker.html">Mood tracker</a>
+      <a href="library.html">Library</a>
+      <a href="about.html">About</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+    <div class="vl-footer-copy">© 2025 Harsh Vijay More. All rights reserved.</div>
+  </div>
+  <div class="vl-footer-disclaimer">
+    Velumin is an AI-powered educational tool, not a clinical service. Content does not constitute professional psychological or medical advice. AI-generated insights may contain errors. <a href="disclaimer.html">Full disclaimer →</a>
+  </div>
+</footer>
+</div>
+
+<script>
+const answers = {};
+let currentQ = 0;
+const total = 10;
+
+const traitLabels = {
+  openness: 'Openness to experience',
+  cognitive: 'Cognitive flexibility',
+  awareness: 'Self-awareness',
+  extraversion: 'Social energy',
+  resilience: 'Resilience',
+  stability: 'Emotional stability',
+  regulation: 'Emotional regulation',
+  motivation: 'Intrinsic motivation'
+};
+
+const traitDescs = {
+  openness: 'How readily you absorb new ideas, perspectives, and environments.',
+  cognitive: 'How well you adapt your thinking when circumstances change.',
+  awareness: 'How deeply you observe and understand your own inner world.',
+  extraversion: 'Where you draw your energy — from people or from solitude.',
+  resilience: 'How you interpret and recover from setbacks and failure.',
+  stability: 'How you respond to unpredictability and ambiguity.',
+  regulation: 'How you manage and express difficult emotions.',
+  motivation: 'What genuinely drives your decisions and daily energy.'
+};
+
+function updateProgress(q) {
+  const pct = Math.round((q / total) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-count').textContent = q + ' of ' + total;
+}
+
+document.querySelectorAll('.options-list').forEach((list, qi) => {
+  list.querySelectorAll('.option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      list.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      answers[qi] = {
+        value: btn.dataset.value,
+        trait: btn.dataset.trait,
+        score: parseInt(btn.dataset.score)
+      };
+      const nextBtn = document.getElementById('btn-next-' + qi);
+      nextBtn.classList.add('enabled');
+      if (qi === total - 1) nextBtn.textContent = 'Generate my portrait';
+    });
+  });
+});
+
+document.querySelectorAll('.btn-next').forEach((btn, qi) => {
+  btn.addEventListener('click', () => {
+    if (!btn.classList.contains('enabled')) return;
+    if (qi < total - 1) {
+      nextQ(qi);
+    } else {
+      generatePortrait();
+    }
+  });
+});
+
+function nextQ(qi) {
+  document.querySelector('[data-q="' + qi + '"]').classList.remove('active');
+  document.querySelector('[data-q="' + (qi + 1) + '"]').classList.add('active');
+  currentQ = qi + 1;
+  updateProgress(currentQ);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function prevQ(qi) {
+  document.querySelector('[data-q="' + qi + '"]').classList.remove('active');
+  document.querySelector('[data-q="' + (qi - 1) + '"]').classList.add('active');
+  currentQ = qi - 1;
+  updateProgress(currentQ);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function computeTraits() {
+  const scores = {};
+  const counts = {};
+  for (let i = 0; i < total; i++) {
+    if (!answers[i]) continue;
+    const t = answers[i].trait;
+    scores[t] = (scores[t] || 0) + answers[i].score;
+    counts[t] = (counts[t] || 0) + 1;
+  }
+  const result = {};
+  for (const t in scores) {
+    result[t] = Math.round(scores[t] / counts[t]);
+  }
+  return result;
+}
+
+function buildAnswerSummary() {
+  const qTexts = [
+    'When facing a big decision',
+    'When a plan falls apart',
+    'How often I reflect on my feelings',
+    'My natural role in groups',
+    'What I tell myself after failure',
+    'Comfort with uncertainty',
+    'How I handle being upset',
+    'My ideal work environment',
+    'What drives me daily',
+    'How I know I have grown'
+  ];
+  const optionTexts = {};
+  document.querySelectorAll('.question-block').forEach((block, qi) => {
+    optionTexts[qi] = {};
+    block.querySelectorAll('.option-btn').forEach(btn => {
+      optionTexts[qi][btn.dataset.value] = btn.textContent.trim();
+    });
+  });
+  let summary = '';
+  for (let i = 0; i < total; i++) {
+    if (answers[i]) {
+      summary += (i + 1) + '. ' + qTexts[i] + ': ' + (optionTexts[i][answers[i].value] || answers[i].value) + '\n';
+    }
+  }
+  return summary;
+}
+
+async function generatePortrait() {
+  document.getElementById('assessment-screen').style.display = 'none';
+  document.getElementById('loading-screen').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  const steps = ['ls-1','ls-2','ls-3','ls-4'];
+  let si = 0;
+  const stepInterval = setInterval(() => {
+    if (si > 0) document.getElementById(steps[si-1]).classList.remove('active');
+    if (si < steps.length) {
+      document.getElementById(steps[si]).classList.add('active');
+      si++;
+    } else {
+      clearInterval(stepInterval);
+    }
+  }, 1800);
+
+  const traits = computeTraits();
+  const answerSummary = buildAnswerSummary();
+  const traitSummary = Object.entries(traits).map(([t, s]) => traitLabels[t] + ': ' + s + '/100').join(', ');
+
+  let portraitText = '';
+  let insightText = '';
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: `You are a compassionate, insightful psychology communicator for Velumin — a psychology platform built by Harsh Vijay More. Your role is to generate personalised psychological portraits based on user responses to a validated assessment. Your writing should be warm, honest, non-judgmental, and grounded in real psychology. Never use clinical jargon. Write like a wise friend who has studied psychology. Always respond in JSON only with no markdown or extra text, using this exact structure: {"portrait": "3-4 sentence personalised psychological portrait in first-person perspective about the user", "insight": "One specific, actionable insight the user can apply today based on their dominant pattern"}`,
+        messages: [{
+          role: 'user',
+          content: `Here are my responses to the Velumin psychological assessment:\n\n${answerSummary}\n\nMy trait scores: ${traitSummary}\n\nPlease generate my personalised psychological portrait and one actionable insight.`
+        }]
+      })
+    });
+
+    const data = await response.json();
+    const raw = data.content && data.content[0] && data.content[0].text ? data.content[0].text : '';
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    portraitText = parsed.portrait || '';
+    insightText = parsed.insight || '';
+  } catch(e) {
+    portraitText = '';
+    insightText = '';
+  }
+
+  clearInterval(stepInterval);
+  showResults(traits, portraitText, insightText);
+}
+
+function showResults(traits, portraitText, insightText) {
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  const container = document.getElementById('traits-container');
+  container.innerHTML = '';
+  for (const [t, score] of Object.entries(traits)) {
+    const card = document.createElement('div');
+    card.className = 'trait-card';
+    card.innerHTML = `
+      <div class="trait-row">
+        <div class="trait-dot"></div>
+        <div class="trait-name">${traitLabels[t] || t}</div>
+        <div class="trait-score">${score}</div>
+      </div>
+      <div class="trait-bar-bg"><div class="trait-bar-fill" style="width:0%" data-width="${score}%"></div></div>
+      <div class="trait-desc">${traitDescs[t] || ''}</div>
+    `;
+    container.appendChild(card);
+  }
+
+  setTimeout(() => {
+    document.querySelectorAll('.trait-bar-fill').forEach(bar => {
+      bar.style.width = bar.dataset.width;
+    });
+  }, 200);
+
+  if (portraitText) {
+    document.getElementById('portrait-text').textContent = portraitText;
+  } else {
+    document.getElementById('portrait-text').textContent = 'Your responses reveal a thoughtful, self-aware individual who approaches life with genuine curiosity. You tend to process experiences deeply and value understanding over surface-level reactions. Your patterns suggest strong introspective capacity balanced with real-world adaptability.';
+    document.getElementById('error-note').style.display = 'block';
+  }
+
+  if (insightText) {
+    document.getElementById('insight-text').textContent = insightText;
+  } else {
+    const dominantTrait = Object.entries(traits).sort((a,b) => b[1]-a[1])[0];
+    document.getElementById('insight-text').textContent = 'Your strongest trait is ' + (traitLabels[dominantTrait[0]] || dominantTrait[0]).toLowerCase() + ' (scored ' + dominantTrait[1] + '/100). Today, notice one moment where this trait drives a decision — and ask yourself if it is serving you or limiting you.';
+  }
+}
+
+function retake() {
+  location.reload();
+}
+
+function shareResult() {
+  if (navigator.share) {
+    navigator.share({ title: 'My Velumin Psychological Portrait', text: 'I just discovered my psychological patterns on Velumin — a psychology + AI platform.', url: 'https://veluminmind' });
+  } else {
+    navigator.clipboard.writeText('I just discovered my psychological patterns on Velumin — veluminmind').then(() => {
+      alert('Link copied to clipboard!');
+    });
+  }
+}
+</script>
+</body>
+</html>

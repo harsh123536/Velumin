@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>a{color:#7B6FA0;text-decoration:none;}a:hover{color:#C9A96E;}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>About — Velumin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0E0B1A;color:#E8E4F0;font-family:'DM Sans',sans-serif;min-height:100vh;}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:26px 48px;border-bottom:0.5px solid rgba(200,191,231,0.1);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:0.12em;color:#F5F3FA;text-decoration:none;}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#7B6FA0;text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:#C9A96E;}
+.nav-links a.active{color:#C9A96E;}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1000px;margin:0 auto;padding:80px 48px 72px;}
+.hero-left{}
+.eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C9A96E;margin-bottom:20px;}
+.hero-left h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.1;color:#F5F3FA;margin-bottom:24px;}
+.hero-left h1 em{font-style:italic;color:#C9A96E;}
+.hero-left p{font-size:14px;font-weight:300;color:#7B6FA0;line-height:1.85;}
+.hero-right{display:flex;flex-direction:column;align-items:center;}
+.avatar-wrap{position:relative;margin-bottom:24px;}
+.avatar{width:140px;height:140px;border-radius:50%;background:#1C1530;border:0.5px solid rgba(201,169,110,0.25);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:#C9A96E;}
+.age-badge{position:absolute;bottom:4px;right:4px;background:#0E0B1A;border:0.5px solid rgba(201,169,110,0.4);border-radius:999px;padding:4px 10px;font-size:10px;font-weight:500;color:#C9A96E;letter-spacing:0.06em;}
+.founder-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:#F5F3FA;margin-bottom:6px;}
+.founder-role{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#7B6FA0;text-align:center;line-height:1.7;}
+
+.gold-line{width:36px;height:0.5px;background:#C9A96E;margin:0 auto 72px;}
+
+/* STORY */
+.story-wrap{max-width:680px;margin:0 auto;padding:0 48px 72px;}
+.section-eyebrow{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#C9A96E;margin-bottom:16px;}
+.story-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:#F5F3FA;margin-bottom:28px;line-height:1.2;}
+.story-body{font-size:14px;font-weight:300;color:#B4A8D0;line-height:1.9;margin-bottom:20px;}
+.story-body strong{font-weight:500;color:#E8E4F0;}
+
+.pull-quote{border-left:1px solid #C9A96E;padding:20px 28px;margin:36px 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;font-weight:300;color:#D4CDED;line-height:1.6;}
+
+/* CREDENTIALS */
+.cred-wrap{max-width:1000px;margin:0 auto;padding:0 48px 72px;}
+.cred-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.cred-card{background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:24px;}
+.cred-icon{width:28px;height:2px;background:#C9A96E;margin-bottom:16px;border-radius:1px;}
+.cred-title{font-size:13px;font-weight:500;color:#E8E4F0;margin-bottom:8px;}
+.cred-desc{font-size:12px;font-weight:300;color:#7B6FA0;line-height:1.7;}
+
+/* MISSION */
+.mission-wrap{background:#1C1530;border-top:0.5px solid rgba(200,191,231,0.07);border-bottom:0.5px solid rgba(200,191,231,0.07);padding:72px 48px;text-align:center;margin-bottom:72px;}
+.mission-inner{max-width:600px;margin:0 auto;}
+.mission-label{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#C9A96E;margin-bottom:20px;}
+.mission-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:#F5F3FA;margin-bottom:20px;line-height:1.2;}
+.mission-body{font-size:14px;font-weight:300;color:#7B6FA0;line-height:1.85;}
+
+/* CURRENT WORK */
+.work-wrap{max-width:1000px;margin:0 auto;padding:0 48px 72px;}
+.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:0;}
+.work-card{background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:26px;}
+.work-tag{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:2px;display:inline-block;margin-bottom:14px;}
+.tag-active{background:rgba(201,169,110,0.1);color:#C9A96E;}
+.tag-writing{background:rgba(123,111,160,0.12);color:#9B8FC4;}
+.tag-research{background:rgba(93,202,165,0.1);color:#5DCAA5;}
+.work-title{font-size:14px;font-weight:500;color:#E8E4F0;margin-bottom:8px;}
+.work-desc{font-size:12px;font-weight:300;color:#7B6FA0;line-height:1.7;}
+
+/* CTA */
+.cta-wrap{text-align:center;padding:0 48px 80px;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:#F5F3FA;margin-bottom:16px;}
+.cta-sub{font-size:13px;font-weight:300;color:#7B6FA0;margin-bottom:32px;}
+.btn-primary{background:#C9A96E;border:none;padding:14px 40px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0E0B1A;border-radius:2px;cursor:pointer;transition:opacity 0.2s;}
+.btn-primary:hover{opacity:0.82;}
+.btn-ghost{background:transparent;border:0.5px solid rgba(200,191,231,0.15);padding:14px 28px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:#7B6FA0;border-radius:2px;cursor:pointer;margin-left:12px;transition:all 0.2s;}
+.btn-ghost:hover{color:#E8E4F0;}
+
+footer{padding:28px 48px;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid rgba(200,191,231,0.07);}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;letter-spacing:0.1em;color:#7B6FA0;}
+.footer-copy{font-size:11px;color:rgba(123,111,160,0.35);}
+
+@media(max-width:700px){
+  nav,.story-wrap,.cred-wrap,.work-wrap,.cta-wrap,footer{padding-left:24px;padding-right:24px;}
+  .hero{grid-template-columns:1fr;gap:40px;padding:56px 24px 48px;text-align:center;}
+  .hero-left h1{font-size:38px;}
+  .cred-grid,.work-grid{grid-template-columns:1fr;}
+  .mission-wrap{padding:56px 24px;}
+}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-banner">
+  Velumin is an educational tool, not a clinical service. AI insights may contain errors. <a href="disclaimer.html">Read full disclaimer →</a>
+</div>
+<nav class="vl-nav">
+  <a class="vl-nav-logo" href="index.html">Velumin</a>
+  <div class="vl-nav-links">
+    <a href="discover.html">Discover</a>
+    <a href="tracker.html">Mood tracker</a>
+    <a href="library.html">Library</a>
+    <a href="about.html"  class="active">About</a>
+    <a class="vl-nav-cta" href="discover.html">Begin</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">The founder</div>
+    <h1>Built by someone who <em>asked why.</em></h1>
+    <p>Velumin exists because one person — a 19-year-old psychology student in Dubai — believed that the intersection of psychology and AI was too important to wait for someone else to explore. So he built it himself.</p>
+  </div>
+  <div class="hero-right">
+    <div class="avatar-wrap">
+      <div class="avatar">HVM</div>
+      <div class="age-badge">Age 19</div>
+    </div>
+    <div class="founder-name">Harsh Vijay More</div>
+    <div class="founder-role">Psychology Student · Founder, Velumin<br>Dubai, UAE</div>
+  </div>
+</div>
+
+<div class="gold-line"></div>
+
+<div class="story-wrap">
+  <div class="section-eyebrow">The story</div>
+  <h2 class="story-title">Why Velumin exists</h2>
+
+  <p class="story-body">
+    I'm 19. I'm studying BSc Psychology at De Montfort University Dubai, and I've spent the better part of this year asking one question: <strong>why hasn't AI meaningfully entered the world of psychology yet?</strong>
+  </p>
+
+  <p class="story-body">
+    Not therapy apps. Not chatbots. But a real, publicly accessible platform that uses verified psychological frameworks and AI to help ordinary people understand their own minds — for free, with no clinical barrier, no jargon, and no waiting list.
+  </p>
+
+  <div class="pull-quote">"Psychology should not be a privilege. It should be as accessible as a search engine — and twice as honest."</div>
+
+  <p class="story-body">
+    I hold certifications in <strong>Machine Learning Specialization</strong> and <strong>Deep Learning Specialization</strong>, and I've spent considerable time understanding how AI systems think. When I combined that with what I was learning in my psychology degree — personality theory, cognitive behavioural frameworks, emotional regulation models — Velumin became the obvious thing to build.
+  </p>
+
+  <p class="story-body">
+    Outside of this, I write regularly — research papers, essays, and articles on trending psychological topics. I'm also working on a book exploring <strong>Gen Z's motivational and habitual patterns</strong>, alongside a practical toolkit designed for young people navigating identity, focus, and purpose in the modern world. I play football as an amateur — and honestly, sport taught me as much about psychology as any textbook.
+  </p>
+
+  <p class="story-body">
+    Velumin is my first public initiative. It won't be the last.
+  </p>
+</div>
+
+<div class="cred-wrap">
+  <div class="section-eyebrow" style="text-align:center;margin-bottom:40px;">Credentials & background</div>
+  <div class="cred-grid">
+    <div class="cred-card">
+      <div class="cred-icon"></div>
+      <div class="cred-title">BSc Psychology (Hons)</div>
+      <div class="cred-desc">Undergraduate study in psychology — personality theory, cognitive science, emotional regulation, research methods, and applied psychology.</div>
+    </div>
+    <div class="cred-card">
+      <div class="cred-icon"></div>
+      <div class="cred-title">Machine Learning Specialization</div>
+      <div class="cred-desc">Certified in machine learning fundamentals — supervised learning, neural networks, model evaluation, and practical AI system design.</div>
+    </div>
+    <div class="cred-card">
+      <div class="cred-icon"></div>
+      <div class="cred-title">Deep Learning Specialization</div>
+      <div class="cred-desc">Advanced certification covering deep neural networks, sequence models, and the architecture behind modern AI — applied here in Velumin's core.</div>
+    </div>
+    <div class="cred-card">
+      <div class="cred-icon"></div>
+      <div class="cred-title">Psychology writer & researcher</div>
+      <div class="cred-desc">Regular author of essays, research articles, and reports on trending psychological topics — bridging academic knowledge with accessible public writing.</div>
+    </div>
+    <div class="cred-card">
+      <div class="cred-icon"></div>
+      <div class="cred-title">Amateur footballer</div>
+      <div class="cred-desc">Competitive amateur football player — sport as a lived laboratory for psychology: pressure, teamwork, identity, resilience, and peak performance.</div>
+    </div>
+    <div class="cred-card">
+      <div class="cred-icon"></div>
+      <div class="cred-title">Dubai · India · Global outlook</div>
+      <div class="cred-desc">Cross-cultural background spanning India and the UAE — shaping Velumin's dual Western and Eastern psychology perspective from the ground up.</div>
+    </div>
+  </div>
+</div>
+
+<div class="mission-wrap">
+  <div class="mission-inner">
+    <div class="mission-label">The mission</div>
+    <h2 class="mission-title">Psychology + AI.<br>For everyone. Right now.</h2>
+    <p class="mission-body">The field of psychology has centuries of knowledge about the human mind. AI has the ability to make that knowledge personal, instant, and accessible to anyone with a phone. Velumin is the bridge between the two — built by a 19-year-old who didn't want to wait for someone else to build it.</p>
+  </div>
+</div>
+
+<div class="work-wrap">
+  <div class="section-eyebrow" style="margin-bottom:32px;">Currently working on</div>
+  <div class="work-grid">
+    <div class="work-card">
+      <div class="work-tag tag-active">Live initiative</div>
+      <div class="work-title">Velumin — veluminmind</div>
+      <div class="work-desc">This platform. A free, AI-powered psychology tool combining personality assessment, mood tracking, a curated knowledge library, and daily psychological insights.</div>
+    </div>
+    <div class="work-card">
+      <div class="work-tag tag-writing">Book — in progress</div>
+      <div class="work-title">Wired to Wander</div>
+      <div class="work-desc">A book on Gen Z's motivational and habitual patterns — exploring why a generation raised on stimulation struggles with consistency, and what to do about it.</div>
+    </div>
+    <div class="work-card">
+      <div class="work-tag tag-writing">Toolkit — in progress</div>
+      <div class="work-title">Gen Z Motivation & Habits Toolkit</div>
+      <div class="work-desc">A practical, research-backed toolkit designed to help young people build sustainable motivation and habits in a world built to distract them.</div>
+    </div>
+    <div class="work-card">
+      <div class="work-tag tag-research">Ongoing</div>
+      <div class="work-title">Psychology research & writing</div>
+      <div class="work-desc">Regular essays and research articles on trending psychological topics — from digital identity and social comparison to attention, anxiety, and Gen Z mental health.</div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-wrap">
+  <h2 class="cta-title">Ready to discover your mind?</h2>
+  <p class="cta-sub">The assessment takes under 5 minutes. Your portrait lasts a lifetime.</p>
+  <button class="btn-primary" onclick="window.location.href='velumin_discover.html'">Begin the assessment</button>
+  <button class="btn-ghost" onclick="window.location.href='velumin_library.html'">Explore the library</button>
+</div>
+
+<footer class="vl-footer">
+  <div class="vl-footer-main">
+    <div class="vl-footer-logo">Velumin</div>
+    <div class="vl-footer-links">
+      <a href="discover.html">Discover</a>
+      <a href="tracker.html">Mood tracker</a>
+      <a href="library.html">Library</a>
+      <a href="about.html">About</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+    <div class="vl-footer-copy">© 2025 Harsh Vijay More. All rights reserved.</div>
+  </div>
+  <div class="vl-footer-disclaimer">
+    Velumin is an AI-powered educational tool, not a clinical service. Content does not constitute professional psychological or medical advice. AI-generated insights may contain errors and should not be used for clinical decisions. <a href="disclaimer.html">Full disclaimer →</a>
+  </div>
+</footer>
+
+</body>
+</html>

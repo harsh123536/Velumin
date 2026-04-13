@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── RESET ── */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{background:#0E0B1A;color:#E8E4F0;font-family:'DM Sans',sans-serif;min-height:100vh;}
+
+/* ── TOKENS ── */
+:root{
+  --gold:#C9A96E;
+  --gold-dim:rgba(201,169,110,0.15);
+  --surface:#1C1530;
+  --bg:#0E0B1A;
+  --text-primary:#F5F3FA;
+  --text-secondary:#E8E4F0;
+  --text-muted:#7B6FA0;
+  --text-soft:#B4A8D0;
+  --border:rgba(200,191,231,0.08);
+  --border-mid:rgba(200,191,231,0.15);
+  --border-gold:rgba(201,169,110,0.3);
+}
+
+/* ── NAVIGATION ── */
+.vl-nav{display:flex;justify-content:space-between;align-items:center;padding:26px 48px;border-bottom:0.5px solid rgba(200,191,231,0.1);}
+.vl-nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:0.12em;color:var(--text-primary);text-decoration:none;}
+.vl-nav-links{display:flex;gap:28px;align-items:center;}
+.vl-nav-links a{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.2s;}
+.vl-nav-links a:hover,.vl-nav-links a.active{color:var(--gold);}
+.vl-nav-cta{background:var(--gold);color:var(--bg);padding:8px 20px;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;border-radius:2px;cursor:pointer;text-decoration:none;font-family:'DM Sans',sans-serif;}
+
+/* ── FOOTER ── */
+.vl-footer{padding:24px 48px;border-top:0.5px solid var(--border);}
+.vl-footer-main{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.vl-footer-logo{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;letter-spacing:0.1em;color:var(--text-muted);}
+.vl-footer-links{display:flex;gap:20px;}
+.vl-footer-links a{font-size:11px;color:rgba(123,111,160,0.4);text-decoration:none;transition:color 0.2s;}
+.vl-footer-links a:hover{color:var(--gold);}
+.vl-footer-copy{font-size:11px;color:rgba(123,111,160,0.35);}
+.vl-footer-disclaimer{font-size:11px;color:rgba(123,111,160,0.35);line-height:1.6;border-top:0.5px solid var(--border);padding-top:12px;margin-top:12px;}
+.vl-footer-disclaimer a{color:rgba(201,169,110,0.5);text-decoration:none;}
+.vl-footer-disclaimer a:hover{color:var(--gold);}
+
+/* ── BUTTONS ── */
+.btn-primary{background:var(--gold);border:none;padding:13px 36px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--bg);border-radius:2px;cursor:pointer;transition:opacity 0.2s;text-decoration:none;display:inline-block;}
+.btn-primary:hover{opacity:0.82;}
+.btn-ghost{background:transparent;border:0.5px solid var(--border-mid);padding:13px 28px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);border-radius:2px;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.btn-ghost:hover{color:var(--text-secondary);border-color:rgba(200,191,231,0.3);}
+
+/* ── SHARED UTILS ── */
+.eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.section-eyebrow{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);}
+.gold-line{width:36px;height:0.5px;background:var(--gold);margin:0 auto;}
+.surface-card{background:var(--surface);border:0.5px solid var(--border);border-radius:4px;}
+.pull-quote{border-left:1px solid var(--gold);padding:20px 28px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;font-weight:300;color:#D4CDED;line-height:1.6;}
+
+/* ── DISCLAIMER BANNER ── */
+.disclaimer-banner{background:rgba(201,169,110,0.04);border-bottom:0.5px solid rgba(201,169,110,0.12);padding:10px 48px;text-align:center;font-size:11px;color:rgba(123,111,160,0.6);line-height:1.6;}
+.disclaimer-banner a{color:rgba(201,169,110,0.6);text-decoration:none;}
+.disclaimer-banner a:hover{color:var(--gold);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .vl-nav{padding:20px 24px;}
+  .vl-nav-links{gap:16px;}
+  .vl-nav-links a{font-size:10px;}
+  .vl-footer{padding:20px 24px;}
+  .disclaimer-banner{padding:10px 24px;}
+}
