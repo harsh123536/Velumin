@@ -98,9 +98,51 @@
 <div class="insight-bar">
   <div class="insight-tag">Daily insight</div>
   <div class="insight-divider"></div>
-  <div class="insight-text">People who label their emotions recover from stress significantly faster than those who don't.</div>
-  <div class="insight-cite">Lieberman et al., 2007 · UCLA</div>
+  <div class="insight-text" id="daily-insight-text"></div>
+  <div class="insight-cite" id="daily-insight-cite"></div>
 </div>
+
+<script>
+const insights = [
+  { text: "People who label their emotions recover from stress significantly faster than those who don't.", cite: "Lieberman et al., 2007 · UCLA" },
+  { text: "Individuals with a growth mindset are more likely to embrace challenges and persist through failure.", cite: "Dweck, C.S., 2006 · Stanford University" },
+  { text: "Social connection is as important to survival as food and shelter — loneliness is a biological signal, not a weakness.", cite: "Cacioppo & Patrick, 2008 · University of Chicago" },
+  { text: "People make better decisions when they are in a slightly positive mood — neither too elated nor too neutral.", cite: "Isen, A.M., 2001 · Cornell University" },
+  { text: "Writing about emotional experiences for just 20 minutes can significantly improve both mental and physical health.", cite: "Pennebaker & Smyth, 2016 · University of Texas" },
+  { text: "The brain's prefrontal cortex — responsible for decision-making — is not fully developed until age 25.", cite: "Giedd, J.N., 2004 · National Institute of Mental Health" },
+  { text: "Gratitude activates the brain's reward system and is linked to lower levels of depression and anxiety.", cite: "Emmons & McCullough, 2003 · University of California" },
+  { text: "People overestimate how much others notice their appearance and mistakes — known as the spotlight effect.", cite: "Gilovich et al., 2000 · Cornell University" },
+  { text: "Sleep deprivation has the same cognitive impact as being legally drunk — affecting memory, focus, and emotion.", cite: "Harrison & Horne, 2000 · Loughborough University" },
+  { text: "Humans are the only species known to delay sleep voluntarily — often to the detriment of mental health.", cite: "Walker, M., 2017 · University of California Berkeley" },
+  { text: "The mere presence of your smartphone on a desk — even face down — reduces available cognitive capacity.", cite: "Ward et al., 2017 · University of Texas at Austin" },
+  { text: "People who experience awe — from nature, music, or art — report greater life satisfaction and reduced anxiety.", cite: "Keltner & Haidt, 2003 · University of California Berkeley" },
+  { text: "Cognitive reappraisal — reframing how you think about a situation — is one of the most effective emotion regulation strategies.", cite: "Gross, J.J., 1998 · Stanford University" },
+  { text: "The average person has between 6,000 and 7,000 thoughts per day — many of them repetitive and negative.", cite: "Tseng & Poppenk, 2020 · Queen's University" },
+  { text: "Physical exercise is as effective as antidepressants for mild to moderate depression in some clinical populations.", cite: "Blumenthal et al., 1999 · Duke University" },
+  { text: "People are happiest when their minds are focused on the present moment rather than wandering to past or future.", cite: "Killingsworth & Gilbert, 2010 · Harvard University" },
+  { text: "Self-compassion — treating yourself as you would a good friend — is more motivating than self-criticism.", cite: "Neff, K.D., 2003 · University of Texas at Austin" },
+  { text: "The number of close friends matters less than the quality of those relationships for long-term wellbeing.", cite: "Diener & Seligman, 2002 · University of Illinois" },
+  { text: "Humans are wired for negativity bias — negative events impact us two to three times more than positive ones.", cite: "Baumeister et al., 2001 · Case Western Reserve University" },
+  { text: "Spending money on experiences rather than material possessions produces longer-lasting happiness.", cite: "Van Boven & Gilovich, 2003 · Cornell University" },
+  { text: "People who report a strong sense of purpose in life live longer and have better mental health outcomes.", cite: "Hill & Turiano, 2014 · Rochester Medical Center" },
+  { text: "Curiosity — not intelligence — is the strongest predictor of academic and creative achievement.", cite: "Von Stumm et al., 2011 · University of Edinburgh" },
+  { text: "The pain of social rejection activates the same neural regions as physical pain in the brain.", cite: "Eisenberger et al., 2003 · UCLA" },
+  { text: "Helping others activates the brain's reward centres in the same way as receiving rewards yourself.", cite: "Moll et al., 2006 · National Institutes of Health" },
+  { text: "Anxiety and excitement are physiologically identical — the difference is entirely in how you interpret the arousal.", cite: "Brooks, A.W., 2014 · Harvard Business School" },
+  { text: "People with high emotional intelligence earn on average more and have more satisfying relationships.", cite: "Goleman, D., 1995 · Harvard University" },
+  { text: "The way you speak to yourself shapes your self-concept more than what others say about you.", cite: "Markus & Wurf, 1987 · University of Michigan" },
+  { text: "Forgiveness — letting go of resentment — is linked to lower blood pressure, anxiety, and depression.", cite: "Worthington et al., 2007 · Virginia Commonwealth University" },
+  { text: "Nature exposure for as little as 20 minutes significantly lowers cortisol — the body's primary stress hormone.", cite: "Hunter et al., 2019 · University of Michigan" },
+  { text: "People who write down their goals are 42% more likely to achieve them than those who don't.", cite: "Matthews, G., 2015 · Dominican University of California" },
+];
+
+const today = new Date();
+const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+const insight = insights[dayOfYear % insights.length];
+
+document.getElementById('daily-insight-text').textContent = insight.text;
+document.getElementById('daily-insight-cite').textContent = insight.cite;
+</script>
 
 <section class="features">
   <div class="section-eyebrow" style="text-align:center;margin-bottom:16px;">What Velumin offers</div>
