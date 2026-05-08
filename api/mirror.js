@@ -51,15 +51,16 @@ JSON STRUCTURE:
   ]
 }`;
 
-    const response = await fetch('https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1/v1/chat/completions', {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.HF_TOKEN}`
+        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
+        model: 'llama-3.3-70b-versatile',
         max_tokens: 1500,
+        temperature: 0.7,
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: `Analyse this input deeply and thoroughly: "${input}"` }
@@ -69,7 +70,7 @@ JSON STRUCTURE:
 
     if (!response.ok) {
       const err = await response.text();
-      console.error('HuggingFace error:', err);
+      console.error('Groq error:', err);
       return res.status(502).json({ error: 'AI service error', detail: err });
     }
 
