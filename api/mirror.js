@@ -51,14 +51,14 @@ JSON STRUCTURE:
   ]
 }`;
 
-    const response = await fetch('https://router.huggingface.co/v1/chat/completions', {
+    const response = await fetch('https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.HF_TOKEN}`
       },
       body: JSON.stringify({
-        model: 'meta-llama/Llama-3.3-70B-Instruct',
+        model: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
         max_tokens: 1500,
         messages: [
           { role: 'system', content: systemPrompt },
