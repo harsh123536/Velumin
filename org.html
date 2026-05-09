@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>html{background:#0E0B1A !important;}body{background:#0E0B1A !important;}a{color:#7B6FA0;text-decoration:none;}a:hover{color:#C9A96E;}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velumin Org — Organisational Psychology Intelligence</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── ORG HERO ── */
+.org-hero{padding:80px 48px 64px;text-align:center;position:relative;}
+.org-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,169,110,0.08);border:0.5px solid rgba(201,169,110,0.25);border-radius:999px;padding:6px 16px;margin-bottom:28px;}
+.org-badge-dot{width:6px;height:6px;border-radius:50%;background:#C9A96E;animation:pulse-dot 2s infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.org-badge-text{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C9A96E;}
+.org-hero h1{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:300;line-height:1.08;color:#F5F3FA;margin-bottom:20px;max-width:800px;margin-left:auto;margin-right:auto;}
+.org-hero h1 em{font-style:italic;color:#C9A96E;}
+.org-hero p{font-size:15px;font-weight:300;color:#7B6FA0;line-height:1.8;max-width:560px;margin:0 auto 16px;}
+.org-hero-sub{font-size:11px;color:rgba(123,111,160,0.45);max-width:480px;margin:0 auto 48px;}
+
+/* ── ROLE SELECTOR ── */
+.role-strip{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:56px;padding:0 48px;}
+.role-btn{background:transparent;border:0.5px solid rgba(200,191,231,0.1);border-radius:2px;padding:10px 18px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:#7B6FA0;cursor:pointer;transition:all 0.2s;}
+.role-btn:hover{border-color:rgba(201,169,110,0.3);color:#E8E4F0;}
+.role-btn.active{background:rgba(201,169,110,0.08);border-color:#C9A96E;color:#C9A96E;}
+
+/* ── STATS BAR ── */
+.stats-bar{background:#1C1530;border-top:0.5px solid rgba(200,191,231,0.07);border-bottom:0.5px solid rgba(200,191,231,0.07);padding:20px 48px;display:flex;justify-content:center;gap:64px;margin-bottom:64px;flex-wrap:wrap;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#C9A96E;line-height:1;}
+.stat-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(123,111,160,0.5);margin-top:4px;}
+
+/* ── INPUT SECTION ── */
+.org-input-wrap{max-width:760px;margin:0 auto;padding:0 48px 64px;}
+.input-card{background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:36px;margin-bottom:16px;}
+.input-card-label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#C9A96E;margin-bottom:8px;}
+.input-card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#F5F3FA;margin-bottom:24px;line-height:1.3;}
+.placeholder-text{font-size:12px;color:rgba(123,111,160,0.35);margin-bottom:16px;font-style:italic;}
+
+.situation-examples{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:24px;}
+.example-chip{background:rgba(200,191,231,0.03);border:0.5px solid rgba(200,191,231,0.08);border-radius:3px;padding:10px 14px;font-size:11px;color:rgba(123,111,160,0.5);cursor:pointer;transition:all 0.2s;line-height:1.5;}
+.example-chip:hover{border-color:rgba(201,169,110,0.25);color:#B4A8D0;}
+
+textarea{width:100%;background:rgba(200,191,231,0.02);border:0.5px solid rgba(200,191,231,0.08);border-radius:3px;padding:16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:#E8E4F0;resize:none;height:140px;outline:none;transition:border-color 0.2s;line-height:1.7;}
+textarea::placeholder{color:rgba(123,111,160,0.3);}
+textarea:focus{border-color:rgba(201,169,110,0.25);}
+
+.input-footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px;}
+.char-note{font-size:11px;color:rgba(123,111,160,0.35);}
+.analyse-btn{background:#C9A96E;border:none;padding:13px 40px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#0E0B1A;border-radius:2px;cursor:pointer;transition:opacity 0.2s;opacity:0.3;pointer-events:none;}
+.analyse-btn.ready{opacity:1;pointer-events:all;}
+.analyse-btn.ready:hover{opacity:0.85;}
+
+/* ── LOADING ── */
+.loading-card{display:none;background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:48px;text-align:center;margin-bottom:16px;}
+.loading-spinner{width:32px;height:32px;border:0.5px solid rgba(200,191,231,0.08);border-top:0.5px solid #C9A96E;border-radius:50%;animation:spin 1.2s linear infinite;margin:0 auto 24px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;font-weight:300;color:#7B6FA0;margin-bottom:20px;}
+.loading-steps{display:flex;flex-direction:column;gap:8px;}
+.loading-step{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(123,111,160,0.25);transition:color 0.4s;}
+.loading-step.active{color:#C9A96E;}
+
+/* ── BLUEPRINT ── */
+.blueprint-wrap{display:none;margin-bottom:32px;}
+
+.blueprint-header{background:#1C1530;border:0.5px solid rgba(201,169,110,0.15);border-radius:4px 4px 0 0;padding:28px 32px;border-bottom:none;}
+.blueprint-eyebrow{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#C9A96E;margin-bottom:12px;}
+.blueprint-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#F5F3FA;line-height:1.2;margin-bottom:8px;}
+.blueprint-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;}
+.blueprint-tag{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;padding:4px 12px;border-radius:2px;border:0.5px solid rgba(200,191,231,0.1);color:rgba(123,111,160,0.6);}
+.blueprint-tag.gold{border-color:rgba(201,169,110,0.25);color:#C9A96E;}
+
+/* ── BLUEPRINT SECTIONS ── */
+.bp-section{background:#1C1530;border:0.5px solid rgba(200,191,231,0.07);border-top:none;padding:28px 32px;}
+.bp-section:last-of-type{border-radius:0 0 4px 4px;}
+.bp-section-num{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:300;color:rgba(201,169,110,0.3);margin-bottom:4px;letter-spacing:0.1em;}
+.bp-section-title{font-size:13px;font-weight:500;color:#E8E4F0;margin-bottom:14px;letter-spacing:0.04em;}
+.bp-section-body{font-size:13px;font-weight:300;color:#B4A8D0;line-height:1.85;}
+.bp-divider{height:0.5px;background:rgba(200,191,231,0.06);margin:0;}
+
+/* ── INLINE CITATIONS ── */
+.cite-ref{font-size:10px;vertical-align:super;color:#C9A96E;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;padding:0 2px;border-bottom:0.5px solid rgba(201,169,110,0.25);transition:color 0.2s;white-space:nowrap;}
+.cite-ref:hover{color:#E8C882;}
+
+/* ── ACTION ITEMS ── */
+.action-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px;}
+.action-item{background:#0E0B1A;border:0.5px solid rgba(200,191,231,0.07);border-radius:3px;padding:14px 16px;}
+.action-day{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#C9A96E;margin-bottom:6px;}
+.action-text{font-size:12px;font-weight:300;color:#B4A8D0;line-height:1.6;}
+
+/* ── RISK & OUTCOME ── */
+.dual-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+.dual-card{background:#0E0B1A;border:0.5px solid rgba(200,191,231,0.07);border-radius:3px;padding:16px;}
+.dual-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+.label-risk{color:#993C1D;}
+.label-outcome{color:#0F6E56;}
+.dual-body{font-size:12px;font-weight:300;color:#B4A8D0;line-height:1.6;}
+
+/* ── REFERENCES ── */
+.refs-toggle{display:flex;align-items:center;justify-content:space-between;background:#1C1530;border:0.5px solid rgba(200,191,231,0.08);border-radius:4px;padding:16px 24px;cursor:pointer;transition:border-color 0.2s;margin-top:12px;}
+.refs-toggle:hover{border-color:rgba(201,169,110,0.2);}
+.refs-toggle-left{display:flex;align-items:center;gap:12px;}
+.refs-count{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#7B6FA0;}
+.refs-num{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:#C9A96E;}
+.refs-icon{font-size:14px;color:#C9A96E;transition:transform 0.3s;}
+.refs-icon.open{transform:rotate(180deg);}
+.refs-panel{display:none;background:#1C1530;border:0.5px solid rgba(200,191,231,0.06);border-top:none;border-radius:0 0 4px 4px;padding:20px 24px 24px;}
+.refs-panel.open{display:block;}
+.refs-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ref-item{font-size:10px;color:rgba(123,111,160,0.5);line-height:1.6;padding:8px 12px;border-left:1px solid rgba(201,169,110,0.1);}
+.ref-item strong{color:#7B6FA0;font-weight:500;display:block;margin-bottom:2px;}
+
+/* ── ACTIONS ── */
+.blueprint-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+.btn-new-analysis{flex:1;background:transparent;border:0.5px solid rgba(200,191,231,0.15);padding:13px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:#7B6FA0;border-radius:2px;cursor:pointer;transition:all 0.2s;min-width:140px;}
+.btn-new-analysis:hover{color:#E8E4F0;}
+.btn-download{flex:2;background:#C9A96E;border:none;padding:13px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0E0B1A;border-radius:2px;cursor:pointer;transition:opacity 0.2s;min-width:200px;}
+.btn-download:hover{opacity:0.85;}
+
+/* ── TOOLTIP ── */
+.cite-tooltip{position:fixed;background:#1C1530;border:0.5px solid rgba(201,169,110,0.25);border-radius:3px;padding:10px 14px;font-size:11px;color:#B4A8D0;line-height:1.6;max-width:340px;z-index:1000;pointer-events:none;opacity:0;transition:opacity 0.2s;box-shadow:0 4px 24px rgba(0,0,0,0.5);}
+
+/* ── FRAMEWORK SECTION ── */
+.frameworks{max-width:960px;margin:0 auto;padding:0 48px 80px;}
+.fw-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:#F5F3FA;text-align:center;margin-bottom:48px;}
+.fw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.fw-card{background:#1C1530;border:0.5px solid rgba(200,191,231,0.07);border-radius:4px;padding:24px;}
+.fw-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:rgba(201,169,110,0.15);line-height:1;margin-bottom:12px;}
+.fw-name{font-size:13px;font-weight:500;color:#E8E4F0;margin-bottom:4px;}
+.fw-author{font-size:10px;color:#C9A96E;margin-bottom:8px;letter-spacing:0.04em;}
+.fw-desc{font-size:11px;font-weight:300;color:#7B6FA0;line-height:1.7;}
+
+@media(max-width:700px){
+  .org-hero{padding:56px 24px 48px;}
+  .org-hero h1{font-size:36px;}
+  .role-strip{padding:0 24px;}
+  .stats-bar{gap:32px;padding:20px 24px;}
+  .org-input-wrap{padding:0 24px 48px;}
+  .situation-examples{grid-template-columns:1fr;}
+  .action-grid,.dual-grid,.refs-grid,.fw-grid{grid-template-columns:1fr;}
+  .frameworks{padding:0 24px 56px;}
+}
+</style>
+</head>
+<body>
+
+<div style="background:rgba(201,169,110,0.06);border-bottom:0.5px solid rgba(201,169,110,0.1);padding:8px 48px;text-align:center;font-size:11px;color:rgba(123,111,160,0.5);">
+  Velumin Org is an educational tool. Outputs do not substitute professional organisational psychology consultation. <a href="disclaimer.html" style="color:rgba(201,169,110,0.5);">Disclaimer →</a>
+</div>
+
+<nav class="vl-nav">
+  <a class="vl-nav-logo" href="index.html">Velumin</a>
+  <div class="vl-nav-links">
+    <a href="discover.html">Discover</a>
+    <a href="tracker.html">Mood tracker</a>
+    <a href="mirror.html">Mirror</a>
+    <a href="org.html" class="active" style="color:#C9A96E;">Org ✦</a>
+    <a href="library.html">Library</a>
+    <a href="research.html">Research</a>
+    <a href="about.html">About</a>
+    <a class="vl-nav-cta" href="org.html">Analyse my org</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="org-hero">
+  <div class="org-badge">
+    <div class="org-badge-dot"></div>
+    <div class="org-badge-text">Velumin Org · Organisational Psychology Intelligence</div>
+  </div>
+  <h1>The psychology behind<br>every <em>organisational failure.</em></h1>
+  <p>Describe any workplace challenge — team, leadership, culture, policy, or performance. Receive a one-page psychological blueprint that diagnoses the root human cause and prescribes a science-backed action plan.</p>
+  <p class="org-hero-sub">Built on 1,000+ sources across IO psychology, behavioural economics, leadership science, and organisational behaviour. Every claim cited. Every recommendation evidenced.</p>
+</div>
+
+<!-- ROLE SELECTOR -->
+<div class="role-strip">
+  <button class="role-btn active" onclick="setRole(this,'Corporate Manager')">Corporate Manager</button>
+  <button class="role-btn" onclick="setRole(this,'HR Professional')">HR Professional</button>
+  <button class="role-btn" onclick="setRole(this,'Government / Ministry Officer')">Government / Ministry</button>
+  <button class="role-btn" onclick="setRole(this,'Business Student')">Business Student</button>
+  <button class="role-btn" onclick="setRole(this,'Founder / Entrepreneur')">Founder</button>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">1,000+</div><div class="stat-label">Academic sources</div></div>
+  <div class="stat-item"><div class="stat-num">47</div><div class="stat-label">IO psychology frameworks</div></div>
+  <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Professional roles covered</div></div>
+  <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">Always</div></div>
+</div>
+
+<div class="gold-line" style="margin-bottom:56px;"></div>
+
+<!-- INPUT -->
+<div class="org-input-wrap">
+  <div class="input-card" id="input-card">
+    <div class="input-card-label">Your situation — <span id="role-label">Corporate Manager</span></div>
+    <div class="input-card-title" id="input-title">Describe your organisational challenge in plain language.</div>
+
+    <p class="placeholder-text">Not sure where to start? Try one of these:</p>
+    <div class="situation-examples" id="examples-grid"></div>
+
+    <textarea id="org-input" placeholder="Describe your situation honestly. The more specific you are, the more precise the blueprint. No jargon needed — just tell us what's happening." oninput="onInput(this)"></textarea>
+
+    <div class="input-footer">
+      <div class="char-note" id="char-note">Minimum 30 characters</div>
+      <button class="analyse-btn" id="analyse-btn" onclick="runAnalysis()">Generate blueprint</button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-card" id="loading-card">
+    <div class="loading-spinner"></div>
+    <div class="loading-text" id="loading-text">Consulting 1,000+ sources...</div>
+    <div class="loading-steps">
+      <div class="loading-step active" id="ls1">Diagnosing root psychological cause</div>
+      <div class="loading-step" id="ls2">Identifying hidden human dynamics</div>
+      <div class="loading-step" id="ls3">Cross-referencing IO psychology literature</div>
+      <div class="loading-step" id="ls4">Building your one-page blueprint</div>
+    </div>
+  </div>
+
+  <!-- BLUEPRINT OUTPUT -->
+  <div class="blueprint-wrap" id="blueprint-wrap"></div>
+
+</div>
+
+<!-- FRAMEWORKS SECTION -->
+<div class="frameworks">
+  <h2 class="fw-title">Grounded in the world's leading<br>organisational psychology research</h2>
+  <div class="fw-grid">
+    <div class="fw-card"><div class="fw-num">01</div><div class="fw-name">Psychological Safety</div><div class="fw-author">Edmondson, A.C. · Harvard Business School · 1999</div><div class="fw-desc">Why teams that feel safe to speak up outperform those that don't — and how to build it deliberately.</div></div>
+    <div class="fw-card"><div class="fw-num">02</div><div class="fw-name">Two-Factor Motivation Theory</div><div class="fw-author">Herzberg, F. · 1959 · Harvard Business Review</div><div class="fw-desc">Why salary alone never motivates — the distinction between hygiene factors and true motivators.</div></div>
+    <div class="fw-card"><div class="fw-num">03</div><div class="fw-name">Nudge Theory</div><div class="fw-author">Thaler, R. & Sunstein, C. · 2008 · University of Chicago</div><div class="fw-desc">How small changes in how choices are presented dramatically shift human behaviour in organisations.</div></div>
+    <div class="fw-card"><div class="fw-num">04</div><div class="fw-name">Team Development Model</div><div class="fw-author">Tuckman, B. · 1965 · Psychological Bulletin</div><div class="fw-desc">The four universal stages every team passes through — and the psychology of each transition.</div></div>
+    <div class="fw-card"><div class="fw-num">05</div><div class="fw-name">Self-Determination Theory</div><div class="fw-author">Deci, E.L. & Ryan, R.M. · 1985 · University of Rochester</div><div class="fw-desc">The three innate psychological needs — autonomy, competence, relatedness — that drive intrinsic motivation at work.</div></div>
+    <div class="fw-card"><div class="fw-num">06</div><div class="fw-name">Cognitive Bias in Decision-Making</div><div class="fw-author">Kahneman, D. · 2011 · Princeton University</div><div class="fw-desc">How System 1 and System 2 thinking shapes every organisational decision — and where it goes wrong.</div></div>
+  </div>
+</div>
+
+<!-- TOOLTIP -->
+<div class="cite-tooltip" id="cite-tooltip"></div>
+
+<footer class="vl-footer">
+  <div class="vl-footer-main">
+    <div class="vl-footer-logo">Velumin</div>
+    <div class="vl-footer-links">
+      <a href="discover.html">Discover</a>
+      <a href="tracker.html">Mood tracker</a>
+      <a href="mirror.html">Mirror</a>
+      <a href="org.html">Org</a>
+      <a href="library.html">Library</a>
+      <a href="research.html">Research</a>
+      <a href="about.html">About</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+    <div class="vl-footer-copy">© 2025 Harsh Vijay More. All rights reserved.</div>
+  </div>
+  <div class="vl-footer-disclaimer">
+    Velumin Org is an AI-powered educational tool. Outputs do not constitute professional organisational psychology, HR, legal, or management consulting advice. AI responses powered by Anthropic's Claude API — Velumin is independent of Anthropic. <a href="disclaimer.html">Full disclaimer →</a>
+  </div>
+</footer>
+
+<script>
+let currentRole = 'Corporate Manager';
+
+const roleExamples = {
+  'Corporate Manager': [
+    'My team keeps missing deadlines despite repeated warnings and performance reviews.',
+    'Two senior employees are in constant conflict and it is affecting the whole team.',
+    'A high performer suddenly became disengaged and I do not know why.',
+    'My team agrees in meetings but never follows through on decisions.'
+  ],
+  'HR Professional': [
+    'Employee retention is dropping and exit interviews give vague answers.',
+    'Our onboarding process is thorough but new hires still feel lost after 3 months.',
+    'We have a diversity policy but the culture does not reflect it.',
+    'Employees are burning out but no one is willing to admit it.'
+  ],
+  'Government / Ministry Officer': [
+    'A policy we implemented is technically correct but the public is not adopting it.',
+    'Our department has low morale despite recent pay increases.',
+    'Interdepartmental collaboration keeps failing despite clear mandates.',
+    'Public trust in our initiative is low despite strong outcomes.'
+  ],
+  'Business Student': [
+    'I want to understand why good strategies fail at the implementation stage.',
+    'Why do some organisational cultures attract talent and others repel it?',
+    'How does cognitive bias affect senior leadership decisions in real organisations?',
+    'What makes some teams innovate and others stagnate despite similar resources?'
+  ],
+  'Founder / Entrepreneur': [
+    'My startup culture was great at 5 people but is breaking down at 25.',
+    'I cannot get my co-founder and I to agree on major decisions anymore.',
+    'My team is talented but risk-averse — nobody takes initiative.',
+    'We have high output but low team satisfaction — something is wrong.'
+  ]
+};
+
+function setRole(btn, role) {
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentRole = role;
+  document.getElementById('role-label').textContent = role;
+  renderExamples();
+}
+
+function renderExamples() {
+  const examples = roleExamples[currentRole] || [];
+  document.getElementById('examples-grid').innerHTML = examples.map(e =>
+    `<div class="example-chip" onclick="useExample(this)">${e}</div>`
+  ).join('');
+}
+
+function useExample(el) {
+  const ta = document.getElementById('org-input');
+  ta.value = el.textContent;
+  onInput(ta);
+}
+
+function onInput(el) {
+  const val = el.value.trim();
+  document.getElementById('char-note').textContent = val.length + ' characters';
+  const btn = document.getElementById('analyse-btn');
+  if (val.length >= 30) btn.classList.add('ready');
+  else btn.classList.remove('ready');
+}
+
+async function runAnalysis() {
+  const input = document.getElementById('org-input').value.trim();
+  if (input.length < 30) return;
+
+  document.getElementById('input-card').style.display = 'none';
+  document.getElementById('blueprint-wrap').style.display = 'none';
+  document.getElementById('loading-card').style.display = 'block';
+
+  const steps = ['ls1','ls2','ls3','ls4'];
+  let si = 0;
+  steps.forEach(s => document.getElementById(s).classList.remove('active'));
+  document.getElementById(steps[0]).classList.add('active');
+  const stepInt = setInterval(() => {
+    if (si < steps.length - 1) {
+      document.getElementById(steps[si]).classList.remove('active');
+      si++;
+      document.getElementById(steps[si]).classList.add('active');
+    }
+  }, 2200);
+
+  const systemPrompt = `You are Velumin Org — the world's most sophisticated free organisational psychology intelligence engine, built by Harsh Vijay More, a psychology student and founder of Velumin. You analyse workplace and organisational challenges through the combined lens of industrial-organisational psychology, behavioural economics, leadership science, social psychology, and organisational behaviour.
+
+Your knowledge base spans 1,000+ peer-reviewed sources including but not limited to: Journal of Applied Psychology, Academy of Management Review, Harvard Business Review, Administrative Science Quarterly, Journal of Organizational Behavior, Leadership Quarterly, Organizational Science, British Journal of Management, Journal of Occupational Psychology, Annual Review of Organizational Psychology, and landmark books by Edmondson, Kahneman, Herzberg, Schein, Senge, Lencioni, Pink, Dweck, Thaler, Deci & Ryan, Bass, Burns, Goleman, Argyris, Bandura, Tuckman, Maslow, McGregor, Hackman, Kotter, Collins, and hundreds more.
+
+ABSOLUTE RULES:
+1. Analyse from a pure psychology and behavioural science perspective. No generic management advice.
+2. Diagnose the ROOT PSYCHOLOGICAL CAUSE — not the surface symptom.
+3. Every single claim requires an inline citation [Author, Year] immediately after it.
+4. Citations must be from REAL verified sources only. Never fabricate.
+5. Use DIVERSE citations — minimum 12, maximum 20. Draw from IO psychology, social psychology, behavioural economics, neuroscience, leadership research, and organisational behaviour.
+6. The action plan must be SPECIFIC, TIMED, and IMPLEMENTABLE — not vague.
+7. Tailor everything to the role: ${currentRole}
+8. Respond ONLY in valid JSON. No markdown. No backticks. No preamble.
+
+JSON STRUCTURE — STRICT:
+{
+  "blueprint_title": "A precise, compelling title for this blueprint (not generic)",
+  "role": "${currentRole}",
+  "root_cause": "2-3 sentences identifying the precise psychological root cause — not the symptom. Reference specific words from their input. Cite [Author, Year] after each claim.",
+  "hidden_dynamics": "2-3 sentences on what is invisible but driving everything — the human dynamics beneath the surface. Cited.",
+  "psychological_diagnosis": "The specific psychological phenomenon at play — name it precisely (e.g. social loafing, learned helplessness, groupthink, psychological safety deficit, attribution error, status quo bias). 2 sentences. Cited.",
+  "action_plan": [
+    {"timeframe": "Day 1-3", "action": "Specific, concrete action grounded in psychology", "why": "The psychological mechanism this targets", "citation": "Author, Year"},
+    {"timeframe": "Week 1", "action": "Specific action", "why": "Psychological mechanism", "citation": "Author, Year"},
+    {"timeframe": "Week 2-3", "action": "Specific action", "why": "Psychological mechanism", "citation": "Author, Year"},
+    {"timeframe": "Month 1", "action": "Specific action", "why": "Psychological mechanism", "citation": "Author, Year"},
+    {"timeframe": "Month 2-3", "action": "Specific action", "why": "Psychological mechanism", "citation": "Author, Year"},
+    {"timeframe": "Ongoing", "action": "Specific systemic change", "why": "Psychological mechanism", "citation": "Author, Year"}
+  ],
+  "if_ignored": "2 sentences on the precise psychological and organisational consequences if nothing changes. Cited.",
+  "ideal_outcome": "2 sentences on the measurable psychological and organisational transformation possible if the blueprint is followed. Cited.",
+  "founder_insight": "One sentence — a powerful psychological insight about this situation that only a trained psychology mind would notice. No citation needed.",
+  "references": [
+    {"key": "Author, Year", "full": "Author, A. A. (Year). Title. Journal/Publisher, volume(issue), pages/DOI."},
+    {"key": "Author, Year", "full": "..."}
+  ]
+}`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 2000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: `Analyse this organisational situation for a ${currentRole}: "${input}"` }]
+      })
+    });
+
+    const data = await response.json();
+    const raw = data.content && data.content[0] ? data.content[0].text : '';
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+
+    clearInterval(stepInt);
+    renderBlueprint(parsed, input);
+
+  } catch(e) {
+    clearInterval(stepInt);
+    document.getElementById('loading-card').style.display = 'none';
+    document.getElementById('input-card').style.display = 'block';
+    document.getElementById('input-card').insertAdjacentHTML('beforebegin',
+      '<div style="background:rgba(201,169,110,0.06);border:0.5px solid rgba(201,169,110,0.2);border-radius:3px;padding:14px 18px;font-size:12px;color:#B4A8D0;margin-bottom:12px;">Unable to generate blueprint right now. Please try again.</div>'
+    );
+  }
+}
+
+function formatCitations(text, refs) {
+  if (!refs || !text) return text;
+  let result = text;
+  refs.forEach(ref => {
+    const key = ref.key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`\\[${key}\\]`, 'g');
+    const tooltip = ref.full.replace(/"/g, '&quot;');
+    result = result.replace(regex,
+      `<span class="cite-ref" data-tooltip="${tooltip}" onmouseenter="showTooltip(event,this)" onmouseleave="hideTooltip()">[${ref.key}]</span>`
+    );
+  });
+  return result;
+}
+
+function renderBlueprint(data, input) {
+  document.getElementById('loading-card').style.display = 'none';
+  const wrap = document.getElementById('blueprint-wrap');
+  wrap.style.display = 'block';
+  const refs = data.references || [];
+  const fc = (text) => formatCitations(text, refs);
+
+  const actionItems = (data.action_plan || []).map(a => `
+    <div class="action-item">
+      <div class="action-day">${a.timeframe}</div>
+      <div class="action-text"><strong style="color:#E8E4F0;font-weight:500;">${a.action}</strong><br><span style="color:#7B6FA0;font-size:11px;margin-top:4px;display:block;">Why: ${a.why} <span class="cite-ref" data-tooltip="${(refs.find(r=>r.key===a.citation)||{full:a.citation}).full||a.citation}" onmouseenter="showTooltip(event,this)" onmouseleave="hideTooltip()">[${a.citation}]</span></span></div>
+    </div>`).join('');
+
+  const refsHtml = refs.map(r =>
+    `<div class="ref-item"><strong>${r.key}</strong>${r.full}</div>`
+  ).join('');
+
+  wrap.innerHTML = `
+    <div class="blueprint-header">
+      <div class="blueprint-eyebrow">One-Page Psychological Blueprint · Velumin Org</div>
+      <div class="blueprint-title">${data.blueprint_title || 'Organisational Psychology Blueprint'}</div>
+      <div class="blueprint-meta">
+        <span class="blueprint-tag gold">${data.role || currentRole}</span>
+        <span class="blueprint-tag">${refs.length} citations</span>
+        <span class="blueprint-tag">Generated ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</span>
+        <span class="blueprint-tag">Velumin Org · Harsh Vijay More</span>
+      </div>
+    </div>
+
+    <div class="bp-section">
+      <div class="bp-section-num">SECTION 01</div>
+      <div class="bp-section-title">Root Psychological Cause</div>
+      <div class="bp-section-body">${fc(data.root_cause)}</div>
+    </div>
+    <div class="bp-divider"></div>
+
+    <div class="bp-section">
+      <div class="bp-section-num">SECTION 02</div>
+      <div class="bp-section-title">Hidden Human Dynamics</div>
+      <div class="bp-section-body">${fc(data.hidden_dynamics)}</div>
+    </div>
+    <div class="bp-divider"></div>
+
+    <div class="bp-section">
+      <div class="bp-section-num">SECTION 03</div>
+      <div class="bp-section-title">Psychological Diagnosis</div>
+      <div class="bp-section-body">${fc(data.psychological_diagnosis)}</div>
+    </div>
+    <div class="bp-divider"></div>
+
+    <div class="bp-section">
+      <div class="bp-section-num">SECTION 04</div>
+      <div class="bp-section-title">Six-Stage Action Plan</div>
+      <div class="bp-section-body" style="margin-bottom:14px;">Each action is grounded in a specific psychological mechanism — not intuition, not best practice, but science.</div>
+      <div class="action-grid">${actionItems}</div>
+    </div>
+    <div class="bp-divider"></div>
+
+    <div class="bp-section">
+      <div class="bp-section-num">SECTION 05</div>
+      <div class="bp-section-title">Risk & Outcome Projection</div>
+      <div class="dual-grid">
+        <div class="dual-card">
+          <div class="dual-label label-risk">If ignored</div>
+          <div class="dual-body">${fc(data.if_ignored)}</div>
+        </div>
+        <div class="dual-card">
+          <div class="dual-label label-outcome">If followed</div>
+          <div class="dual-body">${fc(data.ideal_outcome)}</div>
+        </div>
+      </div>
+    </div>
+    <div class="bp-divider"></div>
+
+    <div class="bp-section" style="border-radius:0 0 4px 4px;background:#0E0B1A;border-left:2px solid #C9A96E;">
+      <div class="bp-section-num">FOUNDER'S INSIGHT</div>
+      <div class="bp-section-body" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#D4CDED;">${data.founder_insight}</div>
+      <div style="margin-top:8px;font-size:10px;color:rgba(123,111,160,0.4);font-style:normal;font-family:'DM Sans',sans-serif;">— Harsh Vijay More, Founder, Velumin</div>
+    </div>
+
+    <div class="refs-toggle" onclick="toggleRefs()">
+      <div class="refs-toggle-left">
+        <div class="refs-num">${refs.length}</div>
+        <div class="refs-count">Academic references & citations</div>
+      </div>
+      <span class="refs-icon" id="refs-icon">↓</span>
+    </div>
+    <div class="refs-panel" id="refs-panel">
+      <div class="refs-grid">${refsHtml}</div>
+    </div>
+
+    <div class="blueprint-actions">
+      <button class="btn-new-analysis" onclick="newAnalysis()">New analysis</button>
+      <button class="btn-download" onclick="printBlueprint()">Download blueprint as PDF</button>
+    </div>`;
+
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function toggleRefs() {
+  document.getElementById('refs-panel').classList.toggle('open');
+  document.getElementById('refs-icon').classList.toggle('open');
+}
+
+function showTooltip(e, el) {
+  const t = document.getElementById('cite-tooltip');
+  t.textContent = el.dataset.tooltip;
+  t.style.opacity = '1';
+  const rect = el.getBoundingClientRect();
+  t.style.left = Math.min(rect.left, window.innerWidth - 360) + 'px';
+  t.style.top = (rect.top - 80) + 'px';
+}
+function hideTooltip() { document.getElementById('cite-tooltip').style.opacity = '0'; }
+
+function newAnalysis() {
+  document.getElementById('blueprint-wrap').style.display = 'none';
+  document.getElementById('input-card').style.display = 'block';
+  document.getElementById('org-input').value = '';
+  document.getElementById('char-note').textContent = 'Minimum 30 characters';
+  document.getElementById('analyse-btn').classList.remove('ready');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function printBlueprint() {
+  window.print();
+}
+
+renderExamples();
+</script>
+</body>
+</html>
