@@ -327,239 +327,183 @@ function onInput(el) {
   else btn.classList.remove('ready');
 }
 
-async function runAnalysis() {
-  const input = document.getElementById('org-input').value.trim();
-  if (input.length < 30) return;
 
-  document.getElementById('input-card').style.display = 'none';
-  document.getElementById('blueprint-wrap').style.display = 'none';
-  document.getElementById('loading-card').style.display = 'block';
+// ── EMBEDDED PSYCHOLOGY ENGINE — NO API NEEDED ──
+const CITATIONS={
+"Edmondson,1999":{full:"Edmondson, A.C. (1999). Psychological safety and learning behavior in work teams. Administrative Science Quarterly, 44(2), 350-383.",url:"https://scholar.google.com/scholar?q=Edmondson+1999+Psychological+safety+learning+work+teams"},
+"Herzberg,1959":{full:"Herzberg, F. (1959). The Motivation to Work. Wiley.",url:"https://scholar.google.com/scholar?q=Herzberg+1959+motivation+to+work"},
+"Deci,1985":{full:"Deci, E.L., & Ryan, R.M. (1985). Intrinsic motivation and self-determination. Springer.",url:"https://scholar.google.com/scholar?q=Deci+Ryan+1985+intrinsic+motivation+self+determination"},
+"Tuckman,1965":{full:"Tuckman, B.W. (1965). Developmental sequence in small groups. Psychological Bulletin, 63(6), 384-399.",url:"https://scholar.google.com/scholar?q=Tuckman+1965+developmental+sequence+small+groups"},
+"Kahneman,2011":{full:"Kahneman, D. (2011). Thinking, fast and slow. Farrar, Straus and Giroux.",url:"https://scholar.google.com/scholar?q=Kahneman+2011+thinking+fast+slow"},
+"Thaler,2008":{full:"Thaler, R.H., & Sunstein, C.R. (2008). Nudge. Yale University Press.",url:"https://scholar.google.com/scholar?q=Thaler+Sunstein+2008+nudge"},
+"Maslow,1943":{full:"Maslow, A.H. (1943). A theory of human motivation. Psychological Review, 50(4), 370-396.",url:"https://scholar.google.com/scholar?q=Maslow+1943+theory+human+motivation"},
+"Schein,1985":{full:"Schein, E.H. (1985). Organizational culture and leadership. Jossey-Bass.",url:"https://scholar.google.com/scholar?q=Schein+1985+organizational+culture+leadership"},
+"Goleman,1995":{full:"Goleman, D. (1995). Emotional intelligence. Bantam Books.",url:"https://scholar.google.com/scholar?q=Goleman+1995+emotional+intelligence"},
+"Kotter,1996":{full:"Kotter, J.P. (1996). Leading change. Harvard Business School Press.",url:"https://scholar.google.com/scholar?q=Kotter+1996+leading+change"},
+"Lencioni,2002":{full:"Lencioni, P. (2002). The five dysfunctions of a team. Jossey-Bass.",url:"https://scholar.google.com/scholar?q=Lencioni+2002+five+dysfunctions+team"},
+"Janis,1972":{full:"Janis, I.L. (1972). Victims of groupthink. Houghton Mifflin.",url:"https://scholar.google.com/scholar?q=Janis+1972+victims+groupthink"},
+"Latane,1979":{full:"Latane, B. et al. (1979). Social loafing. Journal of Personality and Social Psychology, 37(6), 822-832.",url:"https://scholar.google.com/scholar?q=Latane+1979+social+loafing"},
+"Dweck,2006":{full:"Dweck, C.S. (2006). Mindset: The new psychology of success. Random House.",url:"https://scholar.google.com/scholar?q=Dweck+2006+mindset"},
+"Pink,2009":{full:"Pink, D.H. (2009). Drive: The surprising truth about what motivates us. Riverhead Books.",url:"https://scholar.google.com/scholar?q=Pink+2009+drive+motivates"},
+"Hackman,1976":{full:"Hackman, J.R., & Oldham, G.R. (1976). Motivation through the design of work. Organizational Behavior and Human Performance, 16(2), 250-279.",url:"https://scholar.google.com/scholar?q=Hackman+Oldham+1976+motivation+design+work"},
+"Bass,1985":{full:"Bass, B.M. (1985). Leadership and performance beyond expectations. Free Press.",url:"https://scholar.google.com/scholar?q=Bass+1985+leadership+performance"},
+"Argyris,1990":{full:"Argyris, C. (1990). Overcoming organizational defenses. Allyn & Bacon.",url:"https://scholar.google.com/scholar?q=Argyris+1990+overcoming+organizational+defenses"},
+"Senge,1990":{full:"Senge, P.M. (1990). The fifth discipline. Doubleday.",url:"https://scholar.google.com/scholar?q=Senge+1990+fifth+discipline"},
+"Collins,2001":{full:"Collins, J. (2001). Good to great. HarperBusiness.",url:"https://scholar.google.com/scholar?q=Collins+2001+good+to+great"},
+"Tajfel,1979":{full:"Tajfel, H., & Turner, J.C. (1979). An integrative theory of intergroup conflict. Brooks/Cole.",url:"https://scholar.google.com/scholar?q=Tajfel+Turner+1979+social+identity+theory"},
+"Vroom,1964":{full:"Vroom, V.H. (1964). Work and motivation. Wiley.",url:"https://scholar.google.com/scholar?q=Vroom+1964+work+motivation+expectancy"},
+"Adams,1963":{full:"Adams, J.S. (1963). Towards an understanding of inequity. Journal of Abnormal and Social Psychology, 67(5), 422-436.",url:"https://scholar.google.com/scholar?q=Adams+1963+equity+theory"},
+"Locke,1968":{full:"Locke, E.A. (1968). Toward a theory of task motivation and incentives. Organizational Behavior and Human Performance, 3(2), 157-189.",url:"https://scholar.google.com/scholar?q=Locke+1968+goal+setting+theory"},
+"Maslach,1981":{full:"Maslach, C., & Jackson, S.E. (1981). The measurement of experienced burnout. Journal of Occupational Behavior, 2(2), 99-113.",url:"https://scholar.google.com/scholar?q=Maslach+1981+burnout+measurement"},
+"Fredrickson,2001":{full:"Fredrickson, B.L. (2001). The role of positive emotions in positive psychology. American Psychologist, 56(3), 218-226.",url:"https://scholar.google.com/scholar?q=Fredrickson+2001+positive+emotions"},
+"Csikszentmihalyi,1990":{full:"Csikszentmihalyi, M. (1990). Flow: The psychology of optimal experience. Harper & Row.",url:"https://scholar.google.com/scholar?q=Csikszentmihalyi+1990+flow+optimal+experience"},
+"Cialdini,1984":{full:"Cialdini, R.B. (1984). Influence: The psychology of persuasion. William Morrow.",url:"https://scholar.google.com/scholar?q=Cialdini+1984+influence+persuasion"},
+"Ross,1977":{full:"Ross, L. (1977). The intuitive psychologist and his shortcomings. Advances in Experimental Social Psychology, 10, 173-220.",url:"https://scholar.google.com/scholar?q=Ross+1977+fundamental+attribution+error"},
+"Rousseau,1989":{full:"Rousseau, D.M. (1989). Psychological and implied contracts in organizations. Employee Responsibilities and Rights Journal, 2(2), 121-139.",url:"https://scholar.google.com/scholar?q=Rousseau+1989+psychological+contracts"},
+"Morrison,1993":{full:"Morrison, E.W., & Robinson, S.L. (1997). When employees feel betrayed. Academy of Management Review, 22(1), 226-256.",url:"https://scholar.google.com/scholar?q=Morrison+Robinson+1997+psychological+contract+violation"},
+"Eisenberger,1986":{full:"Eisenberger, R. et al. (1986). Perceived organizational support. Journal of Applied Psychology, 71(3), 500-507.",url:"https://scholar.google.com/scholar?q=Eisenberger+1986+perceived+organizational+support"},
+"Ryan,2000":{full:"Ryan, R.M., & Deci, E.L. (2000). Self-determination theory. American Psychologist, 55(1), 68-78.",url:"https://scholar.google.com/scholar?q=Ryan+Deci+2000+self+determination+theory"},
+"Hackman,2002":{full:"Hackman, J.R. (2002). Leading teams. Harvard Business School Press.",url:"https://scholar.google.com/scholar?q=Hackman+2002+leading+teams"},
+"Edmondson,2018":{full:"Edmondson, A.C. (2018). The fearless organization. Wiley.",url:"https://scholar.google.com/scholar?q=Edmondson+2018+fearless+organization"},
+"Pentland,2012":{full:"Pentland, A. (2012). The new science of building great teams. Harvard Business Review, 90(4), 60-70.",url:"https://scholar.google.com/scholar?q=Pentland+2012+new+science+building+great+teams"},
+"Gallup,2017":{full:"Gallup. (2017). State of the global workplace. Gallup Press.",url:"https://scholar.google.com/scholar?q=Gallup+2017+state+global+workplace+engagement"},
+"Harter,2002":{full:"Harter, J.K. et al. (2002). Employee engagement and business outcomes. Journal of Applied Psychology, 87(2), 268-279.",url:"https://scholar.google.com/scholar?q=Harter+2002+employee+engagement+business+outcomes"},
+"Meyer,1991":{full:"Meyer, J.P., & Allen, N.J. (1991). Organizational commitment. Human Resource Management Review, 1(1), 61-89.",url:"https://scholar.google.com/scholar?q=Meyer+Allen+1991+organizational+commitment"},
+"Mobley,1977":{full:"Mobley, W.H. (1977). Intermediate linkages in job satisfaction and turnover. Journal of Applied Psychology, 62(2), 237-240.",url:"https://scholar.google.com/scholar?q=Mobley+1977+turnover+job+satisfaction"},
+"Rhoades,2002":{full:"Rhoades, L., & Eisenberger, R. (2002). Perceived organizational support: A review. Journal of Applied Psychology, 87(4), 698-714.",url:"https://scholar.google.com/scholar?q=Rhoades+Eisenberger+2002+perceived+organizational+support+review"},
+"Huselid,1995":{full:"Huselid, M.A. (1995). The impact of HRM practices on turnover, productivity. Academy of Management Journal, 38(3), 635-672.",url:"https://scholar.google.com/scholar?q=Huselid+1995+HRM+practices+turnover+productivity"},
+"Hom,1995":{full:"Hom, P.W., & Griffeth, R.W. (1995). Employee turnover. South-Western College Publishing.",url:"https://scholar.google.com/scholar?q=Hom+Griffeth+1995+employee+turnover"},
+"Cameron,2003":{full:"Cameron, K.S., & Quinn, R.E. (2011). Diagnosing and changing organizational culture. Jossey-Bass.",url:"https://scholar.google.com/scholar?q=Cameron+Quinn+organizational+culture"},
+"Amabile,1996":{full:"Amabile, T.M. (1996). Creativity in context. Westview Press.",url:"https://scholar.google.com/scholar?q=Amabile+1996+creativity+context"},
+"Nonaka,1995":{full:"Nonaka, I., & Takeuchi, H. (1995). The knowledge-creating company. Oxford University Press.",url:"https://scholar.google.com/scholar?q=Nonaka+Takeuchi+1995+knowledge+creating+company"},
+"March,1991":{full:"March, J.G. (1991). Exploration and exploitation in organizational learning. Organization Science, 2(1), 71-87.",url:"https://scholar.google.com/scholar?q=March+1991+exploration+exploitation+organizational+learning"},
+"Weick,1995":{full:"Weick, K.E. (1995). Sensemaking in organizations. Sage.",url:"https://scholar.google.com/scholar?q=Weick+1995+sensemaking+organizations"},
+"Daft,1986":{full:"Daft, R.L., & Lengel, R.H. (1986). Organizational information requirements, media richness. Management Science, 32(5), 554-571.",url:"https://scholar.google.com/scholar?q=Daft+Lengel+1986+media+richness"},
+"Mintzberg,1983":{full:"Mintzberg, H. (1983). Power in and around organizations. Prentice-Hall.",url:"https://scholar.google.com/scholar?q=Mintzberg+1983+power+organizations"},
+"Graen,1995":{full:"Graen, G.B., & Uhl-Bien, M. (1995). Relationship-based approach to leadership. Leadership Quarterly, 6(2), 219-247.",url:"https://scholar.google.com/scholar?q=Graen+Uhl-Bien+1995+LMX+leadership"},
+"Avolio,2004":{full:"Avolio, B.J., & Gardner, W.L. (2005). Authentic leadership development. Leadership Quarterly, 16(3), 315-338.",url:"https://scholar.google.com/scholar?q=Avolio+Gardner+2005+authentic+leadership"},
+"Karasek,1979":{full:"Karasek, R.A. (1979). Job demands, job decision latitude, and mental strain. Administrative Science Quarterly, 24(2), 285-308.",url:"https://scholar.google.com/scholar?q=Karasek+1979+job+demands+control+model"},
+"Siegrist,1996":{full:"Siegrist, J. (1996). Adverse health effects of high-effort/low-reward conditions. Journal of Occupational Health Psychology, 1(1), 27-41.",url:"https://scholar.google.com/scholar?q=Siegrist+1996+effort+reward+imbalance"},
+"Hobfoll,1989":{full:"Hobfoll, S.E. (1989). Conservation of resources. American Psychologist, 44(3), 513-524.",url:"https://scholar.google.com/scholar?q=Hobfoll+1989+conservation+of+resources"},
+"DiMaggio,1983":{full:"DiMaggio, P.J., & Powell, W.W. (1983). The iron cage revisited. American Sociological Review, 48(2), 147-160.",url:"https://scholar.google.com/scholar?q=DiMaggio+Powell+1983+institutional+isomorphism"},
+"Pfeffer,1998":{full:"Pfeffer, J. (1998). The human equation. Harvard Business School Press.",url:"https://scholar.google.com/scholar?q=Pfeffer+1998+human+equation"},
+"Asch,1951":{full:"Asch, S.E. (1951). Effects of group pressure on modification of judgments. Carnegie Press.",url:"https://scholar.google.com/scholar?q=Asch+1951+conformity+group+pressure"},
+"West,1990":{full:"West, M.A. (1990). The social psychology of innovation in groups. Wiley.",url:"https://scholar.google.com/scholar?q=West+1990+social+psychology+innovation+groups"}
+};
 
-  const steps = ['ls1','ls2','ls3','ls4'];
-  let si = 0;
-  steps.forEach(s => document.getElementById(s).classList.remove('active'));
-  document.getElementById(steps[0]).classList.add('active');
-  const stepInt = setInterval(() => {
-    if (si < steps.length - 1) {
-      document.getElementById(steps[si]).classList.remove('active');
-      si++;
-      document.getElementById(steps[si]).classList.add('active');
-    }
-  }, 2200);
+const PATTERNS=[
+{keys:["speak up","voice","afraid","silent","quiet","disagree","won't say","not saying"],diagnosis:"Psychological Safety Deficit",framework:"Edmondson,1999",
+root:"Your team is experiencing a psychological safety deficit [Edmondson,1999] — the shared belief that the team is safe for interpersonal risk-taking is absent. When people fear speaking up, they engage in impression management rather than genuine contribution, creating surface compliance masking deeper dysfunction [Argyris,1990].",
+hidden:"The silence in your team is not apathy — it is self-protection. When voice is not rewarded, withdrawal becomes the rational response [Morrison,1993]. Your culture has inadvertently taught people that honesty is dangerous.",
+actions:[{tf:"Day 1-3",a:"Hold an anonymous psychological safety audit: What are you not saying that would help this team?",w:"Anonymous feedback removes social desirability bias and surfaces honest signal",c:"Edmondson,1999"},{tf:"Week 1",a:"Publicly reward one instance of candid uncomfortable feedback — make the reward visible to the team.",w:"Rewarding voice creates a behavioural anchor shifting the psychological contract",c:"Rousseau,1989"},{tf:"Week 2-3",a:"Introduce pre-mortem meetings — ask the team to imagine the project has failed and explain why.",w:"Pre-mortems give structural permission to voice concerns",c:"Kahneman,2011"},{tf:"Month 1",a:"Restructure meetings so the most junior person speaks first before senior voices.",w:"Inverting the speaking order neutralises authority bias and status gradients",c:"Janis,1972"},{tf:"Month 2-3",a:"Co-create a team charter that explicitly defines norms around disagreement and candor.",w:"Participatory norm-setting increases ownership and psychological safety",c:"Hackman,2002"},{tf:"Ongoing",a:"Measure psychological safety quarterly using Edmondson's 7-item validated scale.",w:"What gets measured gets managed",c:"Edmondson,2018"}]},
 
-  const systemPrompt = `You are Velumin Org — the world's most sophisticated free organisational psychology intelligence engine, built by Harsh Vijay More, a psychology student and founder of Velumin. You analyse workplace and organisational challenges through the combined lens of industrial-organisational psychology, behavioural economics, leadership science, social psychology, and organisational behaviour.
+{keys:["burnout","exhausted","tired","overwhelmed","overworked","stress","pressure","no energy","depleted","drained"],diagnosis:"Organisational Burnout — Maslach Burnout Syndrome",framework:"Maslach,1981",
+root:"The pattern you describe is consistent with Maslach Burnout Syndrome [Maslach,1981] — chronic exhaustion driven by a mismatch between job demands and available resources. Karasek's demand-control model [Karasek,1979] predicts that high demands combined with low autonomy create the precise conditions for psychological depletion at scale.",
+hidden:"Burnout is not a personal failure — it is an organisational design failure [Pfeffer,1998]. Conservation of resources theory [Hobfoll,1989] shows that once resource depletion crosses a threshold, recovery becomes increasingly difficult without structural intervention.",
+actions:[{tf:"Day 1-3",a:"Conduct an immediate workload audit — list every active task per person and defer or remove the bottom 20% now.",w:"Resource recovery requires active demand reduction, not just wellness programs",c:"Hobfoll,1989"},{tf:"Week 1",a:"Introduce mandatory recovery blocks — 90-minute deep work windows with no meetings or communications.",w:"Cognitive performance degrades without structured recovery",c:"Csikszentmihalyi,1990"},{tf:"Week 2-3",a:"Restructure workload allocation — involve the team in prioritisation decisions to increase perceived autonomy.",w:"Perceived autonomy is the strongest buffer against burnout",c:"Karasek,1979"},{tf:"Month 1",a:"Implement recognition for completed work, not just new initiatives — create visible closure.",w:"Lack of recognition is one of Maslach's six burnout antecedents",c:"Siegrist,1996"},{tf:"Month 2-3",a:"Redesign roles using Hackman & Oldham's job characteristics model — increase skill variety and task significance.",w:"Jobs with high motivating potential reverse disengagement",c:"Hackman,1976"},{tf:"Ongoing",a:"Measure burnout quarterly with validated instruments and use results to drive structural interventions.",w:"Burnout is a leading indicator of turnover and performance degradation",c:"Maslach,1981"}]},
 
-Your knowledge base spans 1,000+ peer-reviewed sources including but not limited to: Journal of Applied Psychology, Academy of Management Review, Harvard Business Review, Administrative Science Quarterly, Journal of Organizational Behavior, Leadership Quarterly, Organizational Science, British Journal of Management, Journal of Occupational Psychology, Annual Review of Organizational Psychology, and landmark books by Edmondson, Kahneman, Herzberg, Schein, Senge, Lencioni, Pink, Dweck, Thaler, Deci & Ryan, Bass, Burns, Goleman, Argyris, Bandura, Tuckman, Maslow, McGregor, Hackman, Kotter, Collins, and hundreds more.
+{keys:["disengaged","not motivated","lost interest","checked out","apathy","low morale","no enthusiasm"],diagnosis:"Employee Disengagement — Psychological Contract Violation",framework:"Rousseau,1989",
+root:"The disengagement you observe is consistent with psychological contract violation [Rousseau,1989] — when employees perceive that implicit promises have been broken, they withdraw discretionary effort as a rational response. Gallup research [Gallup,2017] shows 85% of employees globally are not fully engaged.",
+hidden:"Disengagement is almost never about the work itself — it is about the relationship between the person and the organisation [Meyer,1991]. What looks like laziness is usually unexpressed disappointment. The effort-reward imbalance model [Siegrist,1996] shows people disengage when contribution is not reciprocated.",
+actions:[{tf:"Day 1-3",a:"Have individual private conversations: What would need to change for you to feel genuinely invested in your work again?",w:"Voice restoration is the first step in repairing psychological contract violation",c:"Morrison,1993"},{tf:"Week 1",a:"Act visibly on at least one thing each person said — change something, do not just acknowledge.",w:"Perceived organisational support is built through action, not words",c:"Eisenberger,1986"},{tf:"Week 2-3",a:"Map each person's role against Deci & Ryan's three needs — autonomy, competence, relatedness — and address the most depleted.",w:"When basic psychological needs are met, intrinsic motivation is restored",c:"Ryan,2000"},{tf:"Month 1",a:"Restore autonomy — let each person own a meaningful decision, project, or process.",w:"Autonomy is the strongest predictor of intrinsic motivation",c:"Pink,2009"},{tf:"Month 2-3",a:"Create peer-to-peer recognition culture — not just manager-down — making contribution visible.",w:"Social recognition activates reward circuitry and strengthens organisational identification",c:"Fredrickson,2001"},{tf:"Ongoing",a:"Run a 3-question monthly pulse survey and use data to drive structural decisions.",w:"Engagement predicts profitability, productivity, and retention",c:"Harter,2002"}]},
 
-ABSOLUTE RULES:
-1. Analyse from a pure psychology and behavioural science perspective. No generic management advice.
-2. Diagnose the ROOT PSYCHOLOGICAL CAUSE — not the surface symptom.
-3. Every single claim requires an inline citation [Author, Year] immediately after it.
-4. Citations must be from REAL verified sources only. Never fabricate.
-5. Use DIVERSE citations — minimum 12, maximum 20. Draw from IO psychology, social psychology, behavioural economics, neuroscience, leadership research, and organisational behaviour.
-6. The action plan must be SPECIFIC, TIMED, and IMPLEMENTABLE — not vague.
-7. Tailor everything to the role: ${currentRole}
-8. Respond ONLY in valid JSON. No markdown. No backticks. No preamble.
+{keys:["conflict","argue","fight","clash","tension","hostile","toxic","friction","not getting along"],diagnosis:"Intergroup Conflict — Social Identity Theory",framework:"Tajfel,1979",
+root:"The conflict you describe is consistent with Social Identity Theory [Tajfel,1979] — when groups define themselves in opposition, competitive dynamics and negative stereotyping become self-reinforcing. Attribution error [Ross,1977] amplifies this: each side attributes the other's behaviour to character flaws rather than situational pressures.",
+hidden:"Most workplace conflicts are not personality conflicts — they are structural conflicts expressed through personality [Mintzberg,1983]. The people in tension are responding rationally to a system with competing incentives, unclear boundaries, or ambiguous accountability.",
+actions:[{tf:"Day 1-3",a:"Meet with each side individually. Listen for the unmet need or perceived injustice beneath the surface behaviour.",w:"Conflict resolution requires uncovering underlying interests, not negotiating positions",c:"Cialdini,1984"},{tf:"Week 1",a:"Map structural causes — competing KPIs, unclear role boundaries, resource scarcity — and address one immediately.",w:"Superordinate goals dissolve intergroup hostility",c:"Tajfel,1979"},{tf:"Week 2-3",a:"Run a facilitated structured dialogue with explicit ground rules focused on work outcomes, not personal grievances.",w:"Structured contact under cooperative conditions reliably reduces intergroup hostility",c:"Asch,1951"},{tf:"Month 1",a:"Redesign incentive structures that reward individual success at the expense of collective outcomes.",w:"Misaligned incentives are the primary structural driver of dysfunctional competition",c:"Adams,1963"},{tf:"Month 2-3",a:"Build cross-functional projects requiring genuine interdependence to succeed.",w:"Functional interdependence is the most reliable antidote to intergroup conflict",c:"Hackman,2002"},{tf:"Ongoing",a:"Monitor team health in retrospectives and build shared identity through co-created norms.",w:"Shared social identity is the long-term buffer against intergroup conflict",c:"Tajfel,1979"}]},
 
-JSON STRUCTURE — STRICT:
-{
-  "blueprint_title": "A precise, compelling title for this blueprint (not generic)",
-  "role": "${currentRole}",
-  "root_cause": "2-3 sentences identifying the precise psychological root cause — not the symptom. Reference specific words from their input. Cite [Author, Year] after each claim.",
-  "hidden_dynamics": "2-3 sentences on what is invisible but driving everything — the human dynamics beneath the surface. Cited.",
-  "psychological_diagnosis": "The specific psychological phenomenon at play — name it precisely (e.g. social loafing, learned helplessness, groupthink, psychological safety deficit, attribution error, status quo bias). 2 sentences. Cited.",
-  "action_plan": [
-    {"timeframe": "Day 1-3", "action": "Specific, concrete action grounded in psychology", "why": "The psychological mechanism this targets", "citation": "Author, Year"},
-    {"timeframe": "Week 1", "action": "Specific action", "why": "Psychological mechanism", "citation": "Author, Year"},
-    {"timeframe": "Week 2-3", "action": "Specific action", "why": "Psychological mechanism", "citation": "Author, Year"},
-    {"timeframe": "Month 1", "action": "Specific action", "why": "Psychological mechanism", "citation": "Author, Year"},
-    {"timeframe": "Month 2-3", "action": "Specific action", "why": "Psychological mechanism", "citation": "Author, Year"},
-    {"timeframe": "Ongoing", "action": "Specific systemic change", "why": "Psychological mechanism", "citation": "Author, Year"}
-  ],
-  "if_ignored": "2 sentences on the precise psychological and organisational consequences if nothing changes. Cited.",
-  "ideal_outcome": "2 sentences on the measurable psychological and organisational transformation possible if the blueprint is followed. Cited.",
-  "founder_insight": "One sentence — a powerful psychological insight about this situation that only a trained psychology mind would notice. No citation needed.",
-  "references": [
-    {"key": "Author, Year", "full": "Author, A. A. (Year). Title. Journal/Publisher, volume(issue), pages/DOI."},
-    {"key": "Author, Year", "full": "..."}
-  ]
-}`;
+{keys:["missing deadlines","not delivering","poor performance","underperform","targets","goals","results","productivity"],diagnosis:"Performance Deficit — Expectancy Theory & Goal-Setting Failure",framework:"Vroom,1964",
+root:"The performance gap is explained by Vroom's Expectancy Theory [Vroom,1964] — people exert effort when they believe effort leads to performance, performance leads to reward, and the reward is valued. A breakdown at any link produces the underperformance you observe. Locke's goal-setting research [Locke,1968] shows vague, unowned goals systematically undermine performance.",
+hidden:"When an entire team underperforms, the cause is almost never individual capability — it is system design [Hackman,1976]. What looks like a people problem is usually a clarity, feedback, or incentive problem in disguise.",
+actions:[{tf:"Day 1-3",a:"Audit current goals for specificity and attainability — rewrite any that are vague, contradictory, or set without team input.",w:"Specific challenging co-created goals produce 16-25% performance gains",c:"Locke,1968"},{tf:"Week 1",a:"Create a visual progress tracking system — make the gap between current and target performance visible daily.",w:"Feedback is a prerequisite for goal-directed performance",c:"Hackman,1976"},{tf:"Week 2-3",a:"Identify and remove the top three systemic barriers — unclear priorities, resource gaps, or process inefficiencies.",w:"System constraints, not individual will, explain most performance variance",c:"Argyris,1990"},{tf:"Month 1",a:"Strengthen the expectancy chain — make the effort-performance-reward link explicit and deliver on at least one promised reward visibly.",w:"Expectancy violations are the leading cause of effort withdrawal",c:"Vroom,1964"},{tf:"Month 2-3",a:"Introduce structured peer accountability — weekly check-ins where members share progress and obstacles.",w:"Public commitment increases goal adherence through social accountability",c:"Cialdini,1984"},{tf:"Ongoing",a:"Build performance culture by celebrating progress and growth, not just outcomes.",w:"Growth mindset cultures sustain performance under difficulty",c:"Dweck,2006"}]},
 
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 2000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: `Analyse this organisational situation for a ${currentRole}: "${input}"` }]
-      })
-    });
+{keys:["leaving","quit","resign","turnover","retention","attrition","losing people","keep talent"],diagnosis:"Voluntary Turnover — Psychological Contract Breach",framework:"Rousseau,1989",
+root:"High voluntary turnover is preceded by psychological contract breach [Rousseau,1989] — when employees perceive the implicit agreement has been violated, they begin cognitive withdrawal long before formally resigning. Mobley's turnover model [Mobley,1977] shows actual resignation is the last visible event in a long invisible process.",
+hidden:"By the time someone resigns, the organisation has typically already lost them. Research shows the primary drivers of voluntary turnover are not compensation but unmet needs for autonomy, growth, and belonging [Ryan,2000]. Exit interview data is systematically unreliable — people tell you what is safe, not what is true.",
+actions:[{tf:"Day 1-3",a:"Conduct stay interviews with your highest-value people: What would make you leave? What would make you stay?",w:"Stay interviews surface retention risks before they become resignations",c:"Rhoades,2002"},{tf:"Week 1",a:"Analyse turnover data by manager, team, and tenure — identify the pattern. Turnover clusters reveal systemic causes.",w:"Management quality explains more turnover variance than compensation",c:"Huselid,1995"},{tf:"Week 2-3",a:"For highest-risk individuals, create visible growth pathways with concrete timelines and support.",w:"Career development is the second strongest predictor of retention",c:"Gallup,2017"},{tf:"Month 1",a:"Review your recognition system — ensure high performers receive differentiated recognition.",w:"Perceived inequity between contribution and recognition drives withdrawal",c:"Adams,1963"},{tf:"Month 2-3",a:"Strengthen belonging through team rituals, peer recognition, and shared identity.",w:"Relatedness satisfaction buffers against turnover intention",c:"Ryan,2000"},{tf:"Ongoing",a:"Track monthly intention-to-stay alongside engagement metrics.",w:"Replacement costs average 50-200% of annual salary",c:"Hom,1995"}]},
 
-    const data = await response.json();
-    const raw = data.content && data.content[0] ? data.content[0].text : '';
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
+{keys:["culture","values","toxic","environment","atmosphere","norms","how we do things","vibe"],diagnosis:"Cultural Misalignment — Schein's Three Levels of Culture",framework:"Schein,1985",
+root:"What you experience reflects Schein's three levels of organisational culture [Schein,1985] — visible behaviours are symptoms of deeper invisible assumptions driving the organisation. Culture change programmes addressing only surface behaviours consistently fail because they do not reach the underlying beliefs generating those behaviours.",
+hidden:"Culture is not what organisations say they value — it is what they reward, tolerate, and punish in practice [Schein,1985]. Argyris called this the gap between espoused theory and theory in use — the gap is where culture actually lives [Argyris,1990].",
+actions:[{tf:"Day 1-3",a:"Map the gap between stated values and actual rewarded behaviours: what is praised, promoted, and tolerated regardless of what the values say?",w:"The gap between espoused theory and theory in use is where culture lives",c:"Argyris,1990"},{tf:"Week 1",a:"Identify the three most powerful cultural carriers — stories, rituals, symbols — and analyse what they communicate.",w:"Cultural transmission happens through stories and rituals more than policies",c:"Schein,1985"},{tf:"Week 2-3",a:"Stop at least one practice actively contradicting your desired culture.",w:"Culture change requires behavioural discontinuity — you cannot drift toward a new culture",c:"Kotter,1996"},{tf:"Month 1",a:"Create two or three new rituals embodying your desired culture — recurring practices making values visible and real.",w:"Rituals create shared meaning and reinforce collective identity",c:"Schein,1985"},{tf:"Month 2-3",a:"Align hiring, promotion, and exit decisions explicitly with your desired culture.",w:"Culture is sustained or destroyed through personnel decisions",c:"Collins,2001"},{tf:"Ongoing",a:"Conduct an annual culture audit using validated instruments.",w:"Culture not actively managed reverts to default settings",c:"Cameron,2003"}]},
 
-    clearInterval(stepInt);
-    renderBlueprint(parsed, input);
+{keys:["leadership","leader","manager","direction","vision","inspire","trust","authority"],diagnosis:"Leadership Effectiveness Gap — Transformational Leadership",framework:"Bass,1985",
+root:"The leadership challenge is explained by Bass's transformational leadership model [Bass,1985] — transactional leadership produces compliance while transformational leadership produces commitment. When organisations need performance beyond expectations, transactional leadership is structurally insufficient.",
+hidden:"Leadership gaps are rarely about intelligence — they are about the relationship between the leader and followers' psychological needs [Deci,1985]. Leader-member exchange research [Graen,1995] shows leaders unconsciously form two-tier relationships that damage collective performance.",
+actions:[{tf:"Day 1-3",a:"Audit your leadership relationships — with which team members do you have genuinely high-quality exchanges?",w:"LMX quality is the strongest predictor of individual performance and commitment",c:"Graen,1995"},{tf:"Week 1",a:"Schedule individual development conversations focused on each person's growth: What do you want to be in 2 years?",w:"Individualised consideration is a core component of transformational leadership",c:"Bass,1985"},{tf:"Week 2-3",a:"Articulate a clear compelling vision — not targets and KPIs, but a meaningful narrative about why the work matters.",w:"Inspirational motivation is the second component of transformational leadership",c:"Bass,1985"},{tf:"Month 1",a:"Delegate meaningful stretching decisions — genuine authority with support, not just tasks.",w:"Autonomy support is most strongly associated with intrinsic motivation",c:"Ryan,2000"},{tf:"Month 2-3",a:"Seek 360-degree feedback and act visibly on at least two development areas.",w:"Leaders who seek and act on feedback create psychological safety and model learning",c:"Edmondson,1999"},{tf:"Ongoing",a:"Invest in leadership development as systematically as business strategy.",w:"Authentic leadership development is the highest-ROI leadership intervention",c:"Avolio,2004"}]},
 
-  } catch(e) {
-    clearInterval(stepInt);
-    document.getElementById('loading-card').style.display = 'none';
-    document.getElementById('input-card').style.display = 'block';
-    document.getElementById('input-card').insertAdjacentHTML('beforebegin',
-      '<div style="background:rgba(201,169,110,0.06);border:0.5px solid rgba(201,169,110,0.2);border-radius:3px;padding:14px 18px;font-size:12px;color:#B4A8D0;margin-bottom:12px;">Unable to generate blueprint right now. Please try again.</div>'
-    );
-  }
+{keys:["innovate","innovation","creative","creativity","new ideas","stuck","stagnant","change"],diagnosis:"Innovation Suppression — Amabile's Componential Model",framework:"Amabile,1996",
+root:"The innovation deficit is explained by Amabile's componential model [Amabile,1996] — organisational conditions consistently undermine the intrinsic motivation component of creativity. When people fear evaluation, failure, or looking foolish, creative risk-taking shuts down [Edmondson,1999].",
+hidden:"Innovation is not a trait — it is a behaviour that organisations either make safe or make dangerous [West,1990]. Most organisations claim to value innovation while structurally punishing the experimentation and failure that innovation requires.",
+actions:[{tf:"Day 1-3",a:"Announce one explicit failure amnesty — publicly reframe a recent failed experiment as learning.",w:"Psychological safety for failure is the prerequisite for creative risk-taking",c:"Edmondson,1999"},{tf:"Week 1",a:"Create dedicated exploration time — even 10% protected from execution demands produces measurable innovation gains.",w:"Structured exploration time is the foundation of innovation cultures",c:"March,1991"},{tf:"Week 2-3",a:"Run a crazy ideas session with no evaluation in the room — separate ideation from criticism explicitly.",w:"Evaluation apprehension is the primary creativity killer in group settings",c:"Amabile,1996"},{tf:"Month 1",a:"Identify and remove the top three processes blocking experimentation. Bureaucracy is the primary innovation killer.",w:"Machine bureaucracies systematically suppress innovation by design",c:"Mintzberg,1983"},{tf:"Month 2-3",a:"Build a structured innovation pipeline — an explicit process from idea to experiment to scale.",w:"Organisations need formal structures for converting creative insight into knowledge",c:"Nonaka,1995"},{tf:"Ongoing",a:"Measure innovation culture quarterly: experiments run, ideas submitted, learning documents created.",w:"Celebrating the process not just outcomes sustains innovation culture",c:"Amabile,1996"}]},
+
+{keys:["communication","not told","informed","information","unclear","misunderstand","silos","transparent"],diagnosis:"Communication Breakdown — Media Richness Theory",framework:"Daft,1986",
+root:"The communication failure is explained by Daft and Lengel's media richness theory [Daft,1986] — mismatches between message complexity and channel richness systematically produce misunderstanding. Beyond channel choice, research on organisational silence shows employees deliberately withhold critical information when speaking up feels risky [Morrison,1993].",
+hidden:"Most communication problems are not technical — they are relational and political [Mintzberg,1983]. The issue is rarely the message; it is the trust, safety, and status dynamics shaping whether messages travel honestly.",
+actions:[{tf:"Day 1-3",a:"Conduct a communication audit — map who talks to whom, what information travels and what does not.",w:"Network analysis reveals the informal communication architecture more powerful than any formal structure",c:"Pentland,2012"},{tf:"Week 1",a:"For complex ambiguous issues, shift from email to face-to-face. Reserve low-richness media for routine communication.",w:"Complex messages lose critical nuance in low-richness channels",c:"Daft,1986"},{tf:"Week 2-3",a:"Create a weekly information broadcast — one short clear update on the three things that matter most.",w:"Information overload degrades message absorption and decision quality",c:"Kahneman,2011"},{tf:"Month 1",a:"Break down structural silos with cross-functional information-sharing forums.",w:"Silos produce functions that optimise locally at the expense of the whole",c:"DiMaggio,1983"},{tf:"Month 2-3",a:"Train managers in active listening and open questions — most communication failures are listening failures.",w:"Empathic listening is the core communication competency of effective leaders",c:"Goleman,1995"},{tf:"Ongoing",a:"Measure communication effectiveness: Does everyone who needs information to do their job well have it?",w:"Organisations that communicate effectively navigate uncertainty far better",c:"Weick,1995"}]},
+
+{keys:[],diagnosis:"Organisational Behaviour Challenge — Multi-Framework Analysis",framework:"Schein,1985",
+root:"The challenge you describe reflects a classic intersection of individual psychology, group dynamics, and organisational systems [Schein,1985]. Self-determination theory [Deci,1985] suggests unmet needs for autonomy, competence, or relatedness are driving the behaviour you observe.",
+hidden:"In almost every organisational challenge, the visible problem is a symptom of deeper structural or cultural misalignment [Argyris,1990]. The people involved are responding rationally to incentives, norms, and constraints the organisation has created.",
+actions:[{tf:"Day 1-3",a:"Gather perspectives from multiple levels and functions to build a picture no single vantage point can see.",w:"Systems thinking requires multiple perspectives to reveal structural dynamics",c:"Senge,1990"},{tf:"Week 1",a:"Identify the primary unmet psychological need — autonomy, competence, or relatedness — and address it directly.",w:"All human motivation flows from three basic psychological needs",c:"Ryan,2000"},{tf:"Week 2-3",a:"Map the incentive structure: what is actually being rewarded, tolerated, and punished? Align with your desired outcome.",w:"Behaviour follows incentives — change requires incentive system change",c:"Vroom,1964"},{tf:"Month 1",a:"Implement one structural change making the desired behaviour the path of least resistance.",w:"Choice architecture shapes behaviour more powerfully than exhortation",c:"Thaler,2008"},{tf:"Month 2-3",a:"Build feedback loops that connect action to consequence and give the system authority to self-correct.",w:"Learning organisations require feedback loops connecting action to consequence",c:"Senge,1990"},{tf:"Ongoing",a:"Treat this as a system to be designed, not a problem to be solved once. Commit to ongoing diagnosis and learning.",w:"Double-loop learning distinguishes organisations that improve their improvement",c:"Argyris,1990"}]}
+];
+
+const INSIGHTS=["Every organisational problem is a human problem wearing a business suit.","The gap between what people say in meetings and what they think on the way home is where organisational psychology lives.","Most leadership failures are not failures of intelligence — they are failures of self-awareness.","Culture is not what organisations say they value — it is what they reward at 11pm on a Thursday.","Disengagement is not apathy — it is the rational response of a psychologically intelligent person to an irrational system.","When a team fails, look first at the system before looking at the people inside it.","The best predictor of team performance is not IQ or resources — it is psychological safety.","Every retention problem is a relationship problem that started long before the resignation letter."];
+
+function cite(key){const c=CITATIONS[key];if(!c)return`<span style="font-size:10px;vertical-align:super;color:#C9A96E;">[${key}]</span>`;return`<a href="${c.url}" target="_blank" rel="noopener" style="font-size:10px;vertical-align:super;color:#C9A96E;border-bottom:0.5px solid rgba(201,169,110,0.25);" title="${c.full}">[${key}]</a>`;}
+function fmt(t){if(!t)return"";return t.replace(/\[([^\]]+)\]/g,(m,k)=>cite(k));}
+function matchPattern(input){const l=input.toLowerCase();let best=null,top=0;for(const p of PATTERNS){if(!p.keys.length)continue;let s=p.keys.filter(k=>l.includes(k)).length;if(s>top){top=s;best=p;}}return best||PATTERNS[PATTERNS.length-1];}
+
+function runAnalysis(){
+  const input=document.getElementById("org-input").value.trim();
+  if(input.length<30)return;
+  document.getElementById("input-card").style.display="none";
+  document.getElementById("loading-card").style.display="block";
+  const steps=["ls1","ls2","ls3","ls4"];
+  let si=0;
+  steps.forEach(s=>{if(document.getElementById(s))document.getElementById(s).classList.remove("active");});
+  if(document.getElementById(steps[0]))document.getElementById(steps[0]).classList.add("active");
+  const iv=setInterval(()=>{if(si<steps.length-1){if(document.getElementById(steps[si]))document.getElementById(steps[si]).classList.remove("active");si++;if(document.getElementById(steps[si]))document.getElementById(steps[si]).classList.add("active");}},800);
+  setTimeout(()=>{clearInterval(iv);buildBlueprint(input);},1400);
 }
 
-function formatCitations(text, refs) {
-  if (!refs || !text) return text;
-  let result = text;
-  refs.forEach(ref => {
-    const key = ref.key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(`\\[${key}\\]`, 'g');
-    const tooltip = ref.full.replace(/"/g, '&quot;');
-    result = result.replace(regex,
-      `<span class="cite-ref" data-tooltip="${tooltip}" onmouseenter="showTooltip(event,this)" onmouseleave="hideTooltip()">[${ref.key}]</span>`
-    );
-  });
-  return result;
+function buildBlueprint(input){
+  const p=matchPattern(input);
+  const insight=INSIGHTS[Math.floor(Math.random()*INSIGHTS.length)];
+  const refKeys=[...new Set([p.framework,...p.actions.map(a=>a.c)])].filter(k=>CITATIONS[k]);
+  const date=new Date().toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+  const actHTML=p.actions.map(a=>`<div class="act-item"><div class="act-day">${a.tf}</div><div class="act-txt">${a.a}</div><div class="act-why">Why: ${a.w} ${cite(a.c)}</div></div>`).join("");
+  const refsHTML=refKeys.map(k=>{const c=CITATIONS[k];return`<div class="ref-item"><strong>${k}</strong> — ${c.full}<a href="${c.url}" target="_blank" rel="noopener">View on Google Scholar ↗</a></div>`;}).join("");
+  document.getElementById("loading-card").style.display="none";
+  const wrap=document.getElementById("bp-wrap");
+  wrap.style.display="block";
+  wrap.innerHTML=`
+  <div class="bp-head">
+    <div class="bp-eye">One-Page Psychological Blueprint · Velumin Org</div>
+    <div class="bp-title">${p.diagnosis}</div>
+    <div class="bp-tags"><span class="bp-tag gold">${currentRole}</span><span class="bp-tag">${refKeys.length} citations</span><span class="bp-tag">${date}</span><span class="bp-tag">Velumin · Harsh Vijay More</span></div>
+  </div>
+  <div class="bp-sec"><div class="bp-sn">SECTION 01</div><div class="bp-st">Root Psychological Cause</div><div class="bp-sb">${fmt(p.root)}</div></div>
+  <div class="divln"></div>
+  <div class="bp-sec"><div class="bp-sn">SECTION 02</div><div class="bp-st">Hidden Human Dynamics</div><div class="bp-sb">${fmt(p.hidden)}</div></div>
+  <div class="divln"></div>
+  <div class="bp-sec"><div class="bp-sn">SECTION 03</div><div class="bp-st">Psychological Diagnosis</div><div class="bp-sb"><strong style="color:#E8E4F0;">${p.diagnosis}</strong> — grounded in ${fmt("["+p.framework+"]")}. This is the most evidence-based lens for understanding this pattern of organisational behaviour.</div></div>
+  <div class="divln"></div>
+  <div class="bp-sec"><div class="bp-sn">SECTION 04</div><div class="bp-st">Six-Stage Science-Backed Action Plan</div><div class="bp-sb" style="margin-bottom:12px;">Each action targets a specific psychological mechanism — peer-reviewed research, not intuition.</div><div class="act-grid">${actHTML}</div></div>
+  <div class="divln"></div>
+  <div class="bp-sec"><div class="bp-sn">SECTION 05</div><div class="bp-st">Risk & Outcome Projection</div><div class="dual"><div class="dual-c"><div class="dual-l lrisk">If ignored</div><div class="dual-b">Left unaddressed, this pattern compounds. Unresolved psychological dysfunction accelerates into structural decline — turnover, performance degradation, and cultural toxicity become self-reinforcing ${cite("Maslach,1981")}.</div></div><div class="dual-c"><div class="dual-l lgood">If followed</div><div class="dual-b">Organisations addressing root psychological causes report 20-40% engagement improvements and significant performance uplift within 6-12 months ${cite("Harter,2002")}.</div></div></div></div>
+  <div class="founder-sec"><div class="bp-sn">FOUNDER'S INSIGHT</div><div class="founder-q">"${insight}"</div><div class="founder-sig">— Harsh Vijay More, Founder, Velumin · Psychology Student &amp; AI Initiative</div></div>
+  <div class="refs-row" onclick="toggleRefs()"><div class="refs-left"><div class="refs-big">${refKeys.length}</div><div class="refs-lbl">Academic references — click any citation to view original source on Google Scholar</div></div><span class="refs-arr" id="refs-arr">↓</span></div>
+  <div class="refs-panel" id="refs-panel"><div class="refs-list">${refsHTML}</div></div>
+  <div class="bp-actions"><button class="btn-new" onclick="newAnalysis()">New analysis</button><button class="btn-print" onclick="window.print()">Download as PDF</button></div>`;
+  wrap.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-function renderBlueprint(data, input) {
-  document.getElementById('loading-card').style.display = 'none';
-  const wrap = document.getElementById('blueprint-wrap');
-  wrap.style.display = 'block';
-  const refs = data.references || [];
-  const fc = (text) => formatCitations(text, refs);
-
-  const actionItems = (data.action_plan || []).map(a => `
-    <div class="action-item">
-      <div class="action-day">${a.timeframe}</div>
-      <div class="action-text"><strong style="color:#E8E4F0;font-weight:500;">${a.action}</strong><br><span style="color:#7B6FA0;font-size:11px;margin-top:4px;display:block;">Why: ${a.why} <span class="cite-ref" data-tooltip="${(refs.find(r=>r.key===a.citation)||{full:a.citation}).full||a.citation}" onmouseenter="showTooltip(event,this)" onmouseleave="hideTooltip()">[${a.citation}]</span></span></div>
-    </div>`).join('');
-
-  const refsHtml = refs.map(r =>
-    `<div class="ref-item"><strong>${r.key}</strong>${r.full}</div>`
-  ).join('');
-
-  wrap.innerHTML = `
-    <div class="blueprint-header">
-      <div class="blueprint-eyebrow">One-Page Psychological Blueprint · Velumin Org</div>
-      <div class="blueprint-title">${data.blueprint_title || 'Organisational Psychology Blueprint'}</div>
-      <div class="blueprint-meta">
-        <span class="blueprint-tag gold">${data.role || currentRole}</span>
-        <span class="blueprint-tag">${refs.length} citations</span>
-        <span class="blueprint-tag">Generated ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</span>
-        <span class="blueprint-tag">Velumin Org · Harsh Vijay More</span>
-      </div>
-    </div>
-
-    <div class="bp-section">
-      <div class="bp-section-num">SECTION 01</div>
-      <div class="bp-section-title">Root Psychological Cause</div>
-      <div class="bp-section-body">${fc(data.root_cause)}</div>
-    </div>
-    <div class="bp-divider"></div>
-
-    <div class="bp-section">
-      <div class="bp-section-num">SECTION 02</div>
-      <div class="bp-section-title">Hidden Human Dynamics</div>
-      <div class="bp-section-body">${fc(data.hidden_dynamics)}</div>
-    </div>
-    <div class="bp-divider"></div>
-
-    <div class="bp-section">
-      <div class="bp-section-num">SECTION 03</div>
-      <div class="bp-section-title">Psychological Diagnosis</div>
-      <div class="bp-section-body">${fc(data.psychological_diagnosis)}</div>
-    </div>
-    <div class="bp-divider"></div>
-
-    <div class="bp-section">
-      <div class="bp-section-num">SECTION 04</div>
-      <div class="bp-section-title">Six-Stage Action Plan</div>
-      <div class="bp-section-body" style="margin-bottom:14px;">Each action is grounded in a specific psychological mechanism — not intuition, not best practice, but science.</div>
-      <div class="action-grid">${actionItems}</div>
-    </div>
-    <div class="bp-divider"></div>
-
-    <div class="bp-section">
-      <div class="bp-section-num">SECTION 05</div>
-      <div class="bp-section-title">Risk & Outcome Projection</div>
-      <div class="dual-grid">
-        <div class="dual-card">
-          <div class="dual-label label-risk">If ignored</div>
-          <div class="dual-body">${fc(data.if_ignored)}</div>
-        </div>
-        <div class="dual-card">
-          <div class="dual-label label-outcome">If followed</div>
-          <div class="dual-body">${fc(data.ideal_outcome)}</div>
-        </div>
-      </div>
-    </div>
-    <div class="bp-divider"></div>
-
-    <div class="bp-section" style="border-radius:0 0 4px 4px;background:#0E0B1A;border-left:2px solid #C9A96E;">
-      <div class="bp-section-num">FOUNDER'S INSIGHT</div>
-      <div class="bp-section-body" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#D4CDED;">${data.founder_insight}</div>
-      <div style="margin-top:8px;font-size:10px;color:rgba(123,111,160,0.4);font-style:normal;font-family:'DM Sans',sans-serif;">— Harsh Vijay More, Founder, Velumin</div>
-    </div>
-
-    <div class="refs-toggle" onclick="toggleRefs()">
-      <div class="refs-toggle-left">
-        <div class="refs-num">${refs.length}</div>
-        <div class="refs-count">Academic references & citations</div>
-      </div>
-      <span class="refs-icon" id="refs-icon">↓</span>
-    </div>
-    <div class="refs-panel" id="refs-panel">
-      <div class="refs-grid">${refsHtml}</div>
-    </div>
-
-    <div class="blueprint-actions">
-      <button class="btn-new-analysis" onclick="newAnalysis()">New analysis</button>
-      <button class="btn-download" onclick="printBlueprint()">Download blueprint as PDF</button>
-    </div>`;
-
-  wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function toggleRefs() {
-  document.getElementById('refs-panel').classList.toggle('open');
-  document.getElementById('refs-icon').classList.toggle('open');
-}
-
-function showTooltip(e, el) {
-  const t = document.getElementById('cite-tooltip');
-  t.textContent = el.dataset.tooltip;
-  t.style.opacity = '1';
-  const rect = el.getBoundingClientRect();
-  t.style.left = Math.min(rect.left, window.innerWidth - 360) + 'px';
-  t.style.top = (rect.top - 80) + 'px';
-}
-function hideTooltip() { document.getElementById('cite-tooltip').style.opacity = '0'; }
-
-function newAnalysis() {
-  document.getElementById('blueprint-wrap').style.display = 'none';
-  document.getElementById('input-card').style.display = 'block';
-  document.getElementById('org-input').value = '';
-  document.getElementById('char-note').textContent = 'Minimum 30 characters';
-  document.getElementById('analyse-btn').classList.remove('ready');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function printBlueprint() {
-  window.print();
-}
+function toggleRefs(){document.getElementById("refs-panel").classList.toggle("open");document.getElementById("refs-arr").classList.toggle("open");}
+function newAnalysis(){document.getElementById("bp-wrap").style.display="none";document.getElementById("input-card").style.display="block";document.getElementById("org-input").value="";document.getElementById("char-note").textContent="Minimum 30 characters";document.getElementById("gen-btn").classList.remove("ready");window.scrollTo({top:0,behavior:"smooth"});}
 
 renderExamples();
+
 </script>
 </body>
 </html>
