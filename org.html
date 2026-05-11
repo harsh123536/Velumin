@@ -61,7 +61,7 @@ textarea:focus{border-color:rgba(201,169,110,0.25);}
 .loading-step.active{color:#C9A96E;}
 
 /* ── BLUEPRINT ── */
-.blueprint-wrap{display:none;margin-bottom:32px;}
+.bp-wrap{display:none;margin-bottom:32px;}
 
 .blueprint-header{background:#1C1530;border:0.5px solid rgba(201,169,110,0.15);border-radius:4px 4px 0 0;padding:28px 32px;border-bottom:none;}
 .blueprint-eyebrow{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#C9A96E;margin-bottom:12px;}
@@ -153,7 +153,6 @@ textarea:focus{border-color:rgba(201,169,110,0.25);}
   <div class="vl-nav-links">
     <a href="discover.html">Discover</a>
     <a href="tracker.html">Mood tracker</a>
-    <a href="mirror.html">Mirror</a>
     <a href="org.html" class="active" style="color:#C9A96E;">Org ✦</a>
     <a href="library.html">Library</a>
     <a href="research.html">Research</a>
@@ -205,7 +204,7 @@ textarea:focus{border-color:rgba(201,169,110,0.25);}
 
     <div class="input-footer">
       <div class="char-note" id="char-note">Minimum 30 characters</div>
-      <button class="analyse-btn" id="analyse-btn" onclick="runAnalysis()">Generate blueprint</button>
+      <button class="gen-btn" id="gen-btn" onclick="runAnalysis()">Generate blueprint</button>
     </div>
   </div>
 
@@ -222,7 +221,7 @@ textarea:focus{border-color:rgba(201,169,110,0.25);}
   </div>
 
   <!-- BLUEPRINT OUTPUT -->
-  <div class="blueprint-wrap" id="blueprint-wrap"></div>
+  <div class="bp-wrap" id="bp-wrap"></div>
 
 </div>
 
@@ -248,8 +247,7 @@ textarea:focus{border-color:rgba(201,169,110,0.25);}
     <div class="vl-footer-links">
       <a href="discover.html">Discover</a>
       <a href="tracker.html">Mood tracker</a>
-      <a href="mirror.html">Mirror</a>
-      <a href="org.html">Org</a>
+        <a href="org.html">Org</a>
       <a href="library.html">Library</a>
       <a href="research.html">Research</a>
       <a href="about.html">About</a>
@@ -322,7 +320,7 @@ function useExample(el) {
 function onInput(el) {
   const val = el.value.trim();
   document.getElementById('char-note').textContent = val.length + ' characters';
-  const btn = document.getElementById('analyse-btn');
+  const btn = document.getElementById('gen-btn');
   if (val.length >= 30) btn.classList.add('ready');
   else btn.classList.remove('ready');
 }
