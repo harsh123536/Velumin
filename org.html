@@ -1,704 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Velumin Org — Organisational Psychology Intelligence</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Velumin Org — Premium Diagnostic Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#09071A;--bg2:#120E22;--bg3:#1A1530;--bg4:#231D3C;
-  --gold:#C9A96E;--gold2:#E8C882;
-  --purple:#7B6FA0;--purple2:#A09BC8;
-  --text:#F0EDF8;--text2:#C8C0E0;--text3:#7B6FA0;
-  --border:rgba(200,191,231,0.08);--border2:rgba(201,169,110,0.22);
-  --r:6px;
+--bg:#09071A;--bg2:#120E22;--bg3:#1A1530;--gold:#C9A96E;--purple:#7B6FA0;--text:#F0EDF8;--muted:#A09BC8;--border:rgba(200,191,231,.08);
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.65;}
-::selection{background:rgba(201,169,110,0.22);color:#fff;}
-::-webkit-scrollbar{width:3px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px;}
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(9,7,26,0.94);backdrop-filter:blur(18px);border-bottom:0.5px solid var(--border);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;}
-.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--text);text-decoration:none;letter-spacing:.04em;}
-.nav-links{display:flex;align-items:center;gap:28px;}
-.nav-links a{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);text-decoration:none;transition:color .2s;}
-.nav-links a:hover,.nav-links a.active{color:var(--gold);}
-.nav-cta{background:var(--gold)!important;color:var(--bg)!important;padding:8px 18px;border-radius:3px;font-weight:500!important;}
-.disclaimer-bar{background:rgba(201,169,110,0.04);border-bottom:0.5px solid rgba(201,169,110,0.1);padding:8px 48px;text-align:center;font-size:10px;color:rgba(123,111,160,0.42);margin-top:54px;}
-.disclaimer-bar a{color:rgba(201,169,110,0.4);text-decoration:none;}
-.hero{padding:80px 48px 56px;text-align:center;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(201,169,110,0.05) 0%,transparent 68%);pointer-events:none;}
-.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,169,110,0.06);border:0.5px solid rgba(201,169,110,0.22);border-radius:999px;padding:7px 18px;margin-bottom:28px;}
-.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pdot 2.5s infinite;}
-@keyframes pdot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(201,169,110,.4);}50%{opacity:.6;box-shadow:0 0 0 5px rgba(201,169,110,0);}}
-.badge span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);}
-h1.hero-title{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:300;line-height:1.07;color:var(--text);margin-bottom:22px;max-width:820px;margin-left:auto;margin-right:auto;}
-h1.hero-title em{font-style:italic;color:var(--gold);}
-.hero-p{font-size:15px;color:var(--text3);line-height:1.8;max-width:580px;margin:0 auto 10px;}
-.hero-p2{font-size:11px;color:rgba(123,111,160,.38);max-width:500px;margin:0 auto 48px;}
-.role-strip{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;padding:0 48px;}
-.role-btn{background:transparent;border:0.5px solid var(--border);border-radius:3px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);cursor:pointer;transition:all .2s;}
-.role-btn:hover{border-color:rgba(201,169,110,.3);color:var(--text2);}
-.role-btn.active{background:rgba(201,169,110,.08);border-color:var(--gold);color:var(--gold);}
-.stats-bar{background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:20px 48px;display:flex;justify-content:center;gap:68px;margin-bottom:60px;flex-wrap:wrap;}
-.stat{text-align:center;}
-.stat-n{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--gold);line-height:1;}
-.stat-l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(123,111,160,.5);margin-top:5px;}
-.gold-line{height:.5px;background:linear-gradient(90deg,transparent,rgba(201,169,110,.2),transparent);margin:0 48px 60px;}
-.main-wrap{max-width:800px;margin:0 auto;padding:0 48px 80px;}
-.input-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:40px;margin-bottom:16px;}
-.ic-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
-.ic-title{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;color:var(--text);margin-bottom:26px;line-height:1.3;}
-.eg-hint{font-size:11px;color:rgba(123,111,160,.38);margin-bottom:12px;font-style:italic;}
-.examples-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:26px;}
-.eg-chip{background:rgba(200,191,231,.025);border:0.5px solid var(--border);border-radius:4px;padding:11px 14px;font-size:11px;color:rgba(123,111,160,.52);cursor:pointer;transition:all .22s;line-height:1.55;}
-.eg-chip:hover{border-color:rgba(201,169,110,.25);color:var(--text2);background:rgba(201,169,110,.04);}
-textarea{width:100%;background:rgba(200,191,231,.025);border:0.5px solid var(--border);border-radius:4px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:300;color:var(--text2);resize:none;height:148px;outline:none;transition:border-color .2s;line-height:1.7;}
-textarea::placeholder{color:rgba(123,111,160,.28);}
-textarea:focus{border-color:rgba(201,169,110,.28);}
-.input-footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px;}
-.char-note{font-size:11px;color:rgba(123,111,160,.35);}
-.gen-btn{background:var(--bg4);border:0.5px solid rgba(200,191,231,.12);padding:12px 36px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);border-radius:3px;cursor:pointer;transition:all .2s;pointer-events:none;opacity:.4;}
-.gen-btn.ready{background:var(--gold);border-color:var(--gold);color:var(--bg);opacity:1;pointer-events:all;}
-.gen-btn.ready:hover{opacity:.85;}
-.loading-card{display:none;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:56px;text-align:center;margin-bottom:16px;}
-.loading-spinner{width:36px;height:36px;border:0.5px solid rgba(200,191,231,.08);border-top:0.5px solid var(--gold);border-radius:50%;animation:spin 1.1s linear infinite;margin:0 auto 28px;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;font-weight:300;color:var(--text3);margin-bottom:24px;}
-.loading-steps{display:flex;flex-direction:column;gap:9px;}
-.ls{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:rgba(123,111,160,.22);transition:color .4s;}
-.ls.active{color:var(--gold);}
-.bp-wrap{display:none;margin-bottom:32px;}
-.bp-head{background:var(--bg2);border:0.5px solid rgba(201,169,110,.18);border-radius:var(--r) var(--r) 0 0;padding:30px 36px 26px;border-bottom:none;}
-.bp-eye{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,169,110,.5);margin-bottom:10px;}
-.bp-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--text);line-height:1.15;margin-bottom:16px;}
-.bp-tags{display:flex;gap:8px;flex-wrap:wrap;}
-.bp-tag{font-size:10px;letter-spacing:.07em;text-transform:uppercase;padding:4px 12px;border-radius:2px;border:0.5px solid rgba(200,191,231,.1);color:rgba(123,111,160,.6);}
-.bp-tag.gold{border-color:rgba(201,169,110,.25);color:var(--gold);}
-.bp-sec{background:var(--bg2);border:0.5px solid rgba(200,191,231,.07);border-top:none;padding:30px 36px;}
-.bp-sec:last-of-type{border-radius:0 0 var(--r) var(--r);}
-.bp-sn{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:300;color:rgba(201,169,110,.28);margin-bottom:5px;letter-spacing:.1em;}
-.bp-st{font-size:13px;font-weight:500;color:var(--text2);margin-bottom:16px;letter-spacing:.03em;}
-.bp-sb{font-size:13.5px;font-weight:300;color:#B4A8D0;line-height:1.85;}
-.bp-div{height:.5px;background:rgba(200,191,231,.055);margin:0;}
-a.cite{font-size:10px;vertical-align:super;color:var(--gold);cursor:pointer;font-weight:500;padding:0 1px;border-bottom:0.5px solid rgba(201,169,110,.22);text-decoration:none;transition:color .2s;white-space:nowrap;}
-a.cite:hover{color:var(--gold2);}
-.diag-banner{display:flex;align-items:center;gap:16px;background:rgba(201,169,110,.06);border:0.5px solid rgba(201,169,110,.18);border-radius:4px;padding:16px 20px;margin-top:16px;}
-.diag-icon{width:44px;height:44px;border-radius:50%;background:rgba(201,169,110,.1);border:0.5px solid rgba(201,169,110,.2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
-.diag-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(201,169,110,.55);margin-bottom:3px;}
-.diag-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--gold);}
-.diag-author{font-size:11px;color:rgba(123,111,160,.5);margin-top:2px;}
-.flowchart-wrap{margin-top:20px;overflow-x:auto;}
-.bar-chart-wrap{margin-top:20px;}
-.bar-chart-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(123,111,160,.45);margin-bottom:14px;}
-.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-.bar-label{font-size:11px;color:var(--text3);width:190px;flex-shrink:0;text-align:right;}
-.bar-track{flex:1;height:6px;background:rgba(200,191,231,.07);border-radius:3px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:3px;width:0;transition:width 1s cubic-bezier(.4,0,.2,1);}
-.bar-fill.red{background:rgba(176,64,64,0.7);}
-.bar-fill.purple{background:rgba(123,111,160,0.7);}
-.bar-fill.green{background:rgba(46,125,90,0.85);}
-.bar-fill.gold{background:var(--gold);}
-.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);width:34px;}
-.icon-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;}
-.istat{background:rgba(9,7,26,.6);border:0.5px solid var(--border);border-radius:4px;padding:16px;text-align:center;}
-.istat-icon{font-size:22px;margin-bottom:8px;}
-.istat-num{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--gold);line-height:1;}
-.istat-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(123,111,160,.45);margin-top:4px;}
-.action-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px;}
-.act-item{background:rgba(9,7,26,.7);border:0.5px solid rgba(200,191,231,.07);border-radius:4px;padding:16px;}
-.act-day{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;display:flex;align-items:center;gap:6px;}
-.act-day::before{content:'';width:14px;height:.5px;background:var(--gold);display:inline-block;}
-.act-txt{font-size:12px;font-weight:400;color:var(--text2);line-height:1.6;margin-bottom:7px;}
-.act-why{font-size:11px;color:rgba(123,111,160,.5);line-height:1.55;border-top:.5px solid rgba(200,191,231,.06);padding-top:7px;}
-.dual{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
-.dual-c{background:rgba(9,7,26,.7);border:0.5px solid rgba(200,191,231,.07);border-radius:4px;padding:18px;}
-.dual-l{font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;}
-.lrisk{color:#CC5555;}
-.lgood{color:#4DAA80;}
-.dual-b{font-size:12.5px;font-weight:300;color:#B4A8D0;line-height:1.65;}
-.founder-sec{background:rgba(201,169,110,.04);border:0.5px solid rgba(201,169,110,.1);padding:28px 36px;border-top:none;}
-.founder-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;font-weight:300;color:var(--text2);line-height:1.55;margin-bottom:12px;}
-.founder-sig{font-size:10px;letter-spacing:.06em;color:rgba(123,111,160,.45);}
-.refs-row{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:0.5px solid var(--border);border-top:none;padding:16px 28px;cursor:pointer;transition:border-color .2s;user-select:none;}
-.refs-row:hover{border-color:rgba(201,169,110,.18);}
-.refs-left{display:flex;align-items:center;gap:14px;}
-.refs-big{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--gold);}
-.refs-lbl{font-size:11px;color:rgba(123,111,160,.45);}
-.refs-arr{font-size:14px;color:var(--gold);transition:transform .3s;display:inline-block;}
-.refs-arr.open{transform:rotate(180deg);}
-.refs-panel{display:none;background:var(--bg2);border:0.5px solid var(--border);border-top:none;padding:20px 28px 28px;}
-.refs-panel.open{display:block;}
-.refs-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.ref-item{font-size:10px;color:rgba(123,111,160,.5);line-height:1.65;padding:9px 12px;border-left:1.5px solid rgba(201,169,110,.1);background:rgba(200,191,231,.015);}
-.ref-item strong{color:var(--text3);font-weight:500;display:block;margin-bottom:2px;}
-.ref-item a{color:rgba(201,169,110,.4);text-decoration:none;font-size:9px;display:block;margin-top:3px;}
-.ref-item a:hover{color:var(--gold);}
-.bp-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
-.btn-new{flex:1;background:transparent;border:0.5px solid rgba(200,191,231,.15);padding:13px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);border-radius:3px;cursor:pointer;transition:all .2s;min-width:140px;}
-.btn-new:hover{color:var(--text);border-color:rgba(200,191,231,.28);}
-.btn-print{flex:2;background:var(--gold);border:none;padding:13px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--bg);border-radius:3px;cursor:pointer;transition:opacity .2s;min-width:200px;}
-.btn-print:hover{opacity:.85;}
-.frameworks{max-width:960px;margin:0 auto;padding:0 48px 80px;}
-.fw-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--text);text-align:center;margin-bottom:48px;}
-.fw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.fw-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:26px;}
-.fw-num{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:rgba(201,169,110,.12);line-height:1;margin-bottom:8px;}
-.fw-icon{font-size:20px;margin-bottom:8px;}
-.fw-name{font-size:13px;font-weight:500;color:var(--text2);margin-bottom:4px;}
-.fw-author{font-size:10px;color:var(--gold);margin-bottom:8px;letter-spacing:.03em;}
-.fw-desc{font-size:11px;color:var(--text3);line-height:1.72;}
-footer{background:var(--bg2);border-top:.5px solid var(--border);padding:40px 48px 32px;text-align:center;}
-.footer-logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--text);margin-bottom:20px;}
-.footer-links{display:flex;justify-content:center;gap:28px;margin-bottom:20px;flex-wrap:wrap;}
-.footer-links a{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);text-decoration:none;transition:color .2s;}
-.footer-links a:hover{color:var(--gold);}
-.footer-copy{font-size:11px;color:rgba(123,111,160,.35);margin-bottom:12px;}
-.footer-disc{font-size:10px;color:rgba(123,111,160,.28);max-width:640px;margin:0 auto;line-height:1.7;}
-.footer-disc a{color:rgba(201,169,110,.35);text-decoration:none;}
-@media print{.nav,.role-strip,.stats-bar,.gen-btn,.btn-new,.btn-print,.input-card,.loading-card,.frameworks,footer,.disclaimer-bar{display:none!important;}.bp-wrap{display:block!important;}.main-wrap{max-width:100%;padding:20px;}}
-@media(max-width:700px){
-  .nav{padding:0 20px;}.nav-links a:not(.nav-cta):not(.active){display:none;}
-  .hero{padding:60px 24px 40px;} h1.hero-title{font-size:36px;}
-  .role-strip{padding:0 20px;}.stats-bar{gap:28px;padding:18px 20px;}
-  .main-wrap{padding:0 20px 48px;}.input-card{padding:24px;}
-  .examples-grid,.action-grid,.dual,.icon-stats,.refs-list,.fw-grid{grid-template-columns:1fr;}
-  .frameworks{padding:0 20px 48px;}.bar-label{width:120px;}
-}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.7;padding:40px}
+.container{max-width:980px;margin:auto}
+.hero{padding:80px 0;text-align:center}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;line-height:1.05;margin-bottom:18px}
+.hero p{max-width:700px;margin:auto;color:var(--muted)}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:32px;margin-top:24px}
+.label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.metric{padding:18px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px}
+.metric h3{font-size:12px;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.metric p{font-size:14px;color:var(--muted)}
+.code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--purple)}
+.badge{display:inline-block;padding:6px 14px;border:1px solid rgba(201,169,110,.2);border-radius:999px;color:var(--gold);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px}
+.scenario{border-left:2px solid var(--gold);padding-left:18px;margin-top:18px}
+.footer{margin-top:60px;text-align:center;color:var(--muted);font-size:12px}
 </style>
 </head>
 <body>
+<div class="container">
+<section class="hero">
+<div class="badge">Velumin Org · Behavioural Intelligence</div>
+<h1>The psychology behind every organisational failure.</h1>
+<p>Premium organisational diagnostics powered by behavioural science, organisational psychology, leadership research, and evidence-backed intervention architecture.</p>
+</section>
 
-<nav class="nav">
-  <a class="nav-logo" href="#">Velumin</a>
-  <div class="nav-links">
-    <a href="#">Discover</a><a href="#">Mood tracker</a>
-    <a href="#" class="active" style="color:var(--gold)">Org ✦</a>
-    <a href="#">Library</a><a href="#">Research</a><a href="#">About</a>
-    <a class="nav-cta" href="#">Analyse my org</a>
-  </div>
-</nav>
-
-<div class="disclaimer-bar">
-  Velumin Org is an educational tool. Outputs do not substitute professional organisational psychology consultation. <a href="#">Disclaimer →</a>
+<div class="card">
+<div class="label">01 · Situation Signal</div>
+<div class="section-title">Autonomy collapse disguised as disengagement</div>
+<p>Employees appear passive, but the passivity is adaptive. This is not a motivation deficit. It is a structural response to low perceived control.</p>
 </div>
 
-<div class="hero">
-  <div class="badge"><div class="badge-dot"></div><span>Velumin Org · Organisational Psychology Intelligence</span></div>
-  <h1 class="hero-title">The psychology behind<br>every <em>organisational failure.</em></h1>
-  <p class="hero-p">Describe any workplace challenge — team, leadership, culture, policy, or performance. Receive a one-page psychological blueprint that diagnoses the root human cause and prescribes a science-backed action plan.</p>
-  <p class="hero-p2">Built on 1,000+ sources across IO psychology, behavioural economics, leadership science, and organisational behaviour. Every claim cited. Every recommendation evidenced.</p>
+<div class="card">
+<div class="label">02 · Hidden Mechanism</div>
+<div class="section-title">Psychological Diagnosis</div>
+<div class="grid">
+<div class="metric">
+<h3>Framework</h3>
+<p>Self-Determination Theory</p>
+</div>
+<div class="metric">
+<h3>Evidence Confidence</h3>
+<p>High · Strong literature consensus</p>
+</div>
+<div class="metric">
+<h3>Risk Escalation Index</h3>
+<p class="code">████████░░ 78%</p>
+</div>
+<div class="metric">
+<h3>Detected Pattern</h3>
+<p>THE INVISIBLE WITHDRAWAL LOOP</p>
+</div>
+</div>
 </div>
 
-<div class="role-strip">
-  <button class="role-btn active" onclick="setRole(this,'Corporate Manager')">Corporate Manager</button>
-  <button class="role-btn" onclick="setRole(this,'HR Professional')">HR Professional</button>
-  <button class="role-btn" onclick="setRole(this,'Government / Ministry Officer')">Government / Ministry</button>
-  <button class="role-btn" onclick="setRole(this,'Business Student')">Business Student</button>
-  <button class="role-btn" onclick="setRole(this,'Founder / Entrepreneur')">Founder</button>
+<div class="card">
+<div class="label">03 · Scenario Simulation</div>
+<div class="scenario">
+<strong>If unchanged (90 days)</strong>
+<p>Discretionary effort decreases, compliance rises, innovation declines, and high performers quietly begin exit evaluation.</p>
+</div>
+<div class="scenario">
+<strong>If partially implemented</strong>
+<p>Voice behaviour increases but latent distrust remains. Short-term conflict may temporarily rise.</p>
+</div>
+<div class="scenario">
+<strong>If fully implemented</strong>
+<p>Role ownership increases, upward feedback normalises, and psychological safety improves across decision layers.</p>
+</div>
 </div>
 
-<div class="stats-bar">
-  <div class="stat"><div class="stat-n">1,000+</div><div class="stat-l">Academic sources</div></div>
-  <div class="stat"><div class="stat-n">47</div><div class="stat-l">IO psychology frameworks</div></div>
-  <div class="stat"><div class="stat-n">15</div><div class="stat-l">Diagnostic patterns</div></div>
-  <div class="stat"><div class="stat-n">Free</div><div class="stat-l">Always</div></div>
+<div class="card">
+<div class="label">04 · Intervention Architecture</div>
+<div class="section-title">90-Day Organisational Reset</div>
+<p>Week 1: anonymous signal audit → Week 2: role redesign → Month 1: decision-right redistribution → Month 2: manager reinforcement loops.</p>
 </div>
 
-<div class="gold-line"></div>
-
-<div class="main-wrap">
-  <div class="input-card" id="input-card">
-    <div class="ic-label">Your situation — <span id="role-label">Corporate Manager</span></div>
-    <div class="ic-title">Describe your organisational challenge in plain language.</div>
-    <p class="eg-hint">Not sure where to start? Try one of these:</p>
-    <div class="examples-grid" id="examples-grid"></div>
-    <textarea id="org-input" placeholder="Describe your situation honestly. The more specific you are, the more precise the blueprint. No jargon needed — just tell us what's happening." oninput="onInput(this)"></textarea>
-    <div class="input-footer">
-      <div class="char-note" id="char-note">Minimum 30 characters</div>
-      <button class="gen-btn" id="gen-btn" onclick="runAnalysis()">Generate blueprint →</button>
-    </div>
-  </div>
-
-  <div class="loading-card" id="loading-card">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Consulting 1,000+ sources…</div>
-    <div class="loading-steps">
-      <div class="ls active" id="ls1">Diagnosing root psychological cause</div>
-      <div class="ls" id="ls2">Identifying hidden human dynamics</div>
-      <div class="ls" id="ls3">Cross-referencing IO psychology literature</div>
-      <div class="ls" id="ls4">Building your visual blueprint</div>
-    </div>
-  </div>
-
-  <div class="bp-wrap" id="bp-wrap"></div>
+<div class="card">
+<div class="label">05 · Evidence Base</div>
+<p>[1] Edmondson (1999) Psychological Safety<br>[2] Deci & Ryan (1985) Self-Determination Theory<br>[3] Argyris (1990) Organisational Defenses</p>
 </div>
 
-<div class="frameworks">
-  <h2 class="fw-title">Grounded in the world's leading<br>organisational psychology research</h2>
-  <div class="fw-grid">
-    <div class="fw-card"><div class="fw-num">01</div><div class="fw-icon">🛡️</div><div class="fw-name">Psychological Safety</div><div class="fw-author">Edmondson, A.C. · Harvard Business School · 1999</div><div class="fw-desc">Why teams that feel safe to speak up outperform those that don't — and how to build it deliberately.</div></div>
-    <div class="fw-card"><div class="fw-num">02</div><div class="fw-icon">⚡</div><div class="fw-name">Two-Factor Motivation Theory</div><div class="fw-author">Herzberg, F. · 1959 · Harvard Business Review</div><div class="fw-desc">Why salary alone never motivates — the distinction between hygiene factors and true motivators.</div></div>
-    <div class="fw-card"><div class="fw-num">03</div><div class="fw-icon">🎯</div><div class="fw-name">Nudge Theory</div><div class="fw-author">Thaler, R. & Sunstein, C. · 2008 · University of Chicago</div><div class="fw-desc">How small changes in how choices are presented dramatically shift human behaviour in organisations.</div></div>
-    <div class="fw-card"><div class="fw-num">04</div><div class="fw-icon">🔄</div><div class="fw-name">Team Development Model</div><div class="fw-author">Tuckman, B. · 1965 · Psychological Bulletin</div><div class="fw-desc">The four universal stages every team passes through — and the psychology of each transition.</div></div>
-    <div class="fw-card"><div class="fw-num">05</div><div class="fw-icon">🌱</div><div class="fw-name">Self-Determination Theory</div><div class="fw-author">Deci, E.L. & Ryan, R.M. · 1985 · University of Rochester</div><div class="fw-desc">The three innate psychological needs — autonomy, competence, relatedness — that drive intrinsic motivation at work.</div></div>
-    <div class="fw-card"><div class="fw-num">06</div><div class="fw-icon">🧠</div><div class="fw-name">Cognitive Bias in Decision-Making</div><div class="fw-author">Kahneman, D. · 2011 · Princeton University</div><div class="fw-desc">How System 1 and System 2 thinking shapes every organisational decision — and where it goes wrong.</div></div>
-  </div>
+<div class="footer">© Velumin Org · Premium Organisational Psychology Intelligence</div>
 </div>
-
-<footer>
-  <div class="footer-logo">Velumin</div>
-  <div class="footer-links">
-    <a href="#">Discover</a><a href="#">Mood tracker</a><a href="#">Org</a><a href="#">Library</a><a href="#">Research</a><a href="#">About</a><a href="#">Disclaimer</a>
-  </div>
-  <div class="footer-copy">© 2025 Harsh Vijay More. All rights reserved.</div>
-  <div class="footer-disc">Velumin Org is an AI-powered educational tool. Outputs do not constitute professional organisational psychology, HR, legal, or management consulting advice. <a href="#">Full disclaimer →</a></div>
-</footer>
-
-<script>
-const CITATIONS={
-  "Edmondson,1999":{full:"Edmondson, A.C. (1999). Psychological safety and learning behavior in work teams. ASQ, 44(2), 350–383.",url:"https://scholar.google.com/scholar?q=Edmondson+1999+Psychological+safety"},
-  "Edmondson,2018":{full:"Edmondson, A.C. (2018). The fearless organization. Wiley.",url:"https://scholar.google.com/scholar?q=Edmondson+2018+fearless+organization"},
-  "Herzberg,1959":{full:"Herzberg, F. (1959). The Motivation to Work. Wiley.",url:"https://scholar.google.com/scholar?q=Herzberg+1959+motivation"},
-  "Deci,1985":{full:"Deci, E.L., & Ryan, R.M. (1985). Intrinsic motivation and self-determination. Springer.",url:"https://scholar.google.com/scholar?q=Deci+Ryan+1985+self+determination"},
-  "Ryan,2000":{full:"Ryan, R.M., & Deci, E.L. (2000). Self-determination theory. American Psychologist, 55(1), 68–78.",url:"https://scholar.google.com/scholar?q=Ryan+Deci+2000"},
-  "Tuckman,1965":{full:"Tuckman, B.W. (1965). Developmental sequence in small groups. Psych. Bulletin, 63(6), 384–399.",url:"https://scholar.google.com/scholar?q=Tuckman+1965"},
-  "Kahneman,2011":{full:"Kahneman, D. (2011). Thinking, fast and slow. Farrar, Straus and Giroux.",url:"https://scholar.google.com/scholar?q=Kahneman+2011+thinking+fast+slow"},
-  "Thaler,2008":{full:"Thaler, R.H., & Sunstein, C.R. (2008). Nudge. Yale University Press.",url:"https://scholar.google.com/scholar?q=Thaler+Sunstein+2008+nudge"},
-  "Schein,1985":{full:"Schein, E.H. (1985). Organizational culture and leadership. Jossey-Bass.",url:"https://scholar.google.com/scholar?q=Schein+1985+organizational+culture"},
-  "Goleman,1995":{full:"Goleman, D. (1995). Emotional intelligence. Bantam Books.",url:"https://scholar.google.com/scholar?q=Goleman+1995+emotional+intelligence"},
-  "Kotter,1996":{full:"Kotter, J.P. (1996). Leading change. Harvard Business School Press.",url:"https://scholar.google.com/scholar?q=Kotter+1996+leading+change"},
-  "Lencioni,2002":{full:"Lencioni, P. (2002). The five dysfunctions of a team. Jossey-Bass.",url:"https://scholar.google.com/scholar?q=Lencioni+2002+five+dysfunctions"},
-  "Janis,1972":{full:"Janis, I.L. (1972). Victims of groupthink. Houghton Mifflin.",url:"https://scholar.google.com/scholar?q=Janis+1972+groupthink"},
-  "Latane,1979":{full:"Latane, B. et al. (1979). Social loafing. JPSP, 37(6), 822–832.",url:"https://scholar.google.com/scholar?q=Latane+1979+social+loafing"},
-  "Dweck,2006":{full:"Dweck, C.S. (2006). Mindset: The new psychology of success. Random House.",url:"https://scholar.google.com/scholar?q=Dweck+2006+mindset"},
-  "Pink,2009":{full:"Pink, D.H. (2009). Drive: The surprising truth about what motivates us. Riverhead Books.",url:"https://scholar.google.com/scholar?q=Pink+2009+drive"},
-  "Hackman,1976":{full:"Hackman, J.R., & Oldham, G.R. (1976). Motivation through the design of work. OBHP, 16(2), 250–279.",url:"https://scholar.google.com/scholar?q=Hackman+Oldham+1976"},
-  "Hackman,2002":{full:"Hackman, J.R. (2002). Leading teams. Harvard Business School Press.",url:"https://scholar.google.com/scholar?q=Hackman+2002+leading+teams"},
-  "Bass,1985":{full:"Bass, B.M. (1985). Leadership and performance beyond expectations. Free Press.",url:"https://scholar.google.com/scholar?q=Bass+1985+leadership"},
-  "Argyris,1990":{full:"Argyris, C. (1990). Overcoming organizational defenses. Allyn & Bacon.",url:"https://scholar.google.com/scholar?q=Argyris+1990+organizational+defenses"},
-  "Senge,1990":{full:"Senge, P.M. (1990). The fifth discipline. Doubleday.",url:"https://scholar.google.com/scholar?q=Senge+1990+fifth+discipline"},
-  "Collins,2001":{full:"Collins, J. (2001). Good to great. HarperBusiness.",url:"https://scholar.google.com/scholar?q=Collins+2001+good+to+great"},
-  "Tajfel,1979":{full:"Tajfel, H., & Turner, J.C. (1979). Integrative theory of intergroup conflict. Brooks/Cole.",url:"https://scholar.google.com/scholar?q=Tajfel+Turner+1979+social+identity"},
-  "Vroom,1964":{full:"Vroom, V.H. (1964). Work and motivation. Wiley.",url:"https://scholar.google.com/scholar?q=Vroom+1964+work+motivation"},
-  "Adams,1963":{full:"Adams, J.S. (1963). Towards an understanding of inequity. JASP, 67(5), 422–436.",url:"https://scholar.google.com/scholar?q=Adams+1963+equity+theory"},
-  "Locke,1968":{full:"Locke, E.A. (1968). Task motivation and incentives. OBHP, 3(2), 157–189.",url:"https://scholar.google.com/scholar?q=Locke+1968+goal+setting"},
-  "Maslach,1981":{full:"Maslach, C., & Jackson, S.E. (1981). Measurement of experienced burnout. JOB, 2(2), 99–113.",url:"https://scholar.google.com/scholar?q=Maslach+1981+burnout"},
-  "Fredrickson,2001":{full:"Fredrickson, B.L. (2001). The role of positive emotions. American Psychologist, 56(3), 218–226.",url:"https://scholar.google.com/scholar?q=Fredrickson+2001+positive+emotions"},
-  "Csikszentmihalyi,1990":{full:"Csikszentmihalyi, M. (1990). Flow: The psychology of optimal experience. Harper & Row.",url:"https://scholar.google.com/scholar?q=Csikszentmihalyi+1990+flow"},
-  "Cialdini,1984":{full:"Cialdini, R.B. (1984). Influence: The psychology of persuasion. William Morrow.",url:"https://scholar.google.com/scholar?q=Cialdini+1984+influence"},
-  "Ross,1977":{full:"Ross, L. (1977). The intuitive psychologist and his shortcomings. AESP, 10, 173–220.",url:"https://scholar.google.com/scholar?q=Ross+1977+attribution+error"},
-  "Rousseau,1989":{full:"Rousseau, D.M. (1989). Psychological and implied contracts. ERRJ, 2(2), 121–139.",url:"https://scholar.google.com/scholar?q=Rousseau+1989+psychological+contracts"},
-  "Morrison,1993":{full:"Morrison, E.W., & Robinson, S.L. (1997). When employees feel betrayed. AMR, 22(1), 226–256.",url:"https://scholar.google.com/scholar?q=Morrison+Robinson+1997+contract+violation"},
-  "Eisenberger,1986":{full:"Eisenberger, R. et al. (1986). Perceived organizational support. JAP, 71(3), 500–507.",url:"https://scholar.google.com/scholar?q=Eisenberger+1986+POS"},
-  "Rhoades,2002":{full:"Rhoades, L., & Eisenberger, R. (2002). POS: A review. JAP, 87(4), 698–714.",url:"https://scholar.google.com/scholar?q=Rhoades+Eisenberger+2002"},
-  "Gallup,2017":{full:"Gallup. (2017). State of the global workplace. Gallup Press.",url:"https://scholar.google.com/scholar?q=Gallup+2017+state+global+workplace"},
-  "Harter,2002":{full:"Harter, J.K. et al. (2002). Employee engagement and business outcomes. JAP, 87(2), 268–279.",url:"https://scholar.google.com/scholar?q=Harter+2002+employee+engagement"},
-  "Meyer,1991":{full:"Meyer, J.P., & Allen, N.J. (1991). Organizational commitment. HRMR, 1(1), 61–89.",url:"https://scholar.google.com/scholar?q=Meyer+Allen+1991+commitment"},
-  "Mobley,1977":{full:"Mobley, W.H. (1977). Linkages in job satisfaction and turnover. JAP, 62(2), 237–240.",url:"https://scholar.google.com/scholar?q=Mobley+1977+turnover"},
-  "Huselid,1995":{full:"Huselid, M.A. (1995). Impact of HRM practices on turnover. AMJ, 38(3), 635–672.",url:"https://scholar.google.com/scholar?q=Huselid+1995+HRM+turnover"},
-  "Hom,1995":{full:"Hom, P.W., & Griffeth, R.W. (1995). Employee turnover. South-Western.",url:"https://scholar.google.com/scholar?q=Hom+Griffeth+1995+turnover"},
-  "Cameron,2003":{full:"Cameron, K.S., & Quinn, R.E. (2011). Diagnosing and changing organizational culture. Jossey-Bass.",url:"https://scholar.google.com/scholar?q=Cameron+Quinn+organizational+culture"},
-  "Amabile,1996":{full:"Amabile, T.M. (1996). Creativity in context. Westview Press.",url:"https://scholar.google.com/scholar?q=Amabile+1996+creativity"},
-  "Nonaka,1995":{full:"Nonaka, I., & Takeuchi, H. (1995). The knowledge-creating company. Oxford.",url:"https://scholar.google.com/scholar?q=Nonaka+Takeuchi+1995"},
-  "March,1991":{full:"March, J.G. (1991). Exploration and exploitation in organizational learning. OS, 2(1), 71–87.",url:"https://scholar.google.com/scholar?q=March+1991+exploration+exploitation"},
-  "Weick,1995":{full:"Weick, K.E. (1995). Sensemaking in organizations. Sage.",url:"https://scholar.google.com/scholar?q=Weick+1995+sensemaking"},
-  "Daft,1986":{full:"Daft, R.L., & Lengel, R.H. (1986). Organizational information requirements. MS, 32(5), 554–571.",url:"https://scholar.google.com/scholar?q=Daft+Lengel+1986+media+richness"},
-  "Mintzberg,1983":{full:"Mintzberg, H. (1983). Power in and around organizations. Prentice-Hall.",url:"https://scholar.google.com/scholar?q=Mintzberg+1983+power+organizations"},
-  "Graen,1995":{full:"Graen, G.B., & Uhl-Bien, M. (1995). Relationship-based approach to leadership. LQ, 6(2), 219–247.",url:"https://scholar.google.com/scholar?q=Graen+Uhl-Bien+1995+LMX"},
-  "Avolio,2004":{full:"Avolio, B.J., & Gardner, W.L. (2005). Authentic leadership development. LQ, 16(3), 315–338.",url:"https://scholar.google.com/scholar?q=Avolio+Gardner+2005"},
-  "Karasek,1979":{full:"Karasek, R.A. (1979). Job demands, decision latitude, and mental strain. ASQ, 24(2), 285–308.",url:"https://scholar.google.com/scholar?q=Karasek+1979+job+demands"},
-  "Siegrist,1996":{full:"Siegrist, J. (1996). Adverse health effects of high-effort/low-reward. JOHP, 1(1), 27–41.",url:"https://scholar.google.com/scholar?q=Siegrist+1996+effort+reward"},
-  "Hobfoll,1989":{full:"Hobfoll, S.E. (1989). Conservation of resources. American Psychologist, 44(3), 513–524.",url:"https://scholar.google.com/scholar?q=Hobfoll+1989+conservation+resources"},
-  "DiMaggio,1983":{full:"DiMaggio, P.J., & Powell, W.W. (1983). The iron cage revisited. ASR, 48(2), 147–160.",url:"https://scholar.google.com/scholar?q=DiMaggio+Powell+1983"},
-  "Pfeffer,1998":{full:"Pfeffer, J. (1998). The human equation. Harvard Business School Press.",url:"https://scholar.google.com/scholar?q=Pfeffer+1998+human+equation"},
-  "Asch,1951":{full:"Asch, S.E. (1951). Effects of group pressure on modification of judgments. Carnegie Press.",url:"https://scholar.google.com/scholar?q=Asch+1951+conformity"},
-  "West,1990":{full:"West, M.A. (1990). The social psychology of innovation in groups. Wiley.",url:"https://scholar.google.com/scholar?q=West+1990+innovation+groups"},
-  "Pentland,2012":{full:"Pentland, A. (2012). The new science of building great teams. HBR, 90(4), 60–70.",url:"https://scholar.google.com/scholar?q=Pentland+2012+building+great+teams"},
-  "Bandura,1977":{full:"Bandura, A. (1977). Self-efficacy: Toward a unifying theory. Psychological Review, 84(2), 191–215.",url:"https://scholar.google.com/scholar?q=Bandura+1977+self+efficacy"},
-  "Lewin,1947":{full:"Lewin, K. (1947). Frontiers in group dynamics. Human Relations, 1(1), 5–41.",url:"https://scholar.google.com/scholar?q=Lewin+1947+group+dynamics"}
-};
-
-const ROLE_EXAMPLES={
-  'Corporate Manager':['My team keeps missing deadlines despite repeated warnings and performance reviews.','Two senior employees are in constant conflict and it is affecting the whole team.','A high performer suddenly became disengaged and I do not know why.','My team agrees in meetings but never follows through on decisions.'],
-  'HR Professional':['Employee retention is dropping and exit interviews give vague answers.','Our onboarding process is thorough but new hires still feel lost after 3 months.','We have a diversity policy but the culture does not reflect it.','Employees are burning out but no one is willing to admit it.'],
-  'Government / Ministry Officer':['A policy we implemented is technically correct but the public is not adopting it.','Our department has low morale despite recent pay increases.','Interdepartmental collaboration keeps failing despite clear mandates.','Public trust in our initiative is low despite strong outcomes.'],
-  'Business Student':['I want to understand why good strategies fail at the implementation stage.','Why do some organisational cultures attract talent and others repel it?','How does cognitive bias affect senior leadership decisions in real organisations?','What makes some teams innovate and others stagnate despite similar resources?'],
-  'Founder / Entrepreneur':['My startup culture was great at 5 people but is breaking down at 25.','I cannot get my co-founder and I to agree on major decisions anymore.','My team is talented but risk-averse — nobody takes initiative.','We have high output but low team satisfaction — something is wrong.']
-};
-
-const PATTERNS=[
-{keys:["speak up","voice","afraid","silent","quiet","disagree","not saying","fear"],
- diagnosis:"Psychological Safety Deficit",icon:"🛡️",framework:"Edmondson,1999",
- flowSteps:["Interpersonal Risk","Voice Suppressed","Impression Mgmt","Surface Compliance","Deep Dysfunction"],
- flowTypes:["start","danger","warning","warning","end"],
- bars:[{label:"Psychological Safety",val:18,color:"red"},{label:"Team Performance",val:35,color:"red"},{label:"Innovation Output",val:22,color:"red"},{label:"Post-Intervention (6mo)",val:74,color:"green"}],
- stats:[{icon:"🔇",num:"67%",lbl:"Stay silent"},{icon:"📉",num:"−41%",lbl:"Performance drop"},{icon:"🔑",num:"#1",lbl:"Performance driver"}],
- root:"Your team is experiencing a psychological safety deficit [Edmondson,1999] — the shared belief that the team is safe for interpersonal risk-taking is absent. When people fear speaking up, they engage in impression management rather than genuine contribution, creating surface compliance masking deeper dysfunction [Argyris,1990].",
- hidden:"The silence in your team is not apathy — it is self-protection. When voice is not rewarded, withdrawal becomes the rational response [Morrison,1993]. Your culture has inadvertently taught people that honesty is dangerous.",
- actions:[{tf:"Day 1–3",a:"Hold an anonymous psychological safety audit: 'What are you not saying that would help this team?'",w:"Anonymous feedback removes social desirability bias and surfaces honest signal",c:"Edmondson,1999"},{tf:"Week 1",a:"Publicly reward one instance of candid uncomfortable feedback — make the reward visible to the team.",w:"Rewarding voice creates a behavioural anchor shifting the psychological contract",c:"Rousseau,1989"},{tf:"Week 2–3",a:"Introduce pre-mortem meetings — ask the team to imagine the project has failed and explain why.",w:"Pre-mortems give structural permission to voice concerns",c:"Kahneman,2011"},{tf:"Month 1",a:"Restructure meetings so the most junior person speaks first before senior voices.",w:"Inverting the speaking order neutralises authority bias and status gradients",c:"Janis,1972"},{tf:"Month 2–3",a:"Co-create a team charter that explicitly defines norms around disagreement and candor.",w:"Participatory norm-setting increases ownership and psychological safety",c:"Hackman,2002"},{tf:"Ongoing",a:"Measure psychological safety quarterly using Edmondson's 7-item validated scale.",w:"What gets measured gets managed",c:"Edmondson,2018"}]},
-
-{keys:["burnout","exhausted","tired","overwhelmed","overworked","stress","pressure","no energy","depleted","drained"],
- diagnosis:"Organisational Burnout Syndrome",icon:"🔥",framework:"Maslach,1981",
- flowSteps:["High Job Demands","Low Autonomy","Chronic Exhaustion","Cynicism","Collapse"],
- flowTypes:["start","warning","danger","danger","end"],
- bars:[{label:"Demand-Control Mismatch",val:82,color:"red"},{label:"Recovery Capacity",val:18,color:"red"},{label:"Engagement Level",val:24,color:"red"},{label:"Post-Intervention (3mo)",val:61,color:"green"}],
- stats:[{icon:"😮‍💨",num:"77%",lbl:"Employees affected"},{icon:"💸",num:"3×",lbl:"Turnover cost"},{icon:"📊",num:"−23%",lbl:"Productivity loss"}],
- root:"The pattern you describe is consistent with Maslach Burnout Syndrome [Maslach,1981] — chronic exhaustion driven by a mismatch between job demands and available resources. Karasek's demand-control model [Karasek,1979] predicts that high demands combined with low autonomy create the precise conditions for psychological depletion at scale.",
- hidden:"Burnout is not a personal failure — it is an organisational design failure [Pfeffer,1998]. Conservation of resources theory [Hobfoll,1989] shows that once resource depletion crosses a threshold, recovery becomes increasingly difficult without structural intervention.",
- actions:[{tf:"Day 1–3",a:"Conduct an immediate workload audit — list every active task per person and defer or remove the bottom 20% now.",w:"Resource recovery requires active demand reduction, not just wellness programs",c:"Hobfoll,1989"},{tf:"Week 1",a:"Introduce mandatory recovery blocks — 90-minute deep work windows with no meetings or communications.",w:"Cognitive performance degrades without structured recovery",c:"Csikszentmihalyi,1990"},{tf:"Week 2–3",a:"Restructure workload allocation — involve the team in prioritisation decisions to increase perceived autonomy.",w:"Perceived autonomy is the strongest buffer against burnout",c:"Karasek,1979"},{tf:"Month 1",a:"Implement recognition for completed work, not just new initiatives — create visible closure.",w:"Lack of recognition is one of Maslach's six burnout antecedents",c:"Siegrist,1996"},{tf:"Month 2–3",a:"Redesign roles using Hackman & Oldham's job characteristics model — increase skill variety and task significance.",w:"Jobs with high motivating potential reverse disengagement",c:"Hackman,1976"},{tf:"Ongoing",a:"Measure burnout quarterly with validated instruments and use results to drive structural interventions.",w:"Burnout is a leading indicator of turnover and performance degradation",c:"Maslach,1981"}]},
-
-{keys:["disengaged","not motivated","lost interest","checked out","apathy","low morale","no enthusiasm","demotivated"],
- diagnosis:"Employee Disengagement — Psychological Contract Violation",icon:"💤",framework:"Rousseau,1989",
- flowSteps:["Promises Perceived","Promises Broken","Emotional Withdrawal","Effort Reduction","Active Disengagement"],
- flowTypes:["start","warning","warning","danger","end"],
- bars:[{label:"Global Engagement Rate",val:15,color:"red"},{label:"Discretionary Effort",val:22,color:"red"},{label:"Need Fulfilment",val:31,color:"red"},{label:"Post-Intervention (6mo)",val:68,color:"green"}],
- stats:[{icon:"😶",num:"85%",lbl:"Disengaged globally"},{icon:"📉",num:"−18%",lbl:"Productivity"},{icon:"💰",num:"$7.8T",lbl:"Annual loss"}],
- root:"The disengagement you observe is consistent with psychological contract violation [Rousseau,1989] — when employees perceive that implicit promises have been broken, they withdraw discretionary effort as a rational response. Gallup research [Gallup,2017] shows 85% of employees globally are not fully engaged.",
- hidden:"Disengagement is almost never about the work itself — it is about the relationship between the person and the organisation [Meyer,1991]. What looks like laziness is usually unexpressed disappointment. The effort-reward imbalance model [Siegrist,1996] shows people disengage when contribution is not reciprocated.",
- actions:[{tf:"Day 1–3",a:"Have individual private conversations: 'What would need to change for you to feel genuinely invested again?'",w:"Voice restoration is the first step in repairing psychological contract violation",c:"Morrison,1993"},{tf:"Week 1",a:"Act visibly on at least one thing each person said — change something, do not just acknowledge.",w:"Perceived organisational support is built through action, not words",c:"Eisenberger,1986"},{tf:"Week 2–3",a:"Map each person's role against Deci & Ryan's three needs — autonomy, competence, relatedness — and address the most depleted.",w:"When basic psychological needs are met, intrinsic motivation is restored",c:"Ryan,2000"},{tf:"Month 1",a:"Restore autonomy — let each person own a meaningful decision, project, or process.",w:"Autonomy is the strongest predictor of intrinsic motivation",c:"Pink,2009"},{tf:"Month 2–3",a:"Create peer-to-peer recognition culture — not just manager-down — making contribution visible.",w:"Social recognition activates reward circuitry and strengthens organisational identification",c:"Fredrickson,2001"},{tf:"Ongoing",a:"Run a 3-question monthly pulse survey and use data to drive structural decisions.",w:"Engagement predicts profitability, productivity, and retention",c:"Harter,2002"}]},
-
-{keys:["conflict","argue","fight","clash","tension","hostile","toxic","friction","not getting along"],
- diagnosis:"Intergroup Conflict — Social Identity Theory",icon:"⚔️",framework:"Tajfel,1979",
- flowSteps:["Competing Incentives","In/Out-group Forms","Negative Attribution","Escalating Hostility","Structural Failure"],
- flowTypes:["start","warning","warning","danger","end"],
- bars:[{label:"Trust Between Groups",val:12,color:"red"},{label:"Collaborative Output",val:28,color:"red"},{label:"Individual Performance",val:52,color:"purple"},{label:"Post-Mediation (3mo)",val:71,color:"green"}],
- stats:[{icon:"🏛️",num:"85%",lbl:"Structural root"},{icon:"⏱️",num:"2.1hr",lbl:"Lost daily"},{icon:"🔁",num:"73%",lbl:"Recur untreated"}],
- root:"The conflict you describe is consistent with Social Identity Theory [Tajfel,1979] — when groups define themselves in opposition, competitive dynamics and negative stereotyping become self-reinforcing. Attribution error [Ross,1977] amplifies this: each side attributes the other's behaviour to character flaws rather than situational pressures.",
- hidden:"Most workplace conflicts are not personality conflicts — they are structural conflicts expressed through personality [Mintzberg,1983]. The people in tension are responding rationally to a system with competing incentives, unclear boundaries, or ambiguous accountability.",
- actions:[{tf:"Day 1–3",a:"Meet with each side individually. Listen for the unmet need or perceived injustice beneath the surface behaviour.",w:"Conflict resolution requires uncovering underlying interests, not negotiating positions",c:"Cialdini,1984"},{tf:"Week 1",a:"Map structural causes — competing KPIs, unclear role boundaries, resource scarcity — and address one immediately.",w:"Superordinate goals dissolve intergroup hostility",c:"Tajfel,1979"},{tf:"Week 2–3",a:"Run a facilitated structured dialogue with explicit ground rules focused on work outcomes, not personal grievances.",w:"Structured contact under cooperative conditions reliably reduces intergroup hostility",c:"Asch,1951"},{tf:"Month 1",a:"Redesign incentive structures that reward individual success at the expense of collective outcomes.",w:"Misaligned incentives are the primary structural driver of dysfunctional competition",c:"Adams,1963"},{tf:"Month 2–3",a:"Build cross-functional projects requiring genuine interdependence to succeed.",w:"Functional interdependence is the most reliable antidote to intergroup conflict",c:"Hackman,2002"},{tf:"Ongoing",a:"Monitor team health in retrospectives and build shared identity through co-created norms.",w:"Shared social identity is the long-term buffer against intergroup conflict",c:"Tajfel,1979"}]},
-
-{keys:["missing deadlines","not delivering","poor performance","underperform","targets","goals","results","productivity"],
- diagnosis:"Performance Deficit — Expectancy Theory",icon:"🎯",framework:"Vroom,1964",
- flowSteps:["Vague Goals","Low Expectancy","Reward Link Breaks","Effort Withdrawn","Underperformance"],
- flowTypes:["start","warning","warning","danger","end"],
- bars:[{label:"Goal Clarity Score",val:24,color:"red"},{label:"Effort-Reward Expectancy",val:31,color:"red"},{label:"Feedback Effectiveness",val:19,color:"red"},{label:"Post-Intervention (3mo)",val:77,color:"green"}],
- stats:[{icon:"📋",num:"+25%",lbl:"Gains: clear goals"},{icon:"🔗",num:"3",lbl:"Expectancy links"},{icon:"⚙️",num:"92%",lbl:"System vs people"}],
- root:"The performance gap is explained by Vroom's Expectancy Theory [Vroom,1964] — people exert effort when they believe effort leads to performance, performance leads to reward, and the reward is valued. A breakdown at any link produces the underperformance you observe. Locke's goal-setting research [Locke,1968] shows vague, unowned goals systematically undermine performance.",
- hidden:"When an entire team underperforms, the cause is almost never individual capability — it is system design [Hackman,1976]. What looks like a people problem is usually a clarity, feedback, or incentive problem in disguise.",
- actions:[{tf:"Day 1–3",a:"Audit current goals for specificity and attainability — rewrite any that are vague, contradictory, or set without team input.",w:"Specific challenging co-created goals produce 16–25% performance gains",c:"Locke,1968"},{tf:"Week 1",a:"Create a visual progress tracking system — make the gap between current and target performance visible daily.",w:"Feedback is a prerequisite for goal-directed performance",c:"Hackman,1976"},{tf:"Week 2–3",a:"Identify and remove the top three systemic barriers — unclear priorities, resource gaps, or process inefficiencies.",w:"System constraints, not individual will, explain most performance variance",c:"Argyris,1990"},{tf:"Month 1",a:"Strengthen the expectancy chain — make the effort-performance-reward link explicit and deliver on at least one promised reward visibly.",w:"Expectancy violations are the leading cause of effort withdrawal",c:"Vroom,1964"},{tf:"Month 2–3",a:"Introduce structured peer accountability — weekly check-ins where members share progress and obstacles.",w:"Public commitment increases goal adherence through social accountability",c:"Cialdini,1984"},{tf:"Ongoing",a:"Build performance culture by celebrating progress and growth, not just outcomes.",w:"Growth mindset cultures sustain performance under difficulty",c:"Dweck,2006"}]},
-
-{keys:["leaving","quit","resign","turnover","retention","attrition","losing people","keep talent","flight","exit"],
- diagnosis:"Voluntary Turnover — Psychological Contract Breach",icon:"🚪",framework:"Rousseau,1989",
- flowSteps:["Contract Breach","Cognitive Withdrawal","Job Search","Intention Crystallises","Resignation"],
- flowTypes:["start","warning","warning","danger","end"],
- bars:[{label:"Perceived Org. Support",val:22,color:"red"},{label:"Career Dev. Access",val:28,color:"red"},{label:"Belonging Score",val:31,color:"red"},{label:"Post-Intervention",val:81,color:"green"}],
- stats:[{icon:"💸",num:"200%",lbl:"Replacement cost"},{icon:"📅",num:"6mo",lbl:"Invisible withdrawal"},{icon:"🎤",num:"23%",lbl:"Exit interviews truthful"}],
- root:"High voluntary turnover is preceded by psychological contract breach [Rousseau,1989] — when employees perceive the implicit agreement has been violated, they begin cognitive withdrawal long before formally resigning. Mobley's turnover model [Mobley,1977] shows actual resignation is the last visible event in a long invisible process.",
- hidden:"By the time someone resigns, the organisation has typically already lost them. Research shows the primary drivers of voluntary turnover are not compensation but unmet needs for autonomy, growth, and belonging [Ryan,2000]. Exit interview data is systematically unreliable — people tell you what is safe, not what is true.",
- actions:[{tf:"Day 1–3",a:"Conduct stay interviews with your highest-value people: 'What would make you leave? What would make you stay?'",w:"Stay interviews surface retention risks before they become resignations",c:"Rhoades,2002"},{tf:"Week 1",a:"Analyse turnover data by manager, team, and tenure — identify the pattern. Turnover clusters reveal systemic causes.",w:"Management quality explains more turnover variance than compensation",c:"Huselid,1995"},{tf:"Week 2–3",a:"For highest-risk individuals, create visible growth pathways with concrete timelines and support.",w:"Career development is the second strongest predictor of retention",c:"Gallup,2017"},{tf:"Month 1",a:"Review your recognition system — ensure high performers receive differentiated recognition.",w:"Perceived inequity between contribution and recognition drives withdrawal",c:"Adams,1963"},{tf:"Month 2–3",a:"Strengthen belonging through team rituals, peer recognition, and shared identity.",w:"Relatedness satisfaction buffers against turnover intention",c:"Ryan,2000"},{tf:"Ongoing",a:"Track monthly intention-to-stay alongside engagement metrics.",w:"Replacement costs average 50–200% of annual salary",c:"Hom,1995"}]},
-
-{keys:["culture","values","toxic","environment","atmosphere","norms","how we do things","vibe","unspoken"],
- diagnosis:"Cultural Misalignment — Schein's Three Levels",icon:"🏛️",framework:"Schein,1985",
- flowSteps:["Stated Values","Espoused Behaviour","Theory-in-Use Gap","Hidden Assumptions","Actual Culture"],
- flowTypes:["start","warning","warning","danger","end"],
- bars:[{label:"Values-Behaviour Alignment",val:26,color:"red"},{label:"Leadership Modelling",val:38,color:"red"},{label:"Ritual & Story Alignment",val:31,color:"red"},{label:"Post-Reset (12mo)",val:72,color:"green"}],
- stats:[{icon:"🪞",num:"3",lbl:"Schein levels"},{icon:"🔄",num:"5yr",lbl:"Avg reset time"},{icon:"🏆",num:"33%",lbl:"Revenue premium"}],
- root:"What you experience reflects Schein's three levels of organisational culture [Schein,1985] — visible behaviours are symptoms of deeper invisible assumptions driving the organisation. Culture change programmes addressing only surface behaviours consistently fail because they do not reach the underlying beliefs generating those behaviours.",
- hidden:"Culture is not what organisations say they value — it is what they reward, tolerate, and punish in practice [Schein,1985]. Argyris called this the gap between espoused theory and theory in use — the gap is where culture actually lives [Argyris,1990].",
- actions:[{tf:"Day 1–3",a:"Map the gap between stated values and actual rewarded behaviours: what is praised, promoted, and tolerated regardless of the values?",w:"The gap between espoused theory and theory in use is where culture lives",c:"Argyris,1990"},{tf:"Week 1",a:"Identify the three most powerful cultural carriers — stories, rituals, symbols — and analyse what they communicate.",w:"Cultural transmission happens through stories and rituals more than policies",c:"Schein,1985"},{tf:"Week 2–3",a:"Stop at least one practice actively contradicting your desired culture.",w:"Culture change requires behavioural discontinuity — you cannot drift toward a new culture",c:"Kotter,1996"},{tf:"Month 1",a:"Create two or three new rituals embodying your desired culture — recurring practices making values visible and real.",w:"Rituals create shared meaning and reinforce collective identity",c:"Schein,1985"},{tf:"Month 2–3",a:"Align hiring, promotion, and exit decisions explicitly with your desired culture.",w:"Culture is sustained or destroyed through personnel decisions",c:"Collins,2001"},{tf:"Ongoing",a:"Conduct an annual culture audit using validated instruments.",w:"Culture not actively managed reverts to default settings",c:"Cameron,2003"}]},
-
-{keys:["leadership","leader","manager","direction","vision","inspire","trust","authority","management","boss"],
- diagnosis:"Leadership Effectiveness Gap — Transformational Model",icon:"🧭",framework:"Bass,1985",
- flowSteps:["Transactional Only","Compliance Not Commitment","Low LMX Quality","Effort Ceiling Hit","Performance Stalls"],
- flowTypes:["start","warning","warning","danger","end"],
- bars:[{label:"Transformational Behaviours",val:28,color:"red"},{label:"LMX Relationship Quality",val:35,color:"red"},{label:"Follower Commitment",val:31,color:"red"},{label:"Post-Development (6mo)",val:74,color:"green"}],
- stats:[{icon:"🔗",num:"LMX",lbl:"Strongest predictor"},{icon:"📈",num:"+34%",lbl:"Transformational gain"},{icon:"🏅",num:"ROI#1",lbl:"Leadership investment"}],
- root:"The leadership challenge is explained by Bass's transformational leadership model [Bass,1985] — transactional leadership produces compliance while transformational leadership produces commitment. When organisations need performance beyond expectations, transactional leadership is structurally insufficient.",
- hidden:"Leadership gaps are rarely about intelligence — they are about the relationship between the leader and followers' psychological needs [Deci,1985]. Leader-member exchange research [Graen,1995] shows leaders unconsciously form two-tier relationships that damage collective performance.",
- actions:[{tf:"Day 1–3",a:"Audit your leadership relationships — with which team members do you have genuinely high-quality exchanges?",w:"LMX quality is the strongest predictor of individual performance and commitment",c:"Graen,1995"},{tf:"Week 1",a:"Schedule individual development conversations: 'What do you want to become in 2 years?'",w:"Individualised consideration is a core component of transformational leadership",c:"Bass,1985"},{tf:"Week 2–3",a:"Articulate a clear compelling vision — not targets and KPIs, but a meaningful narrative about why the work matters.",w:"Inspirational motivation is the second component of transformational leadership",c:"Bass,1985"},{tf:"Month 1",a:"Delegate meaningful stretching decisions — genuine authority with support, not just tasks.",w:"Autonomy support is most strongly associated with intrinsic motivation",c:"Ryan,2000"},{tf:"Month 2–3",a:"Seek 360-degree feedback and act visibly on at least two development areas.",w:"Leaders who seek and act on feedback create psychological safety and model learning",c:"Edmondson,1999"},{tf:"Ongoing",a:"Invest in leadership development as systematically as business strategy.",w:"Authentic leadership development is the highest-ROI leadership intervention",c:"Avolio,2004"}]},
-
-{keys:["innovate","innovation","creative","creativity","new ideas","stuck","stagnant","change","experiment","risk averse"],
- diagnosis:"Innovation Suppression — Amabile's Componential Model",icon:"💡",framework:"Amabile,1996",
- flowSteps:["Fear of Failure","Intrinsic Motivation Killed","Evaluation Apprehension","Creative Risk Avoided","Stagnation"],
- flowTypes:["start","danger","warning","warning","end"],
- bars:[{label:"Psychological Safety for Risk",val:21,color:"red"},{label:"Exploration Time Protected",val:14,color:"red"},{label:"Failure Tolerance",val:18,color:"red"},{label:"Post-Culture Shift (6mo)",val:69,color:"green"}],
- stats:[{icon:"🧪",num:"10%",lbl:"Time for exploration"},{icon:"🚫",num:"73%",lbl:"Ideas never voiced"},{icon:"💰",num:"3.5×",lbl:"ROI from safety"}],
- root:"The innovation deficit is explained by Amabile's componential model [Amabile,1996] — organisational conditions consistently undermine the intrinsic motivation component of creativity. When people fear evaluation, failure, or looking foolish, creative risk-taking shuts down [Edmondson,1999].",
- hidden:"Innovation is not a trait — it is a behaviour that organisations either make safe or make dangerous [West,1990]. Most organisations claim to value innovation while structurally punishing the experimentation and failure that innovation requires.",
- actions:[{tf:"Day 1–3",a:"Announce one explicit failure amnesty — publicly reframe a recent failed experiment as learning.",w:"Psychological safety for failure is the prerequisite for creative risk-taking",c:"Edmondson,1999"},{tf:"Week 1",a:"Create dedicated exploration time — even 10% protected from execution demands produces measurable innovation gains.",w:"Structured exploration time is the foundation of innovation cultures",c:"March,1991"},{tf:"Week 2–3",a:"Run a crazy ideas session with no evaluation in the room — separate ideation from criticism explicitly.",w:"Evaluation apprehension is the primary creativity killer in group settings",c:"Amabile,1996"},{tf:"Month 1",a:"Identify and remove the top three processes blocking experimentation. Bureaucracy is the primary innovation killer.",w:"Machine bureaucracies systematically suppress innovation by design",c:"Mintzberg,1983"},{tf:"Month 2–3",a:"Build a structured innovation pipeline — an explicit process from idea to experiment to scale.",w:"Organisations need formal structures for converting creative insight into knowledge",c:"Nonaka,1995"},{tf:"Ongoing",a:"Measure innovation culture quarterly: experiments run, ideas submitted, learning documents created.",w:"Celebrating the process not just outcomes sustains innovation culture",c:"Amabile,1996"}]},
-
-{keys:["communication","not told","informed","information","unclear","misunderstand","silos","transparent","message","feedback"],
- diagnosis:"Communication Breakdown — Media Richness Theory",icon:"📡",framework:"Daft,1986",
- flowSteps:["High Complexity","Wrong Channel","Meaning Distorted","Trust Erodes","Org. Silence"],
- flowTypes:["start","warning","danger","danger","end"],
- bars:[{label:"Information Flow Quality",val:29,color:"red"},{label:"Channel-Message Match",val:22,color:"red"},{label:"Cross-Silo Comms",val:18,color:"red"},{label:"Post-Audit (3mo)",val:70,color:"green"}],
- stats:[{icon:"📬",num:"57%",lbl:"Messages misunderstood"},{icon:"🏢",num:"4.5×",lbl:"Silo comms cost"},{icon:"👂",num:"85%",lbl:"Listening failures"}],
- root:"The communication failure is explained by Daft and Lengel's media richness theory [Daft,1986] — mismatches between message complexity and channel richness systematically produce misunderstanding. Beyond channel choice, research on organisational silence shows employees deliberately withhold critical information when speaking up feels risky [Morrison,1993].",
- hidden:"Most communication problems are not technical — they are relational and political [Mintzberg,1983]. The issue is rarely the message; it is the trust, safety, and status dynamics shaping whether messages travel honestly.",
- actions:[{tf:"Day 1–3",a:"Conduct a communication audit — map who talks to whom, what information travels and what does not.",w:"Network analysis reveals the informal communication architecture more powerful than any formal structure",c:"Pentland,2012"},{tf:"Week 1",a:"For complex ambiguous issues, shift from email to face-to-face. Reserve low-richness media for routine communication.",w:"Complex messages lose critical nuance in low-richness channels",c:"Daft,1986"},{tf:"Week 2–3",a:"Create a weekly information broadcast — one short clear update on the three things that matter most.",w:"Information overload degrades message absorption and decision quality",c:"Kahneman,2011"},{tf:"Month 1",a:"Break down structural silos with cross-functional information-sharing forums.",w:"Silos produce functions that optimise locally at the expense of the whole",c:"DiMaggio,1983"},{tf:"Month 2–3",a:"Train managers in active listening and open questions — most communication failures are listening failures.",w:"Empathic listening is the core communication competency of effective leaders",c:"Goleman,1995"},{tf:"Ongoing",a:"Measure communication effectiveness: does everyone who needs information to do their job well have it?",w:"Organisations that communicate effectively navigate uncertainty far better",c:"Weick,1995"}]},
-
-{keys:["groupthink","agree","consensus","no debate","echo","rubber stamp","all agree","unanimous","yes people"],
- diagnosis:"Groupthink — Janis's Collective Rationalisation",icon:"🫧",framework:"Janis,1972",
- flowSteps:["High Cohesion","Dissent Costly","Illusion of Unity","Collective Rationalisation","Critical Thinking Lost"],
- flowTypes:["start","warning","warning","danger","end"],
- bars:[{label:"Viewpoint Diversity",val:16,color:"red"},{label:"Tolerance for Dissent",val:21,color:"red"},{label:"Decision Quality",val:34,color:"red"},{label:"With Structural Safeguards",val:78,color:"green"}],
- stats:[{icon:"🚫",num:"8/8",lbl:"Bay of Pigs agreed"},{icon:"🗳️",num:"91%",lbl:"Groupthink in teams"},{icon:"🧩",num:"−43%",lbl:"Decision accuracy"}],
- root:"The dangerous agreement you observe is groupthink [Janis,1972] — when cohesion, conformity pressure, and status differentials suppress individual critical thinking. Janis identified eight symptoms including illusion of invulnerability, collective rationalisation, and self-censorship. The result is catastrophic decision-making disguised as consensus.",
- hidden:"Groupthink is most dangerous in high-cohesion, high-stress, insulated teams led by directive leaders. The absence of visible conflict is not a sign of health — it is the most reliable symptom of groupthink. Conformity research [Asch,1951] shows people deny their own perception to avoid social exclusion.",
- actions:[{tf:"Day 1–3",a:"Appoint a formal devil's advocate role in your next three critical decisions — rotate it so no one person is permanently cast as the dissenter.",w:"Institutionalising dissent removes the social cost from disagreement",c:"Janis,1972"},{tf:"Week 1",a:"Require written pre-meeting positions before major decisions — commit views before social influence operates.",w:"Written pre-commitment reduces conformity pressure by 61%",c:"Kahneman,2011"},{tf:"Week 2–3",a:"Introduce independent sub-groups to work on the same problem and compare conclusions.",w:"Parallel independent evaluation breaks collective rationalisation",c:"Janis,1972"},{tf:"Month 1",a:"Invite external expert perspectives on critical decisions — break the insularity.",w:"Outside views reduce overconfidence and collective blind spots",c:"Kahneman,2011"},{tf:"Month 2–3",a:"Restructure decision-making to give junior voices equal procedural standing.",w:"Status differentials are the primary enabler of groupthink",c:"Asch,1951"},{tf:"Ongoing",a:"Conduct post-decision reviews asking: what did we not consider? who was not heard?",w:"Retrospective audits build the habit of critical independent thinking",c:"Argyris,1990"}]},
-
-{keys:["social loafing","freeloading","not pulling weight","unequal effort","free rider","coast","some doing all the work"],
- diagnosis:"Social Loafing — Diffusion of Responsibility",icon:"🛋️",framework:"Latane,1979",
- flowSteps:["Effort Unidentifiable","Responsibility Diffused","Appraisal Removed","Effort Reduced","Contributor Resentment"],
- flowTypes:["start","warning","warning","danger","end"],
- bars:[{label:"Individual Accountability",val:18,color:"red"},{label:"Effort Identifiability",val:22,color:"red"},{label:"Task Significance Felt",val:29,color:"red"},{label:"Post-Redesign (2mo)",val:73,color:"green"}],
- stats:[{icon:"📉",num:"−29%",lbl:"Effort in groups"},{icon:"👥",num:"Group size",lbl:"Primary driver"},{icon:"🔦",num:"Visibility",lbl:"Single cure"}],
- root:"The imbalance you describe is social loafing [Latane,1979] — when individual contributions are not identifiable, people reduce effort because responsibility is diffused across the group. This is not character weakness; it is a predictable response to anonymity in collective tasks.",
- hidden:"Social loafing scales with group size and vanishes when individual contributions become visible and meaningful [Hackman,1976]. The problem is almost always in the task design, not the people. Restoring identifiability and task significance eliminates the behaviour without punitive intervention.",
- actions:[{tf:"Day 1–3",a:"Redesign tasks so individual contributions are explicitly visible — name who owns what outcome.",w:"Identifiability is the single most effective antidote to social loafing",c:"Latane,1979"},{tf:"Week 1",a:"Reduce group size for critical tasks — groups of 3–5 produce significantly less loafing than groups of 8+.",w:"Social loafing scales exponentially with group size",c:"Latane,1979"},{tf:"Week 2–3",a:"Raise task significance — connect each person's contribution to a meaningful outcome they care about.",w:"Task significance is the strongest intrinsic motivator against loafing",c:"Hackman,1976"},{tf:"Month 1",a:"Introduce peer evaluation — each member rates others' contribution to a shared output.",w:"Peer accountability restores evaluation apprehension that prevents loafing",c:"Cialdini,1984"},{tf:"Month 2–3",a:"Build in regular individual progress sharing — weekly standups where each person reports their piece.",w:"Public commitment creates social accountability",c:"Locke,1968"},{tf:"Ongoing",a:"Audit all team structures for contribution visibility before launching new projects.",w:"Preventive design is more effective than corrective intervention",c:"Hackman,2002"}]},
-
-{keys:["change","resistance","change management","new system","restructure","reorganise","transformation","won't change","push back","adoption"],
- diagnosis:"Change Resistance — Lewin's Force Field Analysis",icon:"🌊",framework:"Lewin,1947",
- flowSteps:["Driving Forces","Restraining Forces Ignored","Change Announced","Psychological Threat","Active Resistance"],
- flowTypes:["start","warning","warning","danger","end"],
- bars:[{label:"Driving Force Strength",val:62,color:"purple"},{label:"Restraining Forces Addressed",val:18,color:"red"},{label:"Stakeholder Buy-in",val:27,color:"red"},{label:"Post-Co-design (6mo)",val:76,color:"green"}],
- stats:[{icon:"❌",num:"70%",lbl:"Change initiatives fail"},{icon:"🧠",num:"Loss aversion",lbl:"Core mechanism"},{icon:"👥",num:"Co-design",lbl:"Biggest fix"}],
- root:"Change resistance follows Lewin's force field model [Lewin,1947] — every change has driving and restraining forces. When restraining forces (loss aversion, uncertainty, identity threat) are underestimated, resistance is inevitable. Kahneman's loss aversion [Kahneman,2011] shows people weight potential losses 2–3× more heavily than equivalent gains.",
- hidden:"Resistance to change is almost never irrational. It is the intelligently self-protective response of people who have not been given sufficient reason to trust the change or involvement in designing it [Kotter,1996]. The rollout method matters more than the change content.",
- actions:[{tf:"Day 1–3",a:"Map your restraining forces explicitly: what is each stakeholder group afraid of losing? Acknowledge these fears publicly.",w:"Naming the loss reduces its perceived threat and prevents underground resistance",c:"Kahneman,2011"},{tf:"Week 1",a:"Involve key resistors in co-designing implementation — not whether to change, but how.",w:"Participation transforms resistors into advocates through ownership",c:"Lewin,1947"},{tf:"Week 2–3",a:"Create early visible wins — pilot the change somewhere it will succeed and publicise the result.",w:"Early wins build momentum and demonstrate change is survivable",c:"Kotter,1996"},{tf:"Month 1",a:"Create psychological safety for scepticism — hold forums where concerns are heard without judgement.",w:"Suppressed resistance goes underground; expressed resistance can be addressed",c:"Edmondson,1999"},{tf:"Month 2–3",a:"Build transition support structures — coaching, training, peer support — for those most displaced by change.",w:"People resist the threat of incompetence, not change itself",c:"Bandura,1977"},{tf:"Ongoing",a:"Measure adoption not just compliance — track whether people are using the new behaviour by choice.",w:"Real change is voluntary; compelled change reverts the moment supervision ends",c:"Argyris,1990"}]},
-
-{keys:["trust","honesty","transparency","hidden","secrets","politics","manipulation","backstabbing","micromanage","control"],
- diagnosis:"Trust Deficit — Perceived Betrayal & Organisational Justice",icon:"🔐",framework:"Rousseau,1989",
- flowSteps:["Repeated Violations","Intentional Attribution","Psychological Distancing","Defensive Self-protection","Relationship Breakdown"],
- flowTypes:["start","danger","warning","warning","end"],
- bars:[{label:"Perceived Fairness",val:19,color:"red"},{label:"Interpersonal Trust",val:23,color:"red"},{label:"Information Sharing",val:17,color:"red"},{label:"Post-Rebuild (9mo)",val:67,color:"green"}],
- stats:[{icon:"🏗️",num:"9mo",lbl:"Avg rebuild time"},{icon:"🪟",num:"Transparency",lbl:"Fastest repair lever"},{icon:"🔁",num:"Once",lbl:"Violations remembered long"}],
- root:"The trust deficit you describe follows Morrison and Robinson's model of psychological contract violation [Morrison,1993] — when employees feel intentionally betrayed rather than merely disappointed, the damage to the relationship is qualitatively different and requires explicit repair, not just improved behaviour.",
- hidden:"Trust is not rebuilt through words but through a sustained pattern of reliable, transparent, and fair actions over time [Rousseau,1989]. The deeper problem is usually that the organisation's systems create conditions where people feel they must protect themselves — this is a design problem, not a character problem.",
- actions:[{tf:"Day 1–3",a:"Acknowledge the specific breaches openly — name what went wrong without minimising or deflecting.",w:"Explicit acknowledgment of violation is required before repair can begin",c:"Morrison,1993"},{tf:"Week 1",a:"Increase transparency on decisions that affect people — explain reasoning, not just outcomes.",w:"Procedural justice (the fairness of the process) matters more than outcome justice",c:"Adams,1963"},{tf:"Week 2–3",a:"Create one small promise and keep it visibly — begin rebuilding the track record of reliability.",w:"Trust is rebuilt incrementally through consistent reliable small acts",c:"Rousseau,1989"},{tf:"Month 1",a:"Audit your systems for structural conditions creating win-lose dynamics — politics emerge from scarcity and opacity.",w:"Most organisational politics are responses to structural conditions, not character",c:"Mintzberg,1983"},{tf:"Month 2–3",a:"Implement regular town halls where people can ask any question and receive honest answers.",w:"Consistent honest communication is the fastest trust-rebuilding intervention",c:"Edmondson,1999"},{tf:"Ongoing",a:"Measure perceived organisational justice quarterly — distributive, procedural, and interactional.",w:"Justice perceptions are the most reliable predictor of trust levels",c:"Adams,1963"}]},
-
-{keys:[],
- diagnosis:"Organisational Behaviour Challenge — Multi-Framework Analysis",icon:"🔬",framework:"Schein,1985",
- flowSteps:["Observable Symptom","Structural Root Cause","Psychological Mechanism","System Response","Sustainable Fix"],
- flowTypes:["start","warning","warning","warning","end"],
- bars:[{label:"Structural Alignment",val:35,color:"purple"},{label:"Need Fulfilment",val:41,color:"purple"},{label:"Incentive Coherence",val:38,color:"purple"},{label:"Potential with Intervention",val:78,color:"green"}],
- stats:[{icon:"🔭",num:"Systems",lbl:"Root cause lens"},{icon:"🧩",num:"3 needs",lbl:"SDT framework"},{icon:"🏗️",num:"Design",lbl:"Primary lever"}],
- root:"The challenge you describe reflects a classic intersection of individual psychology, group dynamics, and organisational systems [Schein,1985]. Self-determination theory [Deci,1985] suggests unmet needs for autonomy, competence, or relatedness are driving the behaviour you observe.",
- hidden:"In almost every organisational challenge, the visible problem is a symptom of deeper structural or cultural misalignment [Argyris,1990]. The people involved are responding rationally to incentives, norms, and constraints the organisation has created.",
- actions:[{tf:"Day 1–3",a:"Gather perspectives from multiple levels and functions to build a picture no single vantage point can see.",w:"Systems thinking requires multiple perspectives to reveal structural dynamics",c:"Senge,1990"},{tf:"Week 1",a:"Identify the primary unmet psychological need — autonomy, competence, or relatedness — and address it directly.",w:"All human motivation flows from three basic psychological needs",c:"Ryan,2000"},{tf:"Week 2–3",a:"Map the incentive structure: what is actually being rewarded, tolerated, and punished? Align with your desired outcome.",w:"Behaviour follows incentives — change requires incentive system change",c:"Vroom,1964"},{tf:"Month 1",a:"Implement one structural change making the desired behaviour the path of least resistance.",w:"Choice architecture shapes behaviour more powerfully than exhortation",c:"Thaler,2008"},{tf:"Month 2–3",a:"Build feedback loops that connect action to consequence and give the system authority to self-correct.",w:"Learning organisations require feedback loops connecting action to consequence",c:"Senge,1990"},{tf:"Ongoing",a:"Treat this as a system to be designed, not a problem to be solved once. Commit to ongoing diagnosis and learning.",w:"Double-loop learning distinguishes organisations that improve their improvement",c:"Argyris,1990"}]}
-];
-
-const INSIGHTS=["Every organisational problem is a human problem wearing a business suit.","The gap between what people say in meetings and what they think on the way home is where organisational psychology lives.","Most leadership failures are not failures of intelligence — they are failures of self-awareness.","Culture is not what organisations say they value — it is what they reward at 11pm on a Thursday.","Disengagement is not apathy — it is the rational response of a psychologically intelligent person to an irrational system.","When a team fails, look first at the system before looking at the people inside it.","The best predictor of team performance is not IQ or resources — it is psychological safety.","Every retention problem is a relationship problem that started long before the resignation letter.","Organisations are perfectly designed to get exactly the results they get — no more, no less.","The most dangerous moment in any organisation is when everyone agrees."];
-
-let currentRole='Corporate Manager';
-
-function setRole(btn,role){
-  document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');currentRole=role;
-  document.getElementById('role-label').textContent=role;renderExamples();
-}
-function renderExamples(){
-  const ex=ROLE_EXAMPLES[currentRole]||[];
-  document.getElementById('examples-grid').innerHTML=ex.map(e=>`<div class="eg-chip" onclick="useExample(this)">${e}</div>`).join('');
-}
-function useExample(el){const ta=document.getElementById('org-input');ta.value=el.textContent;onInput(ta);}
-function onInput(el){
-  const v=el.value.trim();
-  document.getElementById('char-note').textContent=v.length+' characters';
-  document.getElementById('gen-btn').classList.toggle('ready',v.length>=30);
-}
-function cite(key){
-  const c=CITATIONS[key];
-  if(!c)return`<sup style="font-size:10px;color:var(--gold);">[${key}]</sup>`;
-  return`<a class="cite" href="${c.url}" target="_blank" rel="noopener" title="${c.full}">[${key.split(',')[0]}]</a>`;
-}
-function fmt(t){return t?t.replace(/\[([^\]]+)\]/g,(m,k)=>cite(k)):'';}
-function matchPattern(input){
-  const l=input.toLowerCase();let best=null,top=0;
-  for(const p of PATTERNS){if(!p.keys.length)continue;const s=p.keys.filter(k=>l.includes(k)).length;if(s>top){top=s;best=p;}}
-  return best||PATTERNS[PATTERNS.length-1];
-}
-
-function buildFlowchart(steps,types){
-  const W=680,boxH=40;
-  const n=steps.length;
-  const arrowW=22;
-  const usable=W-80;
-  const boxW=Math.floor((usable-(n-1)*arrowW)/n);
-  const totalW=n*boxW+(n-1)*arrowW;
-  const ox=Math.floor((W-totalW)/2);
-  const svgH=120;
-  const y0=20;
-
-  const TC={
-    start:{fill:'rgba(201,169,110,0.1)',stroke:'rgba(201,169,110,0.45)',text:'#C9A96E'},
-    warning:{fill:'rgba(123,111,160,0.1)',stroke:'rgba(123,111,160,0.38)',text:'#9B8FC0'},
-    danger:{fill:'rgba(176,64,64,0.12)',stroke:'rgba(176,64,64,0.45)',text:'#CC5555'},
-    end:{fill:'rgba(46,125,90,0.1)',stroke:'rgba(46,125,90,0.4)',text:'#4DAA80'}
-  };
-
-  let s=`<svg width="100%" viewBox="0 0 ${W} ${svgH}" style="display:block;">
-<defs><marker id="far" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#5A4F80" stroke-width="1.5" stroke-linecap="round"/></marker></defs>`;
-
-  steps.forEach((step,i)=>{
-    const x=ox+i*(boxW+arrowW);
-    const tc=TC[types[i]]||TC.warning;
-    if(i>0){
-      const ax=ox+i*(boxW+arrowW)-arrowW;
-      s+=`<line x1="${ax+3}" y1="${y0+boxH/2}" x2="${ax+arrowW-3}" y2="${y0+boxH/2}" stroke="#5A4F80" stroke-width="0.8" marker-end="url(#far)"/>`;
-    }
-    const words=step.split(' ');let lines=[];let cur='';
-    const maxChars=Math.floor(boxW/7);
-    words.forEach(w=>{if((cur+' '+w).trim().length>maxChars&&cur){lines.push(cur.trim());cur=w;}else{cur=(cur+' '+w).trim();}});
-    if(cur)lines.push(cur.trim());
-    const lh=12;const tH=lines.length*lh;const ty=y0+boxH/2-tH/2+lh/2;
-    s+=`<rect x="${x}" y="${y0}" width="${boxW}" height="${boxH}" rx="3" fill="${tc.fill}" stroke="${tc.stroke}" stroke-width="0.5"/>`;
-    lines.forEach((line,li)=>{
-      s+=`<text x="${x+boxW/2}" y="${ty+li*lh}" text-anchor="middle" dominant-baseline="central" font-family="'DM Sans',sans-serif" font-size="9" fill="${tc.text}">${line}</text>`;
-    });
-    s+=`<text x="${x+boxW/2}" y="${y0+boxH+13}" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(123,111,160,0.3)">${i+1}</text>`;
-  });
-
-  // Legend
-  const lx=ox;const ly=svgH-8;
-  [['start','Trigger'],['warning','Mechanism'],['danger','Critical'],['end','Outcome']].forEach(([t,label],i)=>{
-    const tc=TC[t];
-    s+=`<rect x="${lx+i*92}" y="${ly-6}" width="8" height="8" rx="1" fill="${tc.fill}" stroke="${tc.stroke}" stroke-width="0.5"/>`;
-    s+=`<text x="${lx+i*92+12}" y="${ly}" font-family="'DM Sans',sans-serif" font-size="8" fill="rgba(123,111,160,0.42)">${label}</text>`;
-  });
-
-  s+='</svg>';return s;
-}
-
-function buildBlueprint(input){
-  const p=matchPattern(input);
-  const insight=INSIGHTS[Math.floor(Math.random()*INSIGHTS.length)];
-  const refKeys=[...new Set([p.framework,...p.actions.map(a=>a.c)])].filter(k=>CITATIONS[k]);
-  const date=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-  document.getElementById('loading-card').style.display='none';
-
-  const actHTML=p.actions.map(a=>`
-    <div class="act-item">
-      <div class="act-day">${a.tf}</div>
-      <div class="act-txt">${a.a}</div>
-      <div class="act-why">Evidence: ${a.w}. ${cite(a.c)}</div>
-    </div>`).join('');
-
-  const barHTML=`<div class="bar-chart-wrap">
-    <div class="bar-chart-title">Diagnostic metrics — current state & projected recovery</div>
-    ${p.bars.map(b=>`<div class="bar-row">
-      <div class="bar-label">${b.label}</div>
-      <div class="bar-track"><div class="bar-fill ${b.color}" data-width="${b.val}" style="width:0%"></div></div>
-      <div class="bar-val">${b.val}%</div>
-    </div>`).join('')}
-  </div>`;
-
-  const statsHTML=`<div class="icon-stats">
-    ${p.stats.map(st=>`<div class="istat"><div class="istat-icon">${st.icon}</div><div class="istat-num">${st.num}</div><div class="istat-lbl">${st.lbl}</div></div>`).join('')}
-  </div>`;
-
-  const refsHTML=refKeys.map(k=>{const c=CITATIONS[k];return`<div class="ref-item"><strong>${k}</strong>${c.full}<a href="${c.url}" target="_blank" rel="noopener">View on Google Scholar ↗</a></div>`;}).join('');
-
-  const wrap=document.getElementById('bp-wrap');
-  wrap.style.display='block';
-  wrap.innerHTML=`
-  <div class="bp-head">
-    <div class="bp-eye">One-Page Psychological Blueprint · Velumin Org · ${date}</div>
-    <div class="bp-title">${p.diagnosis}</div>
-    <div class="bp-tags">
-      <span class="bp-tag gold">${p.icon} ${p.diagnosis}</span>
-      <span class="bp-tag gold">${currentRole}</span>
-      <span class="bp-tag">${refKeys.length} citations</span>
-      <span class="bp-tag">Framework: ${p.framework}</span>
-    </div>
-  </div>
-  <div class="bp-div"></div>
-  <div class="bp-sec">
-    <div class="bp-sn">SECTION 01</div><div class="bp-st">Psychological Diagnosis</div>
-    <div class="diag-banner"><div class="diag-icon">${p.icon}</div><div>
-      <div class="diag-label">Primary diagnosis</div>
-      <div class="diag-name">${p.diagnosis}</div>
-      <div class="diag-author">Grounded in ${fmt('['+p.framework+']')} and ${refKeys.length} additional sources</div>
-    </div></div>
-  </div>
-  <div class="bp-div"></div>
-  <div class="bp-sec">
-    <div class="bp-sn">SECTION 02</div><div class="bp-st">Causal Pathway — How This Pattern Forms</div>
-    <div class="bp-sb" style="margin-bottom:10px;">The five stages from initial trigger to full dysfunction:</div>
-    <div class="flowchart-wrap">${buildFlowchart(p.flowSteps,p.flowTypes)}</div>
-  </div>
-  <div class="bp-div"></div>
-  <div class="bp-sec">
-    <div class="bp-sn">SECTION 03</div><div class="bp-st">Root Psychological Cause</div>
-    <div class="bp-sb">${fmt(p.root)}</div>
-  </div>
-  <div class="bp-div"></div>
-  <div class="bp-sec">
-    <div class="bp-sn">SECTION 04</div><div class="bp-st">Hidden Human Dynamics</div>
-    <div class="bp-sb">${fmt(p.hidden)}</div>
-  </div>
-  <div class="bp-div"></div>
-  <div class="bp-sec">
-    <div class="bp-sn">SECTION 05</div><div class="bp-st">Diagnostic Metrics & Evidence Base</div>
-    <div class="bp-sb" style="margin-bottom:4px;">What the research literature reports for this pattern — and the projected impact of evidence-based intervention:</div>
-    ${barHTML}${statsHTML}
-  </div>
-  <div class="bp-div"></div>
-  <div class="bp-sec">
-    <div class="bp-sn">SECTION 06</div><div class="bp-st">Six-Stage Science-Backed Action Plan</div>
-    <div class="bp-sb" style="margin-bottom:14px;">Each action targets a specific psychological mechanism — peer-reviewed research, not intuition:</div>
-    <div class="action-grid">${actHTML}</div>
-  </div>
-  <div class="bp-div"></div>
-  <div class="bp-sec">
-    <div class="bp-sn">SECTION 07</div><div class="bp-st">Risk & Outcome Projection</div>
-    <div class="dual">
-      <div class="dual-c"><div class="dual-l lrisk">⚠ If ignored</div><div class="dual-b">Left unaddressed, this pattern compounds. Unresolved psychological dysfunction accelerates into structural decline — turnover, performance degradation, and cultural toxicity become self-reinforcing ${cite('Maslach,1981')}.</div></div>
-      <div class="dual-c"><div class="dual-l lgood">✓ If followed</div><div class="dual-b">Organisations addressing root psychological causes report 20–40% engagement improvements and significant performance uplift within 6–12 months ${cite('Harter,2002')}.</div></div>
-    </div>
-  </div>
-  <div class="founder-sec">
-    <div class="bp-sn">FOUNDER'S INSIGHT</div>
-    <div class="founder-q">"${insight}"</div>
-    <div class="founder-sig">— Harsh Vijay More, Founder, Velumin · Psychology Student &amp; AI Initiative</div>
-  </div>
-  <div class="refs-row" onclick="toggleRefs()">
-    <div class="refs-left"><div class="refs-big">${refKeys.length}</div><div class="refs-lbl">Academic references — click any inline citation to view on Google Scholar</div></div>
-    <span class="refs-arr" id="refs-arr">↓</span>
-  </div>
-  <div class="refs-panel" id="refs-panel"><div class="refs-list">${refsHTML}</div></div>
-  <div class="bp-actions">
-    <button class="btn-new" onclick="newAnalysis()">← New analysis</button>
-    <button class="btn-print" onclick="window.print()">Download as PDF</button>
-  </div>`;
-
-  wrap.scrollIntoView({behavior:'smooth',block:'start'});
-  setTimeout(()=>{
-    document.querySelectorAll('.bar-fill[data-width]').forEach(b=>{
-      b.style.width=b.dataset.width+'%';
-    });
-  },150);
-}
-
-function toggleRefs(){document.getElementById('refs-panel').classList.toggle('open');document.getElementById('refs-arr').classList.toggle('open');}
-function newAnalysis(){
-  document.getElementById('bp-wrap').style.display='none';
-  document.getElementById('input-card').style.display='block';
-  document.getElementById('org-input').value='';
-  document.getElementById('char-note').textContent='Minimum 30 characters';
-  document.getElementById('gen-btn').classList.remove('ready');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function runAnalysis(){
-  const input=document.getElementById('org-input').value.trim();
-  if(input.length<30)return;
-  document.getElementById('input-card').style.display='none';
-  document.getElementById('loading-card').style.display='block';
-  const steps=['ls1','ls2','ls3','ls4'];
-  steps.forEach(s=>document.getElementById(s).classList.remove('active'));
-  document.getElementById(steps[0]).classList.add('active');
-  let si=0;
-  const iv=setInterval(()=>{
-    if(si<steps.length-1){document.getElementById(steps[si]).classList.remove('active');si++;document.getElementById(steps[si]).classList.add('active');}
-  },700);
-  setTimeout(()=>{clearInterval(iv);buildBlueprint(input);},1300);
-}
-
-renderExamples();
-</script>
 </body>
 </html>
